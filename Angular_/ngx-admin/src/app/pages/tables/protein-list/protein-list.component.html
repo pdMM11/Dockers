@@ -1,0 +1,62 @@
+<!--
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+<table style="width:100%">
+    <thead>
+      <tr>
+      <th  align="left">id</th>
+      <th  align="left">name</th>
+      <th  align="left">class</th>
+      <th  align="left">activation</th>
+      <th  align="left">"name_fusogenic_unit": </th>
+      <th  align="left">"location_fusogenic": </th>
+      <th  align="left">"sequence_fusogenic": </th>
+      <th  align="left">"uniprotid": </th>
+      <th  align="left">""ncbiid":</th>
+      <th  align="left">"idtaxonomy": </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataSource">
+
+      	<td>{{item.idprotein}}</td>
+      	<td>{{item.name}}</td>
+      	<td>{{item.class_field}}</td>
+      	<td>{{item.activation}}</td>
+      	<td>{{item.name_fusogenic_unit}}</td>
+      	<td>{{item.location_fusogenic}}</td>
+      	<td>{{item.sequence_fusogenic}}</td>
+      	<td>{{item.uniprotid}}</td>
+      	<td>{{item.ncbiid}}</td>
+      	<td>{{item.idtaxonomy}}</td>
+      </tr>
+
+    </tbody>
+</table>
+
+-->
+
+<nb-card>
+  <nb-card-header>
+    Smart Table
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="dataSource" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<div class="buttons">
+  <p><button (click)="fetchPrevious()">{{current_page-1}}</button></p>
+  <p><button (click)="fetchNext()">{{current_page+1}}</button></p>
+</div>
+

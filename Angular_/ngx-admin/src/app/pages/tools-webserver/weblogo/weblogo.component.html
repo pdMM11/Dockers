@@ -1,0 +1,31 @@
+<nb-card>
+  <nb-card-body>
+    <p><b>WEBLOGO 3 (FROM http://weblogo.threeplusone.com/)</b></p>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+    <button nbButton (click)="gotoWebLogo(true)">WEBLOGO (FILE IMAGE)</button>
+    <p></p>
+    <button nbButton (click)="gotoWebLogo(false)">WEBLOGO (RAW DATA)</button>
+  </nb-card-body>
+</nb-card>
+
+
+<nb-card>
+  <nb-card-body>
+    <button nbButton (click)="getImageFromService()">WEBLOGO FROM BACKEND (FILE IMAGE)</button>
+    <p></p>
+    <button nbButton (click)="downloadWeblogoFile()">WEBLOGO FROM BACKEND (TEXT IMAGE)</button>
+    <p></p>
+
+      <img style='height: 100%; width: 100%; object-fit: contain'
+        [src]="transform()"
+        alt="Place image title"
+        *ngIf="!isImageLoading; else noImageFound">
+      <ng-template #noImageFound>
+        <p>NO RESULTS</p>
+      </ng-template>
+
+  </nb-card-body>
+</nb-card>
+
+

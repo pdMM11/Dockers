@@ -1,0 +1,71 @@
+<!--
+<ul>
+  <li *ngFor="let tax of dataSource | keyvalue">
+     <pre><code>
+     {{ tax | json}}
+ </code></pre>
+  </li>
+</ul>
+-->
+<!--
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%">
+    <thead>
+      <tr>
+      <th  align="left">id</th>
+      <th  align="left">name</th>
+      <th  align="left">family</th>
+      <th  align="left">genre</th>
+      <th  align="left">species: </th>
+      <th  align="left">subspecies: </th>
+      <th  align="left">ncbitax: </th>
+      <th  align="left">ncbiid:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataSource">
+
+      	<td>{{item.idtaxonomy}}</td>
+      	<td>{{item.commonname}}</td>
+      	<td>{{item.family}}</td>
+      	<td>{{item.genre}}</td>
+      	<td>{{item.species}}</td>
+      	<td>{{item.subspecies}}</td>
+      	<td>{{item.ncbitax}}</td>
+      </tr>
+
+    </tbody>
+</table>
+
+</body>
+-->
+<!-- <input type="text" ng-model="term"> -->
+<!--
+<input type="text" ng-model="enteredValue">
+<br>
+<button type="button" ng-Click="findValue(enteredValue)">Search</button>
+-->
+<nb-card>
+  <nb-card-header>
+    Smart Table
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="dataSource" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<div class="buttons">
+  <p><button (click)="fetchPrevious()">{{current_page-1}}</button></p>
+  <p><button (click)="fetchNext()">{{current_page+1}}</button></p>
+</div>

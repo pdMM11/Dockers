@@ -1,0 +1,30 @@
+<nb-card>
+  <nb-card-body>
+    <p><b>NCBI BLASTP</b></p>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+    DATABASE:
+    <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
+      <nb-option value="nr">Non-redundant protein sequences (nr)</nb-option>
+      <nb-option value="refseq_protein">Reference proteins (refseq_protein)</nb-option>
+      <nb-option value="SMARTBLAST/landmark">Model Organisms (landmark)</nb-option>
+      <nb-option value="swissprot">UniProtKB/Swiss-Prot(swissprot)</nb-option>
+      <nb-option value="pataa">Patented protein sequences(pataa)</nb-option>
+      <nb-option value="pdb">Protein Data Bank proteins(pdb)</nb-option>
+      <nb-option value="tsa_nr">Transcriptome Shotgun Assembly proteins (tsa_nr)</nb-option>
+    </nb-select>
+    <p></p>
+    ALGORITHM:
+    <nb-radio-group [(ngModel)]="option">
+      <nb-radio
+        *ngFor="let option of options"
+        [disabled]="option.disabled"
+        [value]="option.value"
+        [checked]="option.checked">
+        {{ option.label }}
+      </nb-radio>
+    </nb-radio-group>
+    <p></p>
+    <button nbButton (click)="gotoNCBI()">GO TO NCBI BLAST</button>
+  </nb-card-body>
+</nb-card>

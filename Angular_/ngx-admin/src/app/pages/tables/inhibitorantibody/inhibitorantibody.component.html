@@ -1,0 +1,145 @@
+<nb-card>
+
+  <nb-card-header>
+    Antibodies & Inhibitors
+    <p></p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search: </label>
+    <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input">
+    <p></p>
+    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <p></p>
+    <!--
+    <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
+    -->
+
+    <a [href]="fileUrl" download="data_antibodies_nhibitors_results.csv">Download Results</a>
+
+    <p></p>
+    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+    <table [nbTreeGrid]="dataSource"
+           [nbSort]="dataSource"
+           (sort)="updateSort($event)"
+           [equalColumnsWidth]="true">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <!--
+          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+          -->
+          {{row.data[customColumn]}}
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <!-- It was removed '-' -->
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+
+    <div class="buttons">
+      Page:
+      <button nbButton *ngIf="current_page!=1" (click)="fetchFirst()">1</button>
+      <button nbButton *ngIf="current_page-1>1" (click)="fetchPrevious()">{{current_page - 1}}</button>
+      <button [disabled]="true">{{current_page}}</button>
+      <button nbButton *ngIf="current_page+1<this.n_pags" (click)="fetchNext()">{{current_page + 1}}</button>
+      <button nbButton *ngIf="current_page!=this.n_pags" (click)="fetchLast()">{{this.n_pags}}</button>
+    </div>
+
+  </nb-card-footer>
+</nb-card>
+
+<nb-card>
+
+  <nb-card-header>
+    <p *ngIf="add_form">Add Entry</p>
+    <p *ngIf="put_form">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addInhibForm" (ngSubmit)="onSubmit()" *ngIf="add_form" novalidate>
+
+      <p>
+        <label for="type">Type </label>
+        <input nbInput type="text" id="type" name="type" formControlName="type">
+      </p>
+
+      <p>
+        <label for="repository">Repository </label>
+        <input nbInput type="text" id="repository" name="repository" formControlName="repository">
+      </p>
+
+      <p>
+        <label for="id_repository">ID Repository </label>
+        <input nbInput type="text" id="id_repository" name="id_repository" formControlName="id_repository">
+      </p>
+
+      <p>
+        <label for="idProtein">ID Protein </label>
+        <input nbInput type="text" id="idProtein" name="idProtein" formControlName="idProtein">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putInhibForm" (ngSubmit)="onSubmit(true)" *ngIf="put_form" novalidate>
+
+      <p>
+        <label for="idsubstance_put">ID </label>
+        <input nbInput type="text" id="idsubstance_put" name="idsubstance" formControlName="idsubstance">
+      </p>
+
+      <p>
+        <label for="type">Type </label>
+        <input nbInput type="text" id="type_put" name="type" formControlName="type">
+      </p>
+
+      <p>
+        <label for="repository">Repository </label>
+        <input nbInput type="text" id="repository_put" name="repository" formControlName="repository">
+      </p>
+
+      <p>
+        <label for="id_repository">ID Repository </label>
+        <input nbInput type="text" id="id_repository_put" name="id_repository" formControlName="id_repository">
+      </p>
+
+      <p>
+        <label for="idProtein">ID Protein </label>
+        <input nbInput type="text" id="idProtein_put" name="idProtein" formControlName="idProtein">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>

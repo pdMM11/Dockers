@@ -1,0 +1,80 @@
+<!--
+<nb-card>
+  <nb-card-body>
+    <p><b>IEDB Epitopes</b></p>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+
+    ALGORITHM: <nb-radio-group [(ngModel)]="option">
+    <nb-radio
+      *ngFor="let option of options"
+      [disabled]="option.disabled"
+      [value]="option.value"
+      [checked]="option.checked">
+      {{ option.label }}
+    </nb-radio>
+  </nb-radio-group>
+    <p></p>
+    <button nbButton (click)="gotoIEDB()">GO TO IEDB EPITOPES</button>
+  </nb-card-body>
+</nb-card>
+
+{{printstuff}}
+-->
+<nb-card>
+  <nb-card-header><b>IEDB Epitopes</b></nb-card-header>
+  <nb-card-body>
+
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+    <!--
+    METHOD: <nb-radio-group [(ngModel)]="option">
+    <nb-radio
+      *ngFor="let option of options"
+      [disabled]="option.disabled"
+      [value]="option.value"
+      [checked]="option.checked">
+      {{ option.label }}
+    </nb-radio>
+  </nb-radio-group>
+    -->
+    METHOD:
+    <nb-select placeholder="{{option}}" [(selected)]="option">
+      <nb-option value="Bepipred">Bepipred</nb-option>
+      <nb-option value="Bepipred-2.0">Bepipred-2.0</nb-option>
+      <nb-option value="Chou-Fasman">Chou-Fasman</nb-option>
+      <nb-option value="Emini">Emini</nb-option>
+      <nb-option value="Kolaskar-Tongaonkar">Kolaskar-Tongaonkar</nb-option>
+      <nb-option value="Parker">Parker</nb-option>
+    </nb-select>
+    <p></p>
+    WINDOW SIZE: <input nbInput type="number" min="5" placeholder="9" [formControl]="window_size">
+
+    <p></p>
+    <button nbButton (click)="gotoIEDB()">GO TO IEDB EPITOPES</button>
+    <p></p>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="data_bepi1.length>0||data_bepi2.length>0||data_other.length>0">
+  <nb-card-header>
+    Results
+  </nb-card-header>
+
+  <nb-card-body *ngIf="data_bepi1.length>0">
+    <ng2-smart-table [settings]="settings_bepi1" [source]="data_bepi1">
+    </ng2-smart-table>
+  </nb-card-body>
+
+  <nb-card-body *ngIf="data_bepi2.length>0">
+    <ng2-smart-table [settings]="settings_bepi2" [source]="data_bepi2">
+    </ng2-smart-table>
+  </nb-card-body>
+
+  <nb-card-body *ngIf="data_other.length>0">
+    <ng2-smart-table [settings]="settings_other" [source]="data_other">
+    </ng2-smart-table>
+  </nb-card-body>
+
+</nb-card>
+

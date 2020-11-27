@@ -1,0 +1,175 @@
+<nb-card>
+
+  <nb-card-header>
+    Fusion Peptides' References
+    <p></p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search: </label>
+    <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input">
+    <p></p>
+    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <p></p>
+    <!--
+    <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
+    -->
+
+    <a [href]="fileUrl" download="data_peptide_references_results.csv">Download Results</a>
+
+
+    <p></p>
+    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+
+    <table [nbTreeGrid]="dataSource"
+           [nbSort]="dataSource"
+           (sort)="updateSort($event)"
+           [equalColumnsWidth]="true">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <!--
+          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+          -->
+          {{row.data[customColumn]}}
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <!-- It was removed '-' -->
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+
+    <div class="buttons">
+      Page:
+      <button nbButton *ngIf="current_page!=1" (click)="fetchFirst()">1</button>
+      <button nbButton *ngIf="current_page-1>1" (click)="fetchPrevious()">{{current_page - 1}}</button>
+      <button [disabled]="true">{{current_page}}</button>
+      <button nbButton *ngIf="current_page+1<this.n_pags" (click)="fetchNext()">{{current_page + 1}}</button>
+      <button nbButton *ngIf="current_page!=this.n_pags" (click)="fetchLast()">{{this.n_pags}}</button>
+    </div>
+
+
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+
+  <nb-card-header>
+    Peptide's Reference
+    <p *ngIf="add_form_pr">Add Entry</p>
+    <p *ngIf="put_form_pr">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm_pr()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm_pr()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addPeptRef" (ngSubmit)="onSubmitPR()" *ngIf="add_form_pr" novalidate>
+      <p>
+        <label for="idpeptide">ID Fusion Peptide </label>
+        <input nbInput type="text" id="idpeptide" name="idpeptide" formControlName="idpeptide">
+      </p>
+      <p>
+        <label for="idreferences">ID Reference </label>
+        <input nbInput type="text" id="idreferences" name="idreferences" formControlName="idreferences">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putPeptRef" (ngSubmit)="onSubmitPR()" *ngIf="put_form_pr" novalidate>
+      <p>
+        <label for="idpeptide">ID Fusion Peptide </label>
+        <input nbInput type="text" id="idpeptide_put" name="idpeptide" formControlName="idpeptide">
+      </p>
+      <p>
+        <label for="idreferences">ID Reference </label>
+        <input nbInput type="text" id="idreferences_put" name="idreferences" formControlName="idreferences">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>
+
+
+<nb-card>
+
+  <nb-card-header>
+    Reference
+    <p *ngIf="add_form_pr">Add Entry</p>
+    <p *ngIf="put_form_pr">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm_ref()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm_ref()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addRef" (ngSubmit)="onSubmitRef()" *ngIf="add_form_ref" novalidate>
+      <p>
+        <label for="type_reference">Type of Repository </label>
+        <input nbInput type="text" id="type_reference" name="type_reference" formControlName="type_reference">
+      </p>
+      <p>
+        <label for="doi">References </label>
+        <input nbInput type="text" id="doi" name="doi" formControlName="doi">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putRef" (ngSubmit)="onSubmitRef()" *ngIf="put_form_ref" novalidate>
+      <p>
+        <label for="idreferences">ID </label>
+        <input nbInput type="text" id="idreferences_ref_put" name="idreferences" formControlName="idreferences">
+      </p>
+
+      <p>
+        <label for="type_reference">Type of Repository </label>
+        <input nbInput type="text" id="type_reference_put" name="type_reference" formControlName="type_reference">
+      </p>
+      <p>
+        <label for="doi">References </label>
+        <input nbInput type="text" id="doi_put" name="doi" formControlName="doi">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>

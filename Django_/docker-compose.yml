@@ -1,0 +1,43 @@
+  version: '3.7'
+    
+  services:
+    db:
+      image: mysql
+      build:
+        context: .
+        dockerfile: Dockerfile_mysql
+      restart: always
+      # command: --default-authentication-plugin=mysql_native_password --mysqlx=0
+      entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+      environment:
+        MYSQL_DATABASE: 'viral_fusion_protein'
+        # So you don't have to use root, but you can if you like
+        MYSQL_USER: 'root_docker'
+        # You can use whatever password you like
+        MYSQL_PASSWORD: 'admin'
+        # Password for root access
+        MYSQL_ROOT_PASSWORD: 'admin'
+      ports: 
+        - '3307:3306'
+      expose: 
+        - '3307'
+      networks:
+        - VFP_NETWORK
+
+    web:
+      build:
+        context: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/my_app_dir
+      ports:
+        - '8000:8000'
+      depends_on:
+        - db
+      networks:
+        - VFP_NETWORK
+
+
+  networks:
+    VFP_NETWORK:
+

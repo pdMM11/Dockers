@@ -1,0 +1,86 @@
+<nb-card>
+  <nb-card-header><b>Fusion Peptide Prediction - Propythia</b></nb-card-header>
+  <nb-card-body>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+
+    MODEL:
+    <nb-select placeholder="{{option_model}}" [(selected)]="option_model">
+      <nb-option value="svm">Support Vector Machine</nb-option>
+      <nb-option value="rf">Random Forest</nb-option>
+      <nb-option value="gboosting">Gradient Boosting</nb-option>
+      <nb-option value="knn"><i>K</i>-Nearest Neighbors</nb-option>
+      <nb-option value="lr">Linear Regression</nb-option>
+      <nb-option value="gnb">Gaussian Naive Bayes</nb-option>
+      <nb-option value="nn">Neural Network</nb-option>
+    </nb-select>
+    <p></p>
+    WINDOW SIZE: <input nbInput type="number" min="5" placeholder="15" [formControl]="window_size">
+    <p></p>
+    <p></p>
+    GAP SIZE: <input nbInput type="number" min="1" max="4" placeholder="1" [formControl]="gap_size">
+    <p></p>
+    <button nbButton (click)="gotoML()">PREDICT FUSION PEPTIDES</button>
+    <p></p>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="results.length>0">
+  <nb-card-header>
+    Results
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="showTable()">SHOW ALL PEPTIDES</button>
+    <p></p>
+
+    <ng2-smart-table [settings]="settings" [source]="results" *ngIf="table_bool">
+    </ng2-smart-table>
+
+    <p></p>
+    <button nbButton (click)="seqColor()">SHOW SEQUENCE</button>
+    <p></p>
+
+
+    <div *ngIf="pos_prob.length>0">
+      <p></p>
+      <span *ngFor="let item of pos_prob; index as i"
+            class="seq" [ngStyle]="{'background-color':item.color}"
+            nbTooltip="Position: {{item.no}}; Probability: {{item.prob}}">
+        {{item.carat}}
+    </span>
+      <p></p>
+      <dl>
+        <div class="Legend">
+          <div class="Red">&nbsp;</div>
+          >= 99% probability
+          <div class="Orange">&nbsp;</div>
+          Probability between 95 and 99%
+          <div class="Yellow">&nbsp;</div>
+          Probability between 90 and 95%
+          <div class="LightGreen">&nbsp;</div>
+          Probability between 80 and 90%
+          <div class="LightBlue">&nbsp;</div>
+          Probability between 70 and 80%
+          <div class="LightGray">&nbsp;</div>
+          Probability between 60 and 70%
+          <div class="White">&nbsp;</div>
+          < 60% probability
+        </div>
+      </dl>
+
+      <p></p>
+
+      <!--
+      <button nbButton (click)="writeFile()">SAVE DATA</button>
+      -->
+      <a [href]="fileUrl" download="results_ml.txt">Download Results</a>
+
+      <p></p>
+
+    </div>
+
+  </nb-card-body>
+
+</nb-card>

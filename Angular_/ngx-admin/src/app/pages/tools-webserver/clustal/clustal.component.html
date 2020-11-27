@@ -1,0 +1,34 @@
+<nb-card>
+  <nb-card-body>
+    <p><b>CLUSTALW (GENOME.JP)</b></p>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+    <p></p>
+    OUTPUT:
+    <nb-radio-group [(ngModel)]="option">
+      <nb-radio
+        *ngFor="let option of options"
+        [disabled]="option.disabled"
+        [value]="option.value"
+        [checked]="option.checked">
+        {{ option.label }}
+      </nb-radio>
+    </nb-radio-group>
+    <p></p>
+    Pairwise Alignment:
+    <nb-select placeholder="Select Showcase" [(selected)]="selectedItemPair">
+      <nb-option value="fast">FAST/APPROXIMATE</nb-option>
+      <nb-option value="slow">SLOW/ACCURATE</nb-option>
+    </nb-select>
+    <p></p>
+    Weight Matrix:
+    <nb-select placeholder="Select Showcase" [(selected)]="selectedItemMat">
+      <nb-option value="blosum">BLOSUM</nb-option>
+      <nb-option value="pam">PAM</nb-option>
+    </nb-select>
+    <p></p>
+    <button nbButton (click)="gotoEBI()">GO TO GENOME CLUSTAL W</button>
+    <p></p>
+    <button nbButton (click)="gotoClustal()">GO TO CLUSTAL OMEGA (BACKEND)</button>
+
+  </nb-card-body>
+</nb-card>

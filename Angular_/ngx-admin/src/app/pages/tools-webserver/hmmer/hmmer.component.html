@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-body>
+    <p><b>EBI HMMER</b></p>
+    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
+
+    <p></p>
+    DATABASE:
+    <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
+      <nb-option value="uniprotrefprot">Reference Proteomes</nb-option>
+      <nb-option value="uniprotkb">UniProtKB</nb-option>
+      <nb-option value="swissprot">Swiss-Prot</nb-option>
+      <nb-option value="pdb">PDB</nb-option>
+    </nb-select>
+    <p></p>
+    <button nbButton (click)="gotoEBI()">GO TO EBI HMMER</button>
+  </nb-card-body>
+</nb-card>

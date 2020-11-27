@@ -1,0 +1,65 @@
+<!--
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%">
+    <thead>
+      <tr>
+      <th  align="left">id</th>
+      <th  align="left">location</th>
+      <th  align="left">sequence</th>
+      <th  align="left">annotation_method</th>
+      <th  align="left">exp_evidence: </th>
+      <th  align="left">protein: </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataSource">
+
+      	<td>{{item.idfusion_peptides}}</td>
+      	<td>{{item.residues}}</td>
+      	<td>{{item.sequence}}</td>
+      	<td>{{item.annotation_method}}</td>
+      	<td>{{item.exp_evidence}}</td>
+      	<td>{{item.protein}}</td>
+      </tr>
+
+    </tbody>
+</table>
+
+</body>
+-->
+
+
+<nb-card>
+  <nb-card-header>
+    Smart Table
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="dataSource"
+                     (deleteConfirm) = "onDeleteConfirm($event)"
+                     (userRowSelect) = "onUserRowSelect($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+<div class="buttons">
+  <button (click)="fetchFirst()">1</button>
+  <button (click)="fetchPrevious()">{{current_page-1}}</button>
+  <button (click)="fetchNext()">{{current_page+1}}</button>
+  <button (click)="fetchLast()">{{this.n_pags}}</button>
+</div>
+
+{{printstuff}}
+
+

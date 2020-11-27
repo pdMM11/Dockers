@@ -1,0 +1,185 @@
+<nb-card>
+
+  <nb-card-header>
+    Virus' Known Hosts
+    <p></p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search: </label>
+    <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input">
+    <p></p>
+    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <p></p>
+    <!--
+    <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
+    -->
+
+      <a [href]="fileUrl" download="data_virus_hosts_results.csv">Download Results</a>
+
+
+    <p></p>
+    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+
+    <table [nbTreeGrid]="dataSource"
+           [nbSort]="dataSource"
+           (sort)="updateSort($event)"
+           [equalColumnsWidth]="true">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <!--
+          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+          -->
+          {{row.data[customColumn]}}
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <!-- It was removed '-' -->
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+
+    <div class="buttons">
+      Page:
+      <button nbButton *ngIf="current_page!=1" (click)="fetchFirst()">1</button>
+      <button nbButton *ngIf="current_page-1>1" (click)="fetchPrevious()">{{current_page - 1}}</button>
+      <button [disabled]="true">{{current_page}}</button>
+      <button nbButton *ngIf="current_page+1<this.n_pags" (click)="fetchNext()">{{current_page + 1}}</button>
+      <button nbButton *ngIf="current_page!=this.n_pags" (click)="fetchLast()">{{this.n_pags}}</button>
+    </div>
+
+  </nb-card-footer>
+
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    Virus' Host
+    <p *ngIf="add_form_th">Add Entry</p>
+    <p *ngIf="put_form_th">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm_th()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm_th()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addTaxHostForm" (ngSubmit)="onSubmit()" *ngIf="add_form_th" novalidate>
+
+      <p>
+        <label for="idtaxonomy">ID Virus </label>
+        <input nbInput type="text" id="idtaxonomy" name="idtaxonomy" formControlName="idtaxonomy">
+      </p>
+
+      <p>
+        <label for="idhost">ID Host </label>
+        <input nbInput type="text" id="idhost" name="idhost" formControlName="idhost">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putTaxHostForm" (ngSubmit)="onSubmit()" *ngIf="put_form_th" novalidate>
+
+      <p>
+        <label for="idtaxhost">ID Entry</label>
+        <input nbInput type="text" id="idtaxhost" name="idtaxhost" formControlName="idtaxhost">
+      </p>
+
+      <p>
+        <label for="idtaxonomy">ID Virus </label>
+        <input nbInput type="text" id="idtaxonomy_put" name="idtaxonomy" formControlName="idtaxonomy">
+      </p>
+
+      <p>
+        <label for="idhost">ID Host </label>
+        <input nbInput type="text" id="idhost_put" name="idhost" formControlName="idhost">
+      </p>
+
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    Host
+    <p *ngIf="add_form_host">Add Entry</p>
+    <p *ngIf="put_form_host">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm_host()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm_host()">UPDATE ENTRY</button>
+    <p></p>
+
+
+    <form [formGroup]="addHostForm" (ngSubmit)="onSubmitHost()" *ngIf="add_form_host" novalidate>
+
+      <p>
+        <label for="host">Host Name </label>
+        <input nbInput type="text" id="host" name="host" formControlName="host">
+      </p>
+
+      <p>
+        <label for="ncbiid">NCBI Taxonomy </label>
+        <input nbInput type="text" id="ncbiid" name="ncbiid" formControlName="ncbiid">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putHostForm" (ngSubmit)="onSubmitHost()" *ngIf="put_form_host" novalidate>
+
+      <p>
+        <label for="host">ID </label>
+        <input nbInput type="text" id="idhost_host_put" name="idhost" formControlName="idhost">
+      </p>
+
+      <p>
+        <label for="host">Host Name </label>
+        <input nbInput type="text" id="host_put" name="host" formControlName="host">
+      </p>
+
+      <p>
+        <label for="ncbiid">NCBI Taxonomy </label>
+        <input nbInput type="text" id="ncbiid_put" name="ncbiid" formControlName="ncbiid">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>

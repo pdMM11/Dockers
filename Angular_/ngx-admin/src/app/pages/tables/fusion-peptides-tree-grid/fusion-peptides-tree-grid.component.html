@@ -1,0 +1,191 @@
+<nb-card>
+
+  <nb-card-header>
+    Fusion Peptides
+    <p></p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search: </label>
+    <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input">
+    <p></p>
+
+    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <p></p>
+    <!--
+    <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
+    -->
+
+    <a [href]="fileUrl" download="data_fusion_peptides_results.csv">Download Results</a>
+    
+    <p></p>
+
+    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+    <!--
+        <label class="search-label" for="search">Search:</label>
+        <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+        -->
+    <table [nbTreeGrid]="dataSource"
+           [nbSort]="dataSource"
+           (sort)="updateSort($event)"
+           [equalColumnsWidth]="true">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns.slice(0, allColumns.length -1)"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn}}
+          <span *nbSortHeaderIcon="let asc = isAscending; let desc = isDescending">
+                <span *ngIf="asc" class="nb-chevron-down" aria-label="sorted ascending"></span>
+                <span *ngIf="desc" class="nb-chevron-up" aria-label="sorted descending"></span>
+              </span>
+        </th>
+
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <button nbTreeGridRowToggle
+                  *ngIf="row.hasChildren()"
+                  [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
+                <span [ngClass]="{'nb-chevron-down': row.expanded, 'nb-chevron-right': !row.expanded}"
+                      aria-hidden="true">
+                </span>
+          </button>
+          <!--
+          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+          {{row.data[customColumn]}}
+          <p *ngIf="!verifyNull(row.data['actions'])">
+            <button nbButton (click)="goToUrl(row.data['actions'])">{{row.data['page']}}</button>
+          </p>
+          -->
+          <div *ngIf="!verifyNull(row.data['actions']); then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <button nbButton (click)="gotoURLSameApp(row.data['actions'])">{{row.data['page']}}</button>
+          </ng-template>
+          <ng-template #elseBlock>
+            {{row.data[customColumn]}}
+          </ng-template>
+
+
+        </td>
+      </ng-container>
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <!-- It was removed '-' -->
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+  <nb-card-footer>
+
+    <div class="buttons">
+      Page:
+      <button nbButton *ngIf="current_page!=1" (click)="fetchFirst()">1</button>
+      <button nbButton *ngIf="current_page-1>1" (click)="fetchPrevious()">{{current_page - 1}}</button>
+      <button [disabled]="true">{{current_page}}</button>
+      <button nbButton *ngIf="current_page+1<this.n_pags" (click)="fetchNext()">{{current_page + 1}}</button>
+      <button nbButton *ngIf="current_page!=this.n_pags" (click)="fetchLast()">{{this.n_pags}}</button>
+    </div>
+
+
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+
+  <nb-card-header>
+    <p *ngIf="add_form">Add Entry</p>
+    <p *ngIf="put_form">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addFPForm" (ngSubmit)="onSubmit()" *ngIf="add_form" novalidate>
+      <!--
+        <p>
+          <label for="idtaxonomy">ID Taxonomy </label>
+          <input nbInput type="text" id="idtaxonomy" name="idtaxonomy" formControlName="idtaxonomy">
+        </p>
+      -->
+      <p>
+        <label for="residues">Position </label>
+        <input nbInput type="text" id="residues" name="residues" formControlName="residues">
+      </p>
+
+      <p>
+        <label for="sequence">Sequence </label>
+        <input nbInput type="text" id="sequence" name="sequence" formControlName="sequence">
+      </p>
+
+      <p>
+        <label for="annotation_method">Annotation Method </label>
+        <input nbInput type="text" id="annotation_method" name="annotation_method" formControlName="annotation_method">
+      </p>
+
+      <p>
+        <label for="exp_evidence">Experimental Evidence </label>
+        <input nbInput type="text" id="exp_evidence" name="exp_evidence" formControlName="exp_evidence">
+      </p>
+
+      <p>
+        <label for="protein">Protein </label>
+        <input nbInput type="text" id="protein" name="protein" formControlName="protein">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putFPForm" (ngSubmit)="onSubmit(true)" *ngIf="put_form" novalidate>
+      <p>
+        <label for="idfusion_peptides_put">ID </label>
+        <input nbInput type="text" id="idfusion_peptides_put" name="idfusion_peptides"
+               formControlName="idfusion_peptides">
+      </p>
+      <p>
+        <label for="residues">Position </label>
+        <input nbInput type="text" id="residues_put" name="residues" formControlName="residues">
+      </p>
+
+      <p>
+        <label for="sequence">Sequence </label>
+        <input nbInput type="text" id="sequence_put" name="sequence" formControlName="sequence">
+      </p>
+
+      <p>
+        <label for="annotation_method">Annotation Method </label>
+        <input nbInput type="text" id="annotation_method_put" name="annotation_method"
+               formControlName="annotation_method">
+      </p>
+
+      <p>
+        <label for="exp_evidence">Experimental Evidence </label>
+        <input nbInput type="text" id="exp_evidence_put" name="exp_evidence" formControlName="exp_evidence">
+      </p>
+
+      <p>
+        <label for="protein">Protein </label>
+        <input nbInput type="text" id="protein_put" name="protein" formControlName="protein">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+  </nb-card-body>
+
+</nb-card>

@@ -1,0 +1,252 @@
+<nb-card>
+
+  <nb-card-header>
+    Fusion Proteins
+    <p></p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search: </label>
+    <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input">
+    <p></p>
+
+    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <p></p>
+    <!--
+    <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
+    -->
+
+    <a [href]="fileUrl" download="data_fusion_proteins_results.csv">Download Results</a>
+
+    <p></p>
+    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+    <!--
+        <label class="search-label" for="search">Search:</label>
+        <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+        -->
+
+
+    <table [nbTreeGrid]="dataSource"
+           [nbSort]="dataSource"
+           (sort)="updateSort($event)"
+           [equalColumnsWidth]="true">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+
+        <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>
+          {{customColumn}}
+          <span *nbSortHeaderIcon="let asc = isAscending; let desc = isDescending">
+                <span *ngIf="asc" class="nb-chevron-down" aria-label="sorted ascending"></span>
+                <span *ngIf="desc" class="nb-chevron-up" aria-label="sorted descending"></span>
+              </span>
+        </th>
+
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <button nbTreeGridRowToggle
+                  *ngIf="row.hasChildren()"
+                  [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
+                <span [ngClass]="{'nb-chevron-down': row.expanded, 'nb-chevron-right': !row.expanded}"
+                      aria-hidden="true">
+                </span>
+          </button>
+          {{row.data[customColumn]}}
+          <p *ngIf="row.data['idprotein']!=''&&!verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
+            <nb-checkbox
+              (checkedChange)="seq_tools(true,row.data['idprotein'],row.data['sequence_fusogenic'])">
+              Select
+            </nb-checkbox>
+          </p>
+          <p *ngIf="row.data['idprotein']!=''&&verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
+            <nb-checkbox (checkedChange)="seq_tools(false,row.data['idprotein'],row.data['sequence_fusogenic'])"
+                         [checked]="true">
+              Select
+            </nb-checkbox>
+          </p>
+          <p *ngIf="row.data['idprotein']==''">
+            <button nbButton (click)="gotoURLSameApp(row.data['actions'])">{{row.data['page']}}</button>
+          </p>
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <!-- It was removed '-' -->
+      </ng-container>
+
+    </table>
+
+
+    <div class="buttons">
+      <button nbButton (click)="goToTools('BLAST')">BLAST</button>
+      <button nbButton (click)="goToTools('CLUSTAL')">CLUSTAL</button>
+      <button nbButton (click)="goToTools('IEDB')">IEDB</button>
+      <button nbButton (click)="goToTools('HMMER')">HMMER</button>
+      <button nbButton (click)="goToTools('WEBLOGO')">WEBLOGO</button>
+      <button nbButton (click)="goToTools('ML')">Fusion Peptide Prediction</button>
+    </div>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+
+    <div class="buttons">
+      Page:
+      <button nbButton *ngIf="current_page!=1" (click)="fetchFirst()">1</button>
+      <button nbButton *ngIf="current_page-1>1" (click)="fetchPrevious()">{{current_page - 1}}</button>
+      <button [disabled]="true">{{current_page}}</button>
+      <button nbButton *ngIf="current_page+1<this.n_pags" (click)="fetchNext()">{{current_page + 1}}</button>
+      <button nbButton *ngIf="current_page!=this.n_pags" (click)="fetchLast()">{{this.n_pags}}</button>
+    </div>
+
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+
+  <nb-card-header>
+    <p *ngIf="add_form">Add Entry</p>
+    <p *ngIf="put_form">Update Entry</p>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <button nbButton (click)="addDataForm()">ADD ENTRY</button>
+    <p></p>
+    <button nbButton (click)="putDataForm()">UPDATE ENTRY</button>
+    <p></p>
+
+    <form [formGroup]="addProteinForm" (ngSubmit)="onSubmit()" *ngIf="add_form" novalidate>
+
+      <p>
+        <label for="name">Name </label>
+        <input nbInput type="text" id="name" name="name" formControlName="name">
+      </p>
+
+      <p>
+        <label for="class_field">Class </label>
+        <input nbInput type="text" id="class_field" name="class_field" formControlName="class_field">
+      </p>
+
+      <p>
+        <label for="activation">Activation </label>
+        <input nbInput type="text" id="activation" name="activation" formControlName="activation">
+      </p>
+
+      <p>
+        <label for="name_fusogenic_unit">Name Fusogenic Unit </label>
+        <input nbInput type="text" id="name_fusogenic_unit" name="name_fusogenic_unit"
+               formControlName="name_fusogenic_unit">
+      </p>
+
+      <p>
+        <label for="location_fusogenic">Location Fusogenic Unit </label>
+        <input nbInput type="text" id="location_fusogenic" name="location_fusogenic"
+               formControlName="location_fusogenic">
+      </p>
+
+      <p>
+        <label for="sequence_fusogenic">Sequence Fusogenic Unit </label>
+        <input nbInput type="text" id="sequence_fusogenic" name="sequence_fusogenic"
+               formControlName="sequence_fusogenic">
+      </p>
+
+      <p>
+        <label for="uniprotid">UniProt </label>
+        <input nbInput type="text" id="uniprotid" name="uniprotid"
+               formControlName="uniprotid">
+      </p>
+
+      <p>
+        <label for="ncbiid">NCBI Protein </label>
+        <input nbInput type="text" id="ncbiid" name="ncbiid"
+               formControlName="ncbiid">
+      </p>
+
+      <p>
+        <label for="idtaxonomy">ID Virus </label>
+        <input nbInput type="text" id="idtaxonomy" name="idtaxonomy"
+               formControlName="idtaxonomy">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+    <form [formGroup]="putProteinForm" (ngSubmit)="onSubmit(true)" *ngIf="put_form" novalidate>
+
+      <p>
+        <label for="name">ID </label>
+        <input nbInput type="text" id="idprotein" name="idprotein_put" formControlName="idprotein">
+      </p>
+
+      <p>
+        <label for="name">Name </label>
+        <input nbInput type="text" id="name_put" name="name" formControlName="name">
+      </p>
+
+      <p>
+        <label for="class_field">Class </label>
+        <input nbInput type="text" id="class_field_put" name="class_field" formControlName="class_field">
+      </p>
+
+      <p>
+        <label for="activation">Activation </label>
+        <input nbInput type="text" id="activation_put" name="activation" formControlName="activation">
+      </p>
+
+      <p>
+        <label for="name_fusogenic_unit">Name Fusogenic Unit </label>
+        <input nbInput type="text" id="name_fusogenic_unit_put" name="name_fusogenic_unit"
+               formControlName="name_fusogenic_unit">
+      </p>
+
+      <p>
+        <label for="location_fusogenic">Location Fusogenic Unit </label>
+        <input nbInput type="text" id="location_fusogenic_put" name="location_fusogenic"
+               formControlName="location_fusogenic">
+      </p>
+
+
+      <p>
+        <label for="sequence_fusogenic">Sequence Fusogenic Unit </label>
+        <input nbInput type="text" id="sequence_fusogenic_put" name="sequence_fusogenic"
+               formControlName="sequence_fusogenic">
+      </p>
+
+      <p>
+        <label for="uniprotid">UniProt </label>
+        <input nbInput type="text" id="uniprotid_put" name="uniprotid"
+               formControlName="uniprotid">
+      </p>
+
+      <p>
+        <label for="ncbiid">NCBI Protein </label>
+        <input nbInput type="text" id="ncbiid_put" name="ncbiid"
+               formControlName="ncbiid">
+      </p>
+
+      <p>
+        <label for="idtaxonomy">ID Virus </label>
+        <input nbInput type="text" id="idtaxonomy_put" name="idtaxonomy"
+               formControlName="idtaxonomy">
+      </p>
+
+      <button nbButton>Submit</button>
+
+    </form>
+
+  </nb-card-body>
+
+</nb-card>
