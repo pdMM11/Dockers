@@ -88,9 +88,6 @@ WSGI_APPLICATION = 'vfp_web_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-
-
-"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -115,7 +112,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+"""
 
 
 # Password validation
