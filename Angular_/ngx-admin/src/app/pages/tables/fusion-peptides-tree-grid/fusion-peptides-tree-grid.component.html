@@ -19,7 +19,7 @@
     -->
 
     <a [href]="fileUrl" download="data_fusion_peptides_results.csv">Download Results</a>
-    
+
     <p></p>
 
     <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
@@ -100,7 +100,7 @@
 
 </nb-card>
 
-
+<!--
 <nb-card>
 
   <nb-card-header>
@@ -116,12 +116,6 @@
     <p></p>
 
     <form [formGroup]="addFPForm" (ngSubmit)="onSubmit()" *ngIf="add_form" novalidate>
-      <!--
-        <p>
-          <label for="idtaxonomy">ID Taxonomy </label>
-          <input nbInput type="text" id="idtaxonomy" name="idtaxonomy" formControlName="idtaxonomy">
-        </p>
-      -->
       <p>
         <label for="residues">Position </label>
         <input nbInput type="text" id="residues" name="residues" formControlName="residues">
@@ -189,3 +183,4 @@
   </nb-card-body>
 
 </nb-card>
+-->
