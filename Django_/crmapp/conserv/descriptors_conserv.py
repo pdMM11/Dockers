@@ -1144,8 +1144,10 @@ class Descriptor:
         family_column_max_index = {}
         for i in family_weblogo.keys():
             family_column_max_index[i] = self.max_coluns(family_weblogo[i])
-    
-        for i in range(len(protein) - window_size):
+
+        # print(protein)
+
+        for i in range(len(protein) - window_size + 1):
             pos_end = i+window_size
             sequence = protein[i:pos_end]
             dict_seq = {}
@@ -1157,31 +1159,25 @@ class Descriptor:
                 pos_analysis = []
         
                 for j in range(0,len(sequence)):
-                    if j == 0: pos_analysis = current_family[sequence[j]]
+                    if j == 0:
+                        pos_analysis = current_family[sequence[j]]
                     else:
                         pos_temp = list(np.array(current_family[sequence[j]]) - j)
                         pos_temp = np.array(pos_temp)
                         pos_temp = pos_temp[pos_temp >=0]
-                        pos_analysis=list(sorted(pos_analysis + list(set(pos_temp) - set(pos_analysis))))
+                        pos_analysis = list(sorted(pos_analysis + list(set(pos_temp) - set(pos_analysis))))
     
-                dict_seq[k]=self.read_weblogo(family_weblogo[k], sequence, pos_analysis)
-            results_output[str(i) + '-' + str(pos_end)]= dict_seq
+                dict_seq[k] = self.read_weblogo(family_weblogo[k], sequence, pos_analysis)
+            results_output[str(i) + '-' + str(pos_end)] = dict_seq
         
         # print("FINAL: --- %s seconds ---" % (time.time() - start_time))
-        key = results_output.keys()
+        # key = results_output.keys()
         
-        print(results_output)
+        # print(results_output)
         
-        #for i in key: return results_output[i]
-        
-        
-        data_conserv = None
-        
-        for i in key: data_conserv = list(results_output[i].values())
-        
-        max_value = math.log(max(data_conserv))
+        # for i in key: return results_output[i]
 
-        return {'conserv': max_value}
+        return results_output
         
 
 
