@@ -45,6 +45,8 @@ import logomaker
 import base64
 import json
 
+from crmapp.conserv.descriptors_conserv import Descriptor
+
 
 class CustomPagination(PageNumberPagination):
     # for the views that require the entirety of the data
@@ -497,6 +499,65 @@ def ml_predict(request):
         return render(request, 'home.html')
         """
 
+@api_view(["POST"])
+@csrf_exempt
+def conservation_features(request):
+    if request.method == "POST":
+        data = request.data
+        sequence = data['seq']
+        try:
+            window_size = data['window_size']
+        except:
+            window_size = 15
+        """
+        try:
+            gap = int(unquote(request.GET.get('gap')))
+        except:
+            gap = 1
+        """
+        features = Descriptor(sequence)
+
+        data_conserv = features.scores_sequence(sequence, window_size)
+
+        pos = list(data_conserv.keys())
+
+        pos_new =[]
+
+        # print(pos)
+
+        for i in pos:
+            pos_init_end = i.split('-')
+            # print(pos_init_end)
+            pos0 = int(pos_init_end[0])
+            pos1 = int(pos_init_end[1])
+            pos_new.append([i, pos0, pos1])
+
+        # print(pos_new)
+
+        data_send = {}
+
+        families = list(data_conserv[pos[0]].keys())
+
+        # print(len(sequence))
+
+        for i in range(len(sequence)):
+          aux = {}
+          for j in pos_new:
+              if i >= (j[1]) and i < (j[2]):
+                if aux == {}:
+                    aux = data_conserv[j[0]]
+                else:
+                    for k in families:
+                        if data_conserv[j[0]][k] > aux[k]:
+                            aux[k] = data_conserv[j[0]][k]
+          # aux['caract'] = sequence[i]
+          data_send[i] = aux
+          # print(data_send)
+
+        return JsonResponse(data_send, safe=False)
+
+        # return JsonResponse(json.dumps(data_send), safe=False)
+    
 
 class WriteResultsAPIView(APIView):
     @api_view(["POST"])
