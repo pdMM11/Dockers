@@ -98,6 +98,8 @@ urlpatterns = [
     
     path(r'weblogobackend/', views.weblogologomaker, name='weblogologomaker'),
 
+    path(r'conserv/', views.conservation_features, name="conservation_features"),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
