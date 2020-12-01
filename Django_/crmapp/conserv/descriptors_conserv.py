@@ -988,7 +988,7 @@ class Descriptor:
         return res
 
 
-    def size_families_4_min(self, filename="Weblogos/Seqs_prots.csv"):
+    def size_families_4_min(self, filename="crmapp/conserv/Weblogos/Seqs_prots.csv"):
         dataset = pd.read_csv(filename)
         
         dataset['Family'] = dataset['Family'].str.strip()
@@ -1005,7 +1005,7 @@ class Descriptor:
         return families_multiple_align
     
     
-    def vfp_seqs(self, filename="dataset1_usar.csv", families = "Weblogos/Seqs_prots.csv"):
+    def vfp_seqs(self, filename="dataset1_usar.csv", families = "crmapp/conserv/Weblogos/Seqs_prots.csv"):
         colnames=['meta', 'fp'] 
         dataset = pd.read_csv(filename, names=colnames, header=None)
         
@@ -1037,7 +1037,7 @@ class Descriptor:
         
         for i in families:
             family = i[0]
-            filename = 'Weblogos/' + family + '_weblogo.txt'
+            filename = 'crmapp/conserv/Weblogos/' + family + '_weblogo.txt'
             n_seqs = i[1]
             
             weblogoDf = pd.read_csv(filename, skiprows=7, sep='\t')
