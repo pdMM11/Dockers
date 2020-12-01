@@ -21,6 +21,26 @@ interface PosInterface {
   color?: string;
 }
 
+interface PosConservInterface {
+  no?: number;
+  carat?: string;
+  Retroviridae?: number;
+  Pneumoviridae?: number;
+  Coronaviridae?: number;
+  Paramyxoviridae?: number;
+  Peribunyaviridae?: number;
+  Togaviridae?: number;
+  Flaviviridae?: number;
+  Filoviridae?: number;
+  Herpesviridae?: number;
+  Orthomyxoviridae?: number;
+  Arenaviridae?: number;
+  Phenuiviridae?: number;
+  Rhabdoviridae?: number;
+  prob?: number;
+  color?: string;
+}
+
 @Component({
   selector: 'ngx-ml-predict',
   templateUrl: './ml-predict.component.html',
@@ -38,6 +58,17 @@ export class MlPredictComponent implements OnInit {
 
   fileUrl;
   data_print;
+
+  conserv_data = {};
+
+  print_conserv: PosConservInterface[] = [];
+
+  current_sequence: string;
+
+  option_conserv = 'Retroviridae';
+
+  conserv_card = false;
+  name_family = '';
 
   settings = {
     add: {
@@ -80,7 +111,8 @@ export class MlPredictComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private MLService: MlPredictService,
-              private sanitizer: DomSanitizer,) {
+              private sanitizer: DomSanitizer,
+              ) {
   }
 
   ngOnInit() {
@@ -191,11 +223,7 @@ export class MlPredictComponent implements OnInit {
     for (const i of this.pos_prob) {
       text_file = text_file + i.no + '\t' + i.carat + '\t' + i.prob + '\n';
     }
-    
-
     this.data_print = text_file;
-
-
     /**
     const data = {data: text_file};
     this.MLService.writeFile(data).subscribe(
@@ -206,5 +234,104 @@ export class MlPredictComponent implements OnInit {
         alert(error.message);
       });
       */
+  }
+  getConserv() {
+    this.current_sequence = null;
+    let sequence = '';
+    if (this.sequence.value !== null && this.sequence.value !== '') {
+      sequence = this.sequence.value;
+    } else if (this.query_seq !== null && this.query_seq !== '') {
+      sequence = this.query_seq;
+    }
+    this.MLService.getWeblogo(sequence, this.window_size.value).subscribe(
+      (data_send) => {
+        // const data_parse = JSON.parse(data_send);
+        // alert(data_parse);
+        // this.save_data(data_parse['data']);
+        this.save_data(data_send);
+        this.current_sequence = sequence;
+        this.graphConserv();
+        this.conserv_card = true;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        this.save_data({});
+        this.conserv_card = false;
+      });
+    // this.current_sequence = sequence;
+    // alert(JSON.stringify(this.conserv_data));
+  }
+  save_data(data_send) {
+    this.conserv_data = data_send;
+  }
+  graphConserv(new_seq: boolean = true) {
+    if (new_seq) {
+      this.print_conserv = [];
+      for (let i = 0; i < this.current_sequence.length; i++) {
+        const aux_array: PosConservInterface = {no: i, carat: this.current_sequence[i]};
+        aux_array.Retroviridae = this.conserv_data[String(i)]['Retroviridae'];
+        aux_array.Pneumoviridae = this.conserv_data[String(i)]['Pneumoviridae'];
+        aux_array.Coronaviridae = this.conserv_data[String(i)]['Coronaviridae'];
+        aux_array.Paramyxoviridae = this.conserv_data[String(i)]['Paramyxoviridae'];
+        aux_array.Peribunyaviridae = this.conserv_data[String(i)]['Peribunyaviridae'];
+        aux_array.Togaviridae = this.conserv_data[String(i)]['Togaviridae'];
+        aux_array.Flaviviridae = this.conserv_data[String(i)]['Flaviviridae'];
+        aux_array.Filoviridae = this.conserv_data[String(i)]['Filoviridae'];
+        aux_array.Herpesviridae = this.conserv_data[String(i)]['Herpesviridae'];
+        aux_array.Orthomyxoviridae = this.conserv_data[String(i)]['Orthomyxoviridae'];
+        aux_array.Arenaviridae = this.conserv_data[String(i)]['Arenaviridae'];
+        aux_array.Phenuiviridae = this.conserv_data[String(i)]['Phenuiviridae'];
+        aux_array.Rhabdoviridae = this.conserv_data[String(i)]['Rhabdoviridae'];
+        // alert(aux_array.hasOwnProperty(this.option_conserv) );
+        aux_array.prob = this.conserv_data[String(i)][this.option_conserv];
+        // alert(typeof aux_array.prob === 'number');
+        if (aux_array.prob >= 1) {
+          aux_array.color = 'red';
+        } else if (aux_array.prob >= 0.80 && aux_array.prob < 1) {
+          aux_array.color = 'orange';
+        } else if (aux_array.prob >= 0.60 && aux_array.prob < 0.80) {
+          aux_array.color = 'yellow';
+        } else if (aux_array.prob >= 0.40 && aux_array.prob < 0.60) {
+          aux_array.color = 'lightgreen';
+          /**
+        } else if (aux_array.prob >= 0.70 && aux_array.prob < 0.80) {
+          aux_array.color = 'lightblue';
+        } else if (aux_array.prob >= 0.60 && aux_array.prob < 0.70) {
+          aux_array.color = 'lightgray';
+          */
+        } else {
+          aux_array.color = 'white';
+        }
+        // alert(aux_array);
+        this.print_conserv.push(aux_array);
+      }
+    } else {
+      for (let i = 0; i < this.print_conserv.length; i++) {
+        this.print_conserv[i].prob = this.print_conserv[String(i)][this.option_conserv];
+
+        if (this.print_conserv[i].prob >= 1) {
+          this.print_conserv[i].color = 'red';
+        } else if (this.print_conserv[i].prob >= 0.80 && this.print_conserv[i].prob < 1) {
+          this.print_conserv[i].color = 'orange';
+        } else if (this.print_conserv[i].prob >= 0.60 && this.print_conserv[i].prob < 0.80) {
+          this.print_conserv[i].color = 'yellow';
+        } else if (this.print_conserv[i].prob >= 0.40 && this.print_conserv[i].prob < 0.60) {
+          this.print_conserv[i].color = 'lightgreen';
+          /**
+        } else if (aux_array.prob >= 0.70 && aux_array.prob < 0.80) {
+          aux_array.color = 'lightblue';
+        } else if (aux_array.prob >= 0.60 && aux_array.prob < 0.70) {
+          aux_array.color = 'lightgray';
+           */
+        } else {
+          this.print_conserv[i].color = 'white';
+        }
+      }
+    }
+    this.conserv_card = true;
+    this.name_family = this.option_conserv;
+
+    // alert(JSON.stringify(this.conserv_data));
+    // alert(JSON.stringify(this.print_conserv));
   }
 }
