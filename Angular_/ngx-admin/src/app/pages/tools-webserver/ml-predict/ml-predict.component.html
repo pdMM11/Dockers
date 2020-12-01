@@ -1,4 +1,5 @@
 <nb-card>
+<nb-card>
   <nb-card-header><b>Fusion Peptide Prediction - Propythia</b></nb-card-header>
   <nb-card-body>
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
@@ -21,6 +22,8 @@
     GAP SIZE: <input nbInput type="number" min="1" max="4" placeholder="1" [formControl]="gap_size">
     <p></p>
     <button nbButton (click)="gotoML()">PREDICT FUSION PEPTIDES</button>
+    <p></p>
+    <button nbButton (click)="getConserv()">PREDICT CONSERVATION</button>
     <p></p>
   </nb-card-body>
 </nb-card>
@@ -78,7 +81,68 @@
       <a [href]="fileUrl" download="results_ml.txt">Download Results</a>
 
       <p></p>
+    </div>
 
+  </nb-card-body>
+
+</nb-card>
+
+<nb-card *ngIf="conserv_card">
+  <nb-card-header>
+    Conservation Results
+  </nb-card-header>
+
+  <nb-card-body>
+
+    WEBLOGO FAMILY:
+    <nb-select placeholder="{{option_conserv}}" [(selected)]="option_conserv"
+                > <!-- onChange()="graphConserv(false)" -->
+      <nb-option value="Arenaviridae">Arenaviridae</nb-option>
+      <nb-option value="Coronaviridae">Coronaviridae</nb-option>
+      <nb-option value="Flaviviridae">Flaviviridae</nb-option>
+      <nb-option value="Filoviridae">Filoviridae</nb-option>
+      <nb-option value="Herpesviridae">Herpesviridae</nb-option>
+      <nb-option value="Orthomyxoviridae">Orthomyxoviridae</nb-option>
+      <nb-option value="Paramyxoviridae">Paramyxoviridae</nb-option>
+      <nb-option value="Peribunyaviridae">Peribunyaviridae</nb-option>
+      <nb-option value="Phenuiviridae">Phenuiviridae</nb-option>
+      <nb-option value="Pneumoviridae">Pneumoviridae</nb-option>
+      <nb-option value="Rhabdoviridae">Rhabdoviridae</nb-option>
+      <nb-option value="Retroviridae">Retroviridae</nb-option>
+      <nb-option value="Togaviridae">Togaviridae</nb-option>
+    </nb-select>
+
+    <p></p>
+    <button nbButton (click)="graphConserv(false)">UPDATE FAMILY</button>
+    <p></p>
+
+    <div *ngIf="conserv_card">
+      <p></p>
+      {{name_family}}
+      <p></p>
+      <span *ngFor="let item of print_conserv; index as i"
+            class="seq" [ngStyle]="{'background-color':item.color}"
+            nbTooltip="Position: {{item.no}}; Probability: {{item.prob}}">
+        {{item.carat}}
+    </span>
+      <p></p>
+      <dl>
+        <div class="Legend">
+          <div class="Red">&nbsp;</div>
+          Score above 1
+          <div class="Orange">&nbsp;</div>
+          Score above between 0.80 and 1.00
+          <div class="Yellow">&nbsp;</div>
+          Score above between 0.60 and 0.80
+          <div class="LightGreen">&nbsp;</div>
+          Score above between 0.40 and 0.60
+          <div class="White">&nbsp;</div>
+          Score below 0.40
+        </div>
+      </dl>
+
+      <p></p>
+      <p></p>
     </div>
 
   </nb-card-body>
