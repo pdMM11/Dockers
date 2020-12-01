@@ -36,4 +36,16 @@ export class MlPredictService {
     };
     return this.httpClient.post<any>(`${this.API_URL}/save_ml_results/`, text, this.httpOptions);
   }
+  getWeblogo(seq: string, window_size: number = 15) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    this.data = {};
+    this.data.seq = seq;
+    this.data.window_size = window_size;
+    return this.httpClient.post<any>(`${this.API_URL}/conserv/`, this.data, this.httpOptions);
+  }
 }
+
