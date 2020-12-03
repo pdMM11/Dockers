@@ -95,7 +95,7 @@ def weblogologomaker(request):
 
 
         ##########################
-        type_os = "windows"
+        # type_os = "windows"
         #######################
 
         output = weblogo_aux(seqs, type_os)
@@ -372,7 +372,7 @@ def clustal_all(request):
             type_os = "linux"
 
         ##########################
-        type_os = "windows"
+        # type_os = "windows"
         ###########################
 
         if type == "fasta":
