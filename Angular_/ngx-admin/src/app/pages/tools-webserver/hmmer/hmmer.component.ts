@@ -9,7 +9,7 @@ import {FormControl} from '@angular/forms';
 })
 export class HmmerComponent implements OnInit {
   query_seq = '';
-  sequence = new FormControl('');z
+  sequence = new FormControl('');
   selectedItem = 'uniprotrefprot';
 
   constructor(private route: ActivatedRoute) {

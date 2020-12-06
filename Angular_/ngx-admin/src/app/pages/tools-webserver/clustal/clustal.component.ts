@@ -93,7 +93,7 @@ export class ClustalComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         window.open(url);
       }, error => {
-        alert('ERROR');
+        alert(error.message);
       });
       this.clustal.clustalTreeBackend().subscribe(data => {
         const data_result = data as string;
@@ -102,7 +102,7 @@ export class ClustalComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         window.open(url);
       }, error => {
-        alert('ERROR');
+        alert(error.message);
       });
     }
   }

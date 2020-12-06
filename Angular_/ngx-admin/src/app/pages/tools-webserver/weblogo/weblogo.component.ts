@@ -176,7 +176,7 @@ export class WeblogoComponent implements OnInit {
         this.isImageLoading = false;
       }, error => {
         this.isImageLoading = false;
-        alert('ERROR');
+        alert(error.message);
         // console.log(error);
       });
     } else if ((this.sequence.value.match(/>/g) || []).length > 2) {
@@ -195,7 +195,7 @@ export class WeblogoComponent implements OnInit {
         this.isImageLoading = false;
       }, error => {
         this.isImageLoading = false;
-        alert('ERROR');
+        alert(error.message);
         // console.log(error);
       });
     } else {
@@ -244,7 +244,7 @@ export class WeblogoComponent implements OnInit {
         window.open(url);
       }, error => {
         this.isImageLoading = false;
-        alert('ERROR');
+        alert(error.message);
       });
     } else if ((this.sequence.value.match(/>/g) || []).length > 2) {
         this.isImageLoading = true;
@@ -256,7 +256,7 @@ export class WeblogoComponent implements OnInit {
           window.open(url);
         }, error => {
           this.isImageLoading = false;
-          alert('ERROR');
+          alert(error.message);
         });
     } else {
       alert('ERROR: ENTER AT LEAST 3 SEQUENCES');
