@@ -44,6 +44,10 @@ export class TaxHostComponent implements OnInit {
     'species', 'subspecies', 'virus_ncbitax', 'host',
     'host_ncbitax', 'idhost', 'idtaxhost'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
+    'genre': 'Genus', 'species': 'Species',
+    'subspecies': 'Subspecies / Strain', 'virus_ncbitax': 'Virus\' NCBI Tax ID',
+    'host': 'Host', 'host_ncbitax': 'Host\'s NCBI Tax ID', 'idhost': 'Host\'s ID', 'idtaxhost': 'Entry ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;

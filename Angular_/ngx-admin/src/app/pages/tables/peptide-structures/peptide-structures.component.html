@@ -31,7 +31,7 @@
 
       <ng-container [nbTreeGridColumnDef]="customColumn">
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-          {{customColumn}}
+          {{headers[customColumn]}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
           <!--<ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>-->
@@ -43,7 +43,7 @@
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-          {{column}}
+          {{headers[column]}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
         <!-- It was removed '-' -->

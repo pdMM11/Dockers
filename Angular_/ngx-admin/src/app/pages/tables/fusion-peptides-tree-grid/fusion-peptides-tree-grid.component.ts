@@ -46,6 +46,11 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   defaultColumns = ['residues', 'sequence', 'annotation_method', 'protein_name',
     'exp_evidence', 'protein', 'virus'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {
+    'idfusion_peptides': 'ID', 'residues': 'Position', 'sequence': 'Sequence',
+    'annotation_method': 'Annotation Method', 'protein_name': 'Protein Name',
+    'exp_evidence': 'Experimental Evidence', 'protein': 'Protein\' ID', 'virus': 'Virus',
+  };
   current_page = 1;
   count_entries: number;
   n_pags: number;

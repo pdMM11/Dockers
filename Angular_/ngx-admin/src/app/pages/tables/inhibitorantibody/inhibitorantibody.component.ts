@@ -34,6 +34,8 @@ export class InhibitorantibodyComponent implements OnInit {
   customColumn = 'idsubstance';
   defaultColumns = ['type', 'repository', 'id_repository', 'idprotein'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idsubstance': 'ID', 'type': 'Type', 'repository': 'Repository',
+    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;

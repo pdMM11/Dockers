@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-body>
-    <p><b>CLUSTALW (GENOME.JP)</b></p>
+    <p><b>CLUSTAL</b></p>
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"></textarea>
     <p></p>
     OUTPUT:
@@ -26,7 +26,7 @@
       <nb-option value="pam">PAM</nb-option>
     </nb-select>
     <p></p>
-    <button nbButton (click)="gotoEBI()">GO TO GENOME CLUSTAL W</button>
+    <button nbButton (click)="gotoEBI()">GO TO GENOME CLUSTAL W (GENOME.JP)</button>
     <p></p>
     <button nbButton (click)="gotoClustal()">GO TO CLUSTAL OMEGA (BACKEND)</button>
 

@@ -12,7 +12,7 @@ import {
 } from '@nebular/theme';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import {EnvService} from "../../../services/env.service";
+import {EnvService} from '../../../services/env.service';
 
 
 interface PeptideReferencesInterface {
@@ -41,6 +41,10 @@ export class PeptideReferencesComponent implements OnInit {
   defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
     'protein', 'virus', 'doi', 'idreferences'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idpeptide': 'Fusion Peptide ID', 'residues': 'Position', 'sequence': 'Sequence',
+    'annotation_method': 'Annotation Method', 'protein_name': 'Protein Name',
+    'exp_evidence': 'Experimental Evidence', 'protein': 'Protein\' ID', 'virus': 'Virus',
+    'doi': 'DOI', 'idreferences': 'Reference\'s ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;

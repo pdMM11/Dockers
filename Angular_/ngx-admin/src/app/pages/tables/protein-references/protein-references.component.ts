@@ -46,6 +46,11 @@ export class ProteinReferencesComponent implements OnInit {
     'location_fusogenic', 'sequence_fusogenic', 'uniprotid', 'ncbiid',
     'idtaxonomy', 'virus', 'doi', 'idreferences'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
+    'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
+    'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
+    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus',
+    'doi': 'DOI', 'idreferences': 'Reference\'s ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;

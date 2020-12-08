@@ -47,6 +47,10 @@ export class ProteinListTreeGridComponent implements OnInit {
   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
     'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
+    'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
+    'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
+    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus'};
 
   current_page = 1;
 

@@ -39,6 +39,9 @@ export class PeptideStructuresComponent implements OnInit {
   defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
     'idpeptide', 'idstructure'];
   allColumns = [this.customColumn, ...this.defaultColumns];
+  headers = {'idpeptide_structure': 'ID', 'exp_method': 'Experimental Method', 'repository': 'Repository',
+    'pdb': 'Repository\'s ID', 'idprotein': 'Fusion Protein\'s ID',
+    'idpeptide': 'Fusion Peptide\'s ID', 'idstructure': 'Structure\'s ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;

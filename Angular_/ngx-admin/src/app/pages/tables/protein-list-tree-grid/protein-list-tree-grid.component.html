@@ -39,7 +39,7 @@
       <ng-container [nbTreeGridColumnDef]="customColumn">
 
         <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>
-          {{customColumn}}
+          {{headers[customColumn]}}
           <span *nbSortHeaderIcon="let asc = isAscending; let desc = isDescending">
                 <span *ngIf="asc" class="nb-chevron-down" aria-label="sorted ascending"></span>
                 <span *ngIf="desc" class="nb-chevron-up" aria-label="sorted descending"></span>
@@ -77,7 +77,7 @@
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-          {{column}}
+          {{headers[column]}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
         <!-- It was removed '-' -->

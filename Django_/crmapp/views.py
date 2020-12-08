@@ -408,7 +408,6 @@ def clustal_all(request):
 
             p.communicate()
 
-
         file_out = open(out_file, "r")
 
         data_send = file_out.read()

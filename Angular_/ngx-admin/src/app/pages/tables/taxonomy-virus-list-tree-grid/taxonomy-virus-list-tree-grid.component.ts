@@ -43,7 +43,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   defaultColumns = ['commonname', 'family', 'genre', 'species',
     'subspecies', 'ncbitax'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-
+  headers = {'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
+    'genre': 'Genus', 'species': 'Species',
+    'subspecies': 'Subspecies / Strain', 'ncbitax': 'NCBI Tax ID'};
   current_page = 1;
   count_entries: number;
   n_pags: number;
