@@ -23,7 +23,8 @@ export class PeptideStructuresService {
 
   getFirstPage(idpeptide = '4', search = '', page = 1) {
     if (search === '') {
-      return this.httpClient.get(`${this.API_URL}/peptidestructure/?idpeptide=` + String(idpeptide));
+      // return this.httpClient.get(`${this.API_URL}/peptidestructure/?idpeptide=` + String(idpeptide));
+      return this.httpClient.get(`${this.API_URL}/peptidestructure/?idprotein=` + String(idpeptide));
     } else {
       return this.httpClient.get(`${this.API_URL}/peptidestructure/?search=` + String(search)
         + '&page=' + String(page));
