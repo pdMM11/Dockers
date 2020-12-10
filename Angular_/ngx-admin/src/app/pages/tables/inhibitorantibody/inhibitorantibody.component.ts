@@ -10,7 +10,7 @@ import {
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
 
 interface InhibitorantibodyInterface {
@@ -34,8 +34,10 @@ export class InhibitorantibodyComponent implements OnInit {
   customColumn = 'idsubstance';
   defaultColumns = ['type', 'repository', 'id_repository', 'idprotein'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-  headers = {'idsubstance': 'ID', 'type': 'Type', 'repository': 'Repository',
-    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID'};
+  headers = {
+    'idsubstance': 'ID', 'type': 'Type', 'repository': 'Repository',
+    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID'
+  };
   current_page = 1;
   count_entries: number;
   n_pags: number;
@@ -263,16 +265,16 @@ export class InhibitorantibodyComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.inhibService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.inhibService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-      */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -294,7 +296,7 @@ export class InhibitorantibodyComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 

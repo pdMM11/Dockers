@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {
   NbGetters, NbSortDirection, NbSortRequest,
   NbTreeGridDataSource, NbTreeGridDataSourceBuilder,
@@ -7,7 +7,7 @@ import {
 import {ProteinService} from '../../../services/protein.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
 
 
@@ -47,10 +47,12 @@ export class ProteinListTreeGridComponent implements OnInit {
   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
     'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-  headers = {'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
+  headers = {
+    'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
     'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
     'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
-    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus'};
+    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus'
+  };
 
   current_page = 1;
 
@@ -181,6 +183,11 @@ export class ProteinListTreeGridComponent implements OnInit {
             idprotein: '', actions:
               '../protein-references?idprot=' + String(this.idProt),
             page: 'References',
+          },
+          {
+            idprotein: '', actions:
+              '../peptide-structure?idprotein=' + String(this.idProt),
+            page: 'Structure',
           },
           {
             idprotein: '', actions:
@@ -325,9 +332,9 @@ export class ProteinListTreeGridComponent implements OnInit {
       if ((this.search_tools.match(/>/g) || []).length > 0) {
         this.gotoURLSameApp('../../blast?sequence=' + encodeURI(this.search_tools));
         /**
-        window.open('http://localhost:4201/pages/tools/blast?sequence=' + encodeURI(this.search_tools),
-          '_blank');
-        */
+         window.open('http://localhost:4201/pages/tools/blast?sequence=' + encodeURI(this.search_tools),
+         '_blank');
+         */
       } else {
         alert('ERROR: SELECT AT LEAST 1 SEQUENCE');
       }
@@ -358,8 +365,8 @@ export class ProteinListTreeGridComponent implements OnInit {
       if ((this.search_tools.match(/>/g) || []).length === 1) {
         this.gotoURLSameApp('../../tools/epitopes?sequence=' + encodeURI(this.search_tools));
         /**
-        window.open('http://localhost:4201/pages/tools/epitopes?sequence=' + encodeURI(this.search_tools),
-          '_blank');
+         window.open('http://localhost:4201/pages/tools/epitopes?sequence=' + encodeURI(this.search_tools),
+         '_blank');
          */
       } else {
         alert('ERROR: SELECT 1 SEQUENCE');
@@ -368,9 +375,9 @@ export class ProteinListTreeGridComponent implements OnInit {
       if ((this.search_tools.match(/>/g) || []).length === 1) {
         this.gotoURLSameApp('../../tools/hmmer?sequence=' + encodeURI(this.search_tools));
         /**
-        // const search_tools_hmmer = this.search_tools.replace('>' + String(id) + '\n', '');
-        window.open('http://localhost:4201/pages/tools/hmmer?sequence=' + encodeURI(this.search_tools),
-          '_blank');
+         // const search_tools_hmmer = this.search_tools.replace('>' + String(id) + '\n', '');
+         window.open('http://localhost:4201/pages/tools/hmmer?sequence=' + encodeURI(this.search_tools),
+         '_blank');
          */
       } else {
         alert('ERROR: SELECT 1 SEQUENCE');
@@ -392,8 +399,8 @@ export class ProteinListTreeGridComponent implements OnInit {
 
         this.gotoURLSameApp('../../tools/weblogo?sequence=' + encodeURI(string_url));
         /**
-        window.open('http://localhost:4201/pages/tools/weblogo?sequence=' + encodeURI(this.search_tools),
-          '_blank');
+         window.open('http://localhost:4201/pages/tools/weblogo?sequence=' + encodeURI(this.search_tools),
+         '_blank');
          */
       } else {
         alert('ERROR: SELECT AT LEAST 2 SEQUENCES');
@@ -402,8 +409,8 @@ export class ProteinListTreeGridComponent implements OnInit {
       if ((this.search_tools.match(/>/g) || []).length === 1) {
         this.gotoURLSameApp('../../tools/predict?sequence=' + encodeURI(this.search_tools));
         /**
-        window.open('http://localhost:4201/pages/tools/predict?sequence=' + encodeURI(this.search_tools),
-          '_blank');
+         window.open('http://localhost:4201/pages/tools/predict?sequence=' + encodeURI(this.search_tools),
+         '_blank');
          */
       } else {
         alert('ERROR: SELECT 1 SEQUENCE');
@@ -446,16 +453,16 @@ export class ProteinListTreeGridComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.proteinService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.proteinService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-        */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -476,16 +483,16 @@ export class ProteinListTreeGridComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 
   }
 
-  gotoURLSameApp(directory, target= '_blank') {
+  gotoURLSameApp(directory, target = '_blank') {
 
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([directory], { relativeTo: this.route }),
+      this.router.createUrlTree([directory], {relativeTo: this.route}),
     );
 
     window.open(decodeURIComponent(url), target);

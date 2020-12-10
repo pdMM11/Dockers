@@ -1018,7 +1018,7 @@ class PeptideStructureAPIView(generics.ListCreateAPIView):
     queryset = PeptideStructure.objects.all()
     serializer_class = PeptideStructureSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['idpeptide', 'idstructure',
+    filterset_fields = ['idpeptide', 'idprotein','idstructure',
                         'idstructure__id_repository']
     # search_fields = filterset_fields
     search_fields = ['idpeptide__protein__name', 'idpeptide__protein__idtaxonomy__commonname',

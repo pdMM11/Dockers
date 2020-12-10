@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PeptideReferencesService} from '../../../services/peptide-references.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 
 import {
   NbGetters,
@@ -41,10 +41,12 @@ export class PeptideReferencesComponent implements OnInit {
   defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
     'protein', 'virus', 'doi', 'idreferences'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-  headers = {'idpeptide': 'Fusion Peptide ID', 'residues': 'Position', 'sequence': 'Sequence',
+  headers = {
+    'idpeptide': 'Fusion Peptide ID', 'residues': 'Position', 'sequence': 'Sequence',
     'annotation_method': 'Annotation Method', 'protein_name': 'Protein Name',
     'exp_evidence': 'Experimental Evidence', 'protein': 'Protein\' ID', 'virus': 'Virus',
-    'doi': 'DOI', 'idreferences': 'Reference\'s ID'};
+    'doi': 'DOI', 'idreferences': 'Reference\'s ID'
+  };
   current_page = 1;
   count_entries: number;
   n_pags: number;
@@ -318,16 +320,16 @@ export class PeptideReferencesComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.peptidereferencesService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.peptidereferencesService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-        */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -358,7 +360,7 @@ export class PeptideReferencesComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 

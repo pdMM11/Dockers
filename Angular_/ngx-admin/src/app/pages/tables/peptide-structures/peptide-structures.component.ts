@@ -10,7 +10,7 @@ import {
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
 
 
@@ -39,9 +39,11 @@ export class PeptideStructuresComponent implements OnInit {
   defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
     'idpeptide', 'idstructure'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-  headers = {'idpeptide_structure': 'ID', 'exp_method': 'Experimental Method', 'repository': 'Repository',
+  headers = {
+    'idpeptide_structure': 'ID', 'exp_method': 'Experimental Method', 'repository': 'Repository',
     'pdb': 'Repository\'s ID', 'idprotein': 'Fusion Protein\'s ID',
-    'idpeptide': 'Fusion Peptide\'s ID', 'idstructure': 'Structure\'s ID'};
+    'idpeptide': 'Fusion Peptide\'s ID', 'idstructure': 'Structure\'s ID'
+  };
   current_page = 1;
   count_entries: number;
   n_pags: number;
@@ -136,7 +138,7 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   fetchPeptideStructure() {
-    this.peptParam = this.route.snapshot.queryParamMap.get('idpeptide');
+    this.peptParam = this.route.snapshot.queryParamMap.get('idprotein');
     if (this.peptParam !== null) {
       this.search_term = this.peptParam;
     }
@@ -319,16 +321,16 @@ export class PeptideStructuresComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.peptidestructuresService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.peptidestructuresService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-        */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -359,7 +361,7 @@ export class PeptideStructuresComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 

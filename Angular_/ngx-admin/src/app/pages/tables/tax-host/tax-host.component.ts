@@ -10,7 +10,7 @@ import {
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
 
 
@@ -44,10 +44,12 @@ export class TaxHostComponent implements OnInit {
     'species', 'subspecies', 'virus_ncbitax', 'host',
     'host_ncbitax', 'idhost', 'idtaxhost'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-  headers = {'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
+  headers = {
+    'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
     'genre': 'Genus', 'species': 'Species',
     'subspecies': 'Subspecies / Strain', 'virus_ncbitax': 'Virus\' NCBI Tax ID',
-    'host': 'Host', 'host_ncbitax': 'Host\'s NCBI Tax ID', 'idhost': 'Host\'s ID', 'idtaxhost': 'Entry ID'};
+    'host': 'Host', 'host_ncbitax': 'Host\'s NCBI Tax ID', 'idhost': 'Host\'s ID', 'idtaxhost': 'Entry ID'
+  };
   current_page = 1;
   count_entries: number;
   n_pags: number;
@@ -325,16 +327,16 @@ export class TaxHostComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.taxhostService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.taxhostService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-      */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -365,7 +367,7 @@ export class TaxHostComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 

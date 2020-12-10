@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {
   NbGetters, NbSortDirection, NbSortRequest,
   NbTreeGridDataSource, NbTreeGridDataSourceBuilder,
@@ -11,7 +11,7 @@ import {ProteinService} from '../../../services/protein.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {flatMap} from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
 
 interface FusionPeptideInterface {
@@ -221,11 +221,13 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
                 '../protein?idprot=' + String(this.idFP),
               page: 'Fusion Protein',
             },
+            /**
             {
               idfusion_peptides: '', actions:
                 '../peptide-structure?idpeptide=' + String(this.idFP),
               page: 'Structure',
             },
+             */
             {
               idfusion_peptides: '', actions:
                 '../peptide-references?idpeptide=' + String(this.idFP),
@@ -240,7 +242,7 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
         this.n_pags = Math.round(this.count_entries / 10) + 1;
       });
 
-      this.saveDataFile();
+    this.saveDataFile();
 
   }
 
@@ -423,16 +425,16 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
         this.keepData(data_to_print);
 
         /**
-        const data_send = {data: data_print};
-        this.fusionpeptideService.send(data_send).subscribe(
-          (data_) => {
+         const data_send = {data: data_print};
+         this.fusionpeptideService.send(data_send).subscribe(
+         (data_) => {
             alert(data_['response']);
           },
-          (error: HttpErrorResponse) => {
+         (error: HttpErrorResponse) => {
             alert(error.message);
           },
-        );
-        */
+         );
+         */
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -453,16 +455,16 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   keepData(data: string) {
     this.data_print = data;
 
-    const blob = new Blob([this.data_print], { type: 'text/csv' });
+    const blob = new Blob([this.data_print], {type: 'text/csv'});
 
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 
   }
 
-  gotoURLSameApp(directory, target= '_blank') {
+  gotoURLSameApp(directory, target = '_blank') {
 
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([directory], { relativeTo: this.route }),
+      this.router.createUrlTree([directory], {relativeTo: this.route}),
     );
 
     window.open(decodeURIComponent(url), target);
