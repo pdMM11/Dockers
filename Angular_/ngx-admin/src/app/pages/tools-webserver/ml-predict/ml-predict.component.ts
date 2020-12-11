@@ -243,23 +243,27 @@ export class MlPredictComponent implements OnInit {
     } else if (this.query_seq !== null && this.query_seq !== '') {
       sequence = this.query_seq;
     }
-    this.MLService.getWeblogo(sequence, this.window_size.value).subscribe(
-      (data_send) => {
-        // const data_parse = JSON.parse(data_send);
-        // alert(data_parse);
-        // this.save_data(data_parse['data']);
-        this.save_data(data_send);
-        this.current_sequence = sequence;
-        this.graphConserv();
-        this.conserv_card = true;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-        this.save_data({});
-        this.conserv_card = false;
-      });
-    // this.current_sequence = sequence;
-    // alert(JSON.stringify(this.conserv_data));
+    if (sequence !== '') {
+      this.MLService.getWeblogo(sequence, this.window_size.value).subscribe(
+        (data_send) => {
+          // const data_parse = JSON.parse(data_send);
+          // alert(data_parse);
+          // this.save_data(data_parse['data']);
+          this.save_data(data_send);
+          this.current_sequence = sequence;
+          this.graphConserv();
+          this.conserv_card = true;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+          this.save_data({});
+          this.conserv_card = false;
+        });
+      // this.current_sequence = sequence;
+      // alert(JSON.stringify(this.conserv_data));
+    } else {
+      alert('ERROR: SEQUENCE NEEDS TO BE FILLED');
+    }
   }
   save_data(data_send) {
     this.conserv_data = data_send;
