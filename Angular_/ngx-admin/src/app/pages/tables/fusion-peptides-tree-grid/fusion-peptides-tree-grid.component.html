@@ -8,8 +8,8 @@
   <nb-card-body>
 
     <label class="search-label" for="search">Search: </label>
-    <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
-           class="search-input">
+    <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
+           class="search-input" size="medium" shape="rectangle">
     <p></p>
 
     <button nbButton (click)="searchTableResult()">SEARCH</button>
