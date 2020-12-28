@@ -90,7 +90,6 @@ WSGI_APPLICATION = 'vfp_web_server.wsgi.application'
 
 
 DATABASES = {
-
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'viral_fusion_protein',
