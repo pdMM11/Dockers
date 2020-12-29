@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /my_app_dir
 WORKDIR /my_app_dir
 ADD requirements_django.txt /my_app_dir/
-RUN pip install --upgrade pip && pip install setuptools==45.2.0.post20200210 && pip install -r requirements_django.txt
+RUN pip install --upgrade pip && pip install setuptools==45.2.0 && pip install -r requirements_django.txt
 RUN apt-get update && apt-get install -y clustalo
 RUN pip install gunicorn
 # Update the default application repository sources list
