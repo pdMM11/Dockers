@@ -1,4 +1,4 @@
-setuptools < 46
+setuptools==45
 Markupsafe==1.1.1
 bleach==3.2.1
 numpy==1.18.1
