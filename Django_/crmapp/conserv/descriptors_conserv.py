@@ -989,6 +989,9 @@ class Descriptor:
 
 
     def size_families_4_min(self, filename="crmapp/conserv/Weblogos/Seqs_prots.csv"):
+        """
+        Function that retrieves all the families with at least 4 sequences from the dataset present in the "filename" dataset.
+        """
         dataset = pd.read_csv(filename)
         
         dataset['Family'] = dataset['Family'].str.strip()
@@ -1006,6 +1009,9 @@ class Descriptor:
     
     
     def vfp_seqs(self, filename="dataset1_usar.csv", families = "crmapp/conserv/Weblogos/Seqs_prots.csv"):
+        """
+        Function that reads the dataset in "filename" dataset, and preprocess it so to have the Family name in the Meta paramether.
+        """
         colnames=['meta', 'fp'] 
         dataset = pd.read_csv(filename, names=colnames, header=None)
         
@@ -1029,6 +1035,9 @@ class Descriptor:
         return dataset
 
     def weblogo_family(self):
+        """
+        Function that reads all the weblogos from the families retrieved in the size_families_4_min function, and prerocess the weblogo matrix by multiplying each position of bits by the entropy, like described by Crooks et al, 2004.
+        """
         families = self.size_families_4_min()
         
         # print(sorted(families))
@@ -1062,6 +1071,10 @@ class Descriptor:
 
 
     def read_weblogo(self, weblogoDf, fusionpeptide, positions):
+        """
+        Function that provide the conservation score for a given peptide "fusionpeptide" from a weblogo "weblogoDf",
+        restricted to only certain positions "positions" (from max_coluns function).
+        """
         
         best_score = 0.0
         pos = 0
@@ -1090,6 +1103,9 @@ class Descriptor:
     
     
     def max_coluns(self, dataset):
+        """
+        Function that retrives the 20 positions for each symbol in a matrix defined in 'dataset'" paramether.
+        """
         indexes_top = {}
         for i in dataset.columns:
             indexes_top[i] = list(dataset.nlargest(20,i)[i].index)
@@ -1137,7 +1153,13 @@ class Descriptor:
 
 
     def scores_sequence(self, protein, window_size = 15):
-    
+        """
+        Function that retrieves the conservation features of all Weblogos for the all the subpeptides of size "window_size" of "protein" sequence.
+        Inputs:
+        - 'protein': protein sequence
+        - 'window_size': window size of the subpeptides to retrieve the conservation scores
+        Output: A dict with the keys as the positions of the peptide within the protein sequence (e.g '0-15': the first 15 aa) and the value anoter dict with all the families conservation scores
+        """
         # dataset = self.vfp_seqs()
         results_output = {}
         family_weblogo = self.weblogo_family()

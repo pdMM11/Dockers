@@ -149,6 +149,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openResults(val: string, FP: boolean, Prot: boolean, Tax: boolean) {
+    /**
+     Results from the Search; each of the buttons will allow to navigate within the app to the intended results.
+     */
     // let id = 1;
     if (FP) {
       /**
@@ -174,6 +177,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchFusionPeptide(val) {
+    /**
+     Results from the Search against Fusion Peptide table.
+     */
     // let dataSource = [];
     this.fusionpeptideService.getPage(1, '', val).subscribe((data: Array<object>) => {
       this.fp_data = data['results'];
@@ -181,6 +187,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchProtein(val) {
+    /**
+     Results from the Search against Fusion Protein table.
+     */
     // let dataSource = [];
     this.proteinService.getPage(1, '', val).subscribe((data: Array<object>) => {
       this.prot_data = data['results'];
@@ -188,6 +197,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchTaxonomyVirus(val) {
+    /**
+     Results from the Search against Taxonomy Virus table.
+     */
     // let dataSource = [];
     this.taxonomyvirusService.getPage(1, val).subscribe((data: Array<object>) => {
       this.tax_data = data['results'];
@@ -195,6 +207,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openWindow() {
+    /**
+     Open the Results Window.
+     */
     this.windowService.open(
       this.disabledEscTemplate,
       {title: 'Search Results', hasBackdrop: false, closeOnEsc: true},
@@ -202,7 +217,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   gotoURLSameApp(directory, target= '_blank') {
-
+    /**
+     Function to navigate within the app.
+     */
     const url = this.router.serializeUrl(
       this.router.createUrlTree([directory]),
     );

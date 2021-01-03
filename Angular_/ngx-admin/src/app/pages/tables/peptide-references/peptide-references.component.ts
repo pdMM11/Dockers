@@ -40,25 +40,25 @@ export class PeptideReferencesComponent implements OnInit {
   customColumn = 'idpeptide';
   defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
     'protein', 'virus', 'doi', 'idreferences'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idpeptide': 'Fusion Peptide ID', 'residues': 'Position', 'sequence': 'Sequence',
     'annotation_method': 'Annotation Method', 'protein_name': 'Protein Name',
     'exp_evidence': 'Experimental Evidence', 'protein': 'Protein\' ID', 'virus': 'Virus',
-    'doi': 'DOI', 'idreferences': 'Reference\'s ID'
-  };
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
+    'doi': 'DOI', 'idreferences': 'Reference\'s ID',
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
   peptParam: string;
   search_term: string = '29';
   data_aux = [] as any;
   data_all = [] as any;
-  addPeptRef: FormGroup;
-  addRef: FormGroup;
-  putPeptRef: FormGroup;
-  putRef: FormGroup;
-  search_form = new FormControl('');
+  addPeptRef: FormGroup; // Form to POST a data entry (Peptide Reference table)
+  addRef: FormGroup; // Form to POST a data entry (Reference table)
+  putPeptRef: FormGroup; // Form to PUT (update) a data entry (Peptide Reference table)
+  putRef: FormGroup; // Form to PUT (update) a data entry (Peptide Reference table)
+  search_form = new FormControl(''); // Form of the search
   aux_inter: PeptideReferencesInterface = {};
   dataSource: NbTreeGridDataSource<PeptideReferencesInterface>;
 
@@ -73,7 +73,7 @@ export class PeptideReferencesComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<PeptideReferencesInterface>,
               private peptidereferencesService: PeptideReferencesService,
@@ -129,6 +129,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   fetchPeptideReference() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.peptParam = this.route.snapshot.queryParamMap.get('idpeptide');
     if (this.peptParam !== null) {
       this.search_term = this.peptParam;
@@ -176,6 +179,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     this.current_page = 1;
     this.fetchPeptideReference();
   }
@@ -209,6 +215,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -224,6 +233,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   onSubmitPR(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Peptide References).
+     */
     if (!put) {
       if (this.addPeptRef.valid) {
         // this.taxonomyvirusService.add(this.addVirusForm as TaxonomyVirusInterface);
@@ -260,6 +272,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   onSubmitRef(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Reference).
+     */
     if (!put) {
       if (this.addRef.valid) {
         // this.taxonomyvirusService.add(this.addVirusForm as TaxonomyVirusInterface);
@@ -296,6 +311,9 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      customColumn = 'idpeptide';
      defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
@@ -338,26 +356,41 @@ export class PeptideReferencesComponent implements OnInit {
   }
 
   addDataForm_pr() {
+    /**
+     Function to make the Add Form to show up in the page (Peptide References).
+     */
     this.add_form_pr = true;
     this.put_form_pr = false;
   }
 
   putDataForm_pr() {
+    /**
+     Function to make the Update Form to show up in the page (Peptide References).
+     */
     this.put_form_pr = true;
     this.add_form_pr = false;
   }
 
   addDataForm_ref() {
+    /**
+     Function to make the Add Form to show up in the page (References).
+     */
     this.add_form_ref = true;
     this.put_form_ref = false;
   }
 
   putDataForm_ref() {
+    /**
+     Function to make the Update Form to show up in the page (References).
+     */
     this.put_form_ref = true;
     this.add_form_ref = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});

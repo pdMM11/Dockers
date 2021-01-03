@@ -42,14 +42,14 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   customColumn = 'idtaxonomy';
   defaultColumns = ['commonname', 'family', 'genre', 'species',
     'subspecies', 'ncbitax'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
     'genre': 'Genus', 'species': 'Species',
-    'subspecies': 'Subspecies / Strain', 'ncbitax': 'NCBI Tax ID'
-  };
-  current_page = 1;
-  count_entries: number;
+    'subspecies': 'Subspecies / Strain', 'ncbitax': 'NCBI Tax ID',
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
   n_pags: number;
   idTax: string;
   search: boolean;
@@ -57,9 +57,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   data_aux = [] as any;
   data_all = [] as any;
   aux_inter: TaxonomyVirusInterface = {};
-  search_form = new FormControl('');
-  addVirusForm: FormGroup;
-  putVirusForm: FormGroup;
+  search_form = new FormControl(''); // Form of the search
+  addVirusForm: FormGroup; // Form to POST a data entry
+  putVirusForm: FormGroup; // Form to PUT (update) a data entry
   dataSource: NbTreeGridDataSource<TaxonomyVirusInterface>;
 
   sortColumn: string;
@@ -71,7 +71,7 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<TaxonomyVirusInterface>,
               private taxonomyvirusService: TaxonomyVirusService,
@@ -118,6 +118,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   fetchTaxonomy() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.search = false;
     this.idTax = this.route.snapshot.queryParamMap.get('idtax');
     if (this.route.snapshot.queryParamMap.get('search')) {
@@ -217,6 +220,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     if (!this.route.snapshot.queryParamMap.get('search') &&
       !this.route.snapshot.queryParamMap.get('idtax')) {
       this.current_page = 1;
@@ -232,6 +238,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -247,6 +256,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   onSubmit(put: boolean = false) {
+    /**
+     Function to create or update a data entry.
+     */
     if (!put) {
       if (this.addVirusForm.valid) {
         // this.taxonomyvirusService.add(this.addVirusForm as TaxonomyVirusInterface);
@@ -279,6 +291,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      window.open(`${this.API_URL}/taxonomyvirus/save/?search=` +  this.search_form.value,
      '_blank');
@@ -319,16 +334,25 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   addDataForm() {
+    /**
+     Function to make the Add Form to show up in the page.
+     */
     this.add_form = true;
     this.put_form = false;
   }
 
   putDataForm() {
+    /**
+     Function to make the Update Form to show up in the page.
+     */
     this.put_form = true;
     this.add_form = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});
@@ -338,7 +362,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
 
   gotoURLSameApp(directory, target = '_blank') {
-
+    /**
+     Function to navigate within the app.
+     */
     const url = this.router.serializeUrl(
       this.router.createUrlTree([directory], {relativeTo: this.route}),
     );

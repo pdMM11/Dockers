@@ -38,20 +38,20 @@ export class PeptideStructuresComponent implements OnInit {
   customColumn = 'idpeptide_structure';
   defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
     'idpeptide', 'idstructure'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idpeptide_structure': 'ID', 'exp_method': 'Experimental Method', 'repository': 'Repository',
     'pdb': 'Repository\'s ID', 'idprotein': 'Fusion Protein\'s ID',
-    'idpeptide': 'Fusion Peptide\'s ID', 'idstructure': 'Structure\'s ID'
-  };
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
-  search_form = new FormControl('');
-  addPeptStruct: FormGroup;
-  addStruct: FormGroup;
-  putPeptStruct: FormGroup;
-  putStruct: FormGroup;
+    'idpeptide': 'Fusion Peptide\'s ID', 'idstructure': 'Structure\'s ID',
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
+  search_form = new FormControl(''); // Form of the search
+  addPeptStruct: FormGroup; // Form to POST a data entry (Peptide Structure table)
+  addStruct: FormGroup; // Form to POST a data entry (Structure table)
+  putPeptStruct: FormGroup; // Form to PUT (update) a data entry (Peptide Structure table)
+  putStruct: FormGroup; // Form to PUT (update) a data entry (Structure table)
   peptParam: string;
   search_term: string = '4';
   data_aux = [] as any;
@@ -70,7 +70,7 @@ export class PeptideStructuresComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<PeptideStructuresInterface>,
               private peptidestructuresService: PeptideStructuresService,
@@ -138,6 +138,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   fetchPeptideStructure() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.peptParam = this.route.snapshot.queryParamMap.get('idprotein');
     if (this.peptParam !== null) {
       this.search_term = this.peptParam;
@@ -184,6 +187,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     this.current_page = 1;
     this.fetchPeptideStructure();
   }
@@ -217,6 +223,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   onSubmitPS(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Peptide Structure).
+     */
     if (!put) {
       if (this.addPeptStruct.valid) {
         this.peptidestructuresService.add(this.addPeptStruct.value)
@@ -251,6 +260,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   onSubmitStruct(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Structure).
+     */
     if (!put) {
       if (this.addStruct.valid) {
         this.peptidestructuresService.addStruct(this.addStruct.value)
@@ -285,6 +297,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -298,6 +313,9 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      customColumn = 'idpeptide_structure';
      defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
@@ -339,26 +357,41 @@ export class PeptideStructuresComponent implements OnInit {
   }
 
   addDataForm_ps() {
+    /**
+     Function to make the Add Form to show up in the page (Peptide Structure).
+     */
     this.add_form_ps = true;
     this.put_form_ps = false;
   }
 
   putDataForm_ps() {
+    /**
+     Function to make the Update Form to show up in the page (Peptide Structure).
+     */
     this.put_form_ps = true;
     this.add_form_ps = false;
   }
 
   addDataForm_struct() {
+    /**
+     Function to make the Add Form to show up in the page (Structure).
+     */
     this.add_form_struct = true;
     this.put_form_struct = false;
   }
 
   putDataForm_struct() {
+    /**
+     Function to make the Update Form to show up in the page (Structure).
+     */
     this.put_form_struct = true;
     this.add_form_struct = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});

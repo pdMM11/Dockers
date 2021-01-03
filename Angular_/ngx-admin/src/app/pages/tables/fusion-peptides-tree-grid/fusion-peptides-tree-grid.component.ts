@@ -45,15 +45,15 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   customColumn = 'idfusion_peptides';
   defaultColumns = ['residues', 'sequence', 'annotation_method', 'protein_name',
     'exp_evidence', 'protein', 'virus'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idfusion_peptides': 'ID', 'residues': 'Position', 'sequence': 'Sequence',
     'annotation_method': 'Annotation Method', 'protein_name': 'Protein Name',
     'exp_evidence': 'Experimental Evidence', 'protein': 'Protein\' ID', 'virus': 'Virus',
-  };
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
   idFP: string;
   idProt: string;
   search: string = '';
@@ -62,9 +62,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   taxParam: string;
   data_aux = [] as any;
   data_all = [] as any;
-  search_form = new FormControl('');
-  addFPForm: FormGroup;
-  putFPForm: FormGroup;
+  search_form = new FormControl(''); // Form of the search
+  addFPForm: FormGroup; // Form to POST a data entry
+  putFPForm: FormGroup; // Form to PUT (update) a data entry
   aux_inter: FusionPeptideInterface = {};
   dataSource: NbTreeGridDataSource<FusionPeptideInterface>;
   fileUrl;
@@ -78,7 +78,7 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   struct_data = [];
   add_form: boolean = false;
   put_form: boolean = false;
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FusionPeptideInterface>,
               private fusionpeptideService: FusionPeptideService,
@@ -127,7 +127,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   fetchFusionPeptide() {
-
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.protParam = this.route.snapshot.queryParamMap.get('idprot');
     this.taxParam = this.route.snapshot.queryParamMap.get('idtax');
     if (this.route.snapshot.queryParamMap.get('search')) {
@@ -294,6 +296,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     if (!this.route.snapshot.queryParamMap.get('search') && !this.route.snapshot.queryParamMap.get('idprot') &&
       !this.route.snapshot.queryParamMap.get('idtax')) {
       this.current_page = 1;
@@ -305,6 +310,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -322,6 +330,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   onSubmit(put: boolean = false) {
+    /**
+     Function to create or update a data entry.
+     */
     if (!put) {
       if (this.addFPForm.valid) {
         this.fusionpeptideService.add(this.addFPForm.value)
@@ -378,6 +389,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
    */
   // verifies if there is additional data
   fetchData(id_prot: string, idFP: string): any {
+    /**
+     * Function to verify if there are related data in the database.
+     */
     this.prot_data = [];
     this.ref_data = [];
     this.struct_data = [];
@@ -396,6 +410,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      'idfusion_peptides';
      defaultColumns = ['residues', 'sequence', 'annotation_method', 'protein_name',
@@ -443,16 +460,25 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   addDataForm() {
+    /**
+     Function to make the Add Form to show up in the page.
+     */
     this.add_form = true;
     this.put_form = false;
   }
 
   putDataForm() {
+    /**
+     Function to make the Update Form to show up in the page.
+     */
     this.put_form = true;
     this.add_form = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});
@@ -462,7 +488,9 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
 
   gotoURLSameApp(directory, target = '_blank') {
-
+    /**
+     Function to navigate within the app.
+     */
     const url = this.router.serializeUrl(
       this.router.createUrlTree([directory], {relativeTo: this.route}),
     );

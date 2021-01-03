@@ -28,6 +28,10 @@ export class BlastNcbiComponent implements OnInit {
   }
 
   gotoNCBI(): void {
+    /**
+     If there is a valid sequence, this functions opens a new tab to https://blast.ncbi.nlm.nih.gov/Blast.cgi,
+     providing the sequence, database and blast program.
+     */
     if (this.sequence.value !== null && this.sequence.value !== ''
       && this.sequence.value.includes('>')) {
       window.open('https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE=Proteins&QUERY=' + encodeURI(this.sequence.value)

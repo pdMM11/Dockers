@@ -49,7 +49,9 @@ from crmapp.conserv.descriptors_conserv import Descriptor
 
 
 class CustomPagination(PageNumberPagination):
-    # for the views that require the entirety of the data
+    """
+    Pagination method for the views that require the entirety of the data
+    """
     page_size = 0
     page_size_query_param = 'page_size'
     max_page_size = 50000
@@ -68,6 +70,11 @@ class CustomPagination(PageNumberPagination):
 @api_view(["POST"])
 @csrf_exempt
 def weblogo(request):
+    """
+    Clustal Omega multiple alignment function intend for the http://weblogo.threeplusone.com/create.cgi webpage.
+    It receives a POST request, with 'seqs' attribute in its data, containing at least 3 protein sequences in FASTA format.
+    Output is a JSON with that alignment in FASTA format.
+    """
     if request.method == "POST":
         # seqs = unquote(request.GET.get('seq'))
         data = request.data
@@ -80,6 +87,14 @@ def weblogo(request):
 @api_view(["POST"])
 @csrf_exempt
 def weblogologomaker(request):
+    """
+    Function to build Weblogos (either in text format, or in PNG format, using Logomaker package) from protein sequences that are later aligned with Clustal Omega.
+    It receives a POST request, with the following attributes in its data:
+     - 'seqs', containing at least 3 protein sequences in FASTA format.
+     - 'type_output', either 'txt' or 'png'.
+     - 'type_os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
+    Output is a JSON with that weblogo in a txt format or the base-64 string of the PNG output.
+    """
     if request.method == "POST":
         # seqs = unquote(request.GET.get('seq'))
         data = request.data
@@ -242,6 +257,13 @@ def weblogologomaker(request):
 
 
 def weblogo_aux(seqs, type_os = "linux"):
+    """
+    Auxiliar function for the Weblogos functions to perform the Clustal Omega alignment.
+    It receives 2 attributes:
+    - 'seqs', containing at least 3 protein sequences in FASTA format.
+    - 'type_os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
+    This function writes the alignment result into "aligned.fasta" file, but also provides this content as its output.
+    """
     in_file = "unaligned.fasta"
     out_file = "aligned.fasta"
 
@@ -317,6 +339,14 @@ def weblogo_aux(seqs, type_os = "linux"):
 
 
 def iedb(request):
+    """
+    Function that recieve a GET request to perform a request to the IEDB API to perdict the likehood of an epitope within a sequence.
+    Inputs within the request:
+    - 'method': Type of method to obtain the prediction.
+    - 'sequence_text': Protein sequence.
+    - 'window_size': window size.
+    Returns a JSON with te output of the IEDB request.
+    """
     data = {
         'method': unquote(request.GET.get('method')),
         'sequence_text': unquote(request.GET.get('sequence_text')),
@@ -331,7 +361,13 @@ def iedb(request):
 
 
 def clustal(request):  # error no urllib
-
+    """
+    Function to access the EBI Clustal Omega API.
+    Receives a GET request with the following paramethers:
+    - 'email': email of the user
+    - 'seq': protein sequence.
+    Rigth now, this function does not function, since when requests are made using the official API, an urllib error shows up.
+    """
     email = unquote(request.GET.get('email'))
     seqs = unquote(request.GET.get('seq'))
 
@@ -360,6 +396,14 @@ def clustal(request):  # error no urllib
 @api_view(["POST"])
 @csrf_exempt
 def clustal_all(request):
+    """
+    Function that performs a Clustal Omega Alignment to protein sequences, saving into files the alignemnt itself and guide tree information.
+    It receives a POST request with the following paramethers:
+    - 'seqs': at least 3 protein sequences in FASTA format
+    - 'type': type of output: FASTA, CLUSTAL or PHYLIP
+    - 'os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
+    Return a JSON
+    """
     if request.method == "POST":
         # seqs = unquote(request.GET.get('seq'))
         data = request.data
@@ -418,12 +462,25 @@ def clustal_all(request):
 
 
 def send_clustal_tree(request):
+    """
+    Function that, upon recieving a GET request, reads the guide tree information from the last Clustal Alignment.
+    Returns that file's content in a Http Response.
+    """
     file_tree_out = open("tree.dnd", "r")
     data_send = file_tree_out.read()
     return HttpResponse(data_send, content_type="text/plain")
 
 
 def ml_predict(request):
+    """
+    Function that, using ML models trained with ProPythia, predicts the likehood a peptide being a fusion peptide.
+    It receives a GET request, with the following paramethers:
+    - 'seq': protein sequence.
+    - 'window_size': window size
+    - 'gap': gap between windows
+    - 'model': ML model
+    Returns a JSON with the probabilities from all possible peptides
+    """
     seq = unquote(request.GET.get('sequence'))
     try:
         window_size = int(unquote(request.GET.get('window_size')))
@@ -501,6 +558,13 @@ def ml_predict(request):
 @api_view(["POST"])
 @csrf_exempt
 def conservation_features(request):
+    """
+    Function that retrieves the conservation scores of a protein against different taxonomy Family's Weblogos.
+    It receives a POST request, with the following paramethers:
+    - 'seq': protein sequence.
+    - 'window_size': window size
+    Returns a JSON with the conseravtion scores from positions within the sequence.
+    """
     if request.method == "POST":
         data = request.data
         sequence = data['seq']
@@ -559,9 +623,16 @@ def conservation_features(request):
     
 
 class WriteResultsAPIView(APIView):
+    """
+    This method contains function capable to write query / ML results into file.
+    ONLY WORKS LOCALLY.
+    """
     @api_view(["POST"])
     @csrf_exempt
     def write_ml_results(request):
+        """
+        ML results.
+        """
         if request.method == "POST":
             data = request.data
             today = datetime.now()
@@ -576,6 +647,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_fusion_peptide_results(request):
+        """
+        Fusion peptide table query results.
+        """
         if request.method == "POST":
             data = request.data
 
@@ -601,6 +675,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_inhibitor_antibody_results(request):
+        """
+        Inhibitor Antibody table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -632,6 +709,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_peptide_references_results(request):
+        """
+        Fusion peptide references table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -661,6 +741,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_peptide_references_results(request):
+        """
+        Fusion peptide references table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -692,6 +775,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_peptide_structures_results(request):
+        """
+        Fusion peptide structures table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -722,6 +808,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_protein_results(request):
+        """
+        Fusion protein table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -752,6 +841,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_protein_references_results(request):
+        """
+        Fusion protein references table query results.
+        """
         if request.method == "POST":
 
             """
@@ -784,6 +876,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_tax_host_results(request):
+        """
+        Tax Host table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -815,6 +910,9 @@ class WriteResultsAPIView(APIView):
     @api_view(["POST"])
     @csrf_exempt
     def write_taxonomy_virus_results(request):
+        """
+        Taxonomy Virus table query results.
+        """
         if request.method == "POST":
             """
             data = request.data
@@ -849,6 +947,14 @@ class WriteResultsAPIView(APIView):
             # return JsonResponse({'response': "Data successfully saved."}, safe=False)
             return response
         raise Http404
+
+
+"""
+From now on, all the tables are similar, just for different serializers:
+(TableName)APIView is each tables API View, that have its queryset from each model, and on each are defined filterset and search are defoned all the possible attributes to run the search against.
+Each of those methods have 3 functions: get_object (to get object to modify / delete); put (to modify an object) and delete (to delete an object).
+(TableName)APIView_Save are very similar to the first ones, but with CustomPagination, to allow all objects to be in the same page; this will be used to save query results. 
+"""
 
 
 class FusionPeptidesAPIView(generics.ListCreateAPIView):

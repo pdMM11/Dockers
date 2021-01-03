@@ -172,6 +172,11 @@ export class EpitopesComponent implements OnInit {
 
   gotoIEDB(): void {
     /**
+     This function sends a GET request to the backend, which itself sends another to IEDB API, and the this function
+     receives the JSON output, displaying it in Smart Tables (2 tables for the Bepipred methods; 1 table for the rest
+     of the methods).
+     */
+    /**
      if (this.sequence.value !== null && this.sequence.value !== '') {
       const random_id = makeid();
       const cookie = setCookie('iedb_cookie' + random_id,

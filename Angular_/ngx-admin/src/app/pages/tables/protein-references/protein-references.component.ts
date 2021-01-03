@@ -45,20 +45,20 @@ export class ProteinReferencesComponent implements OnInit {
   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit',
     'location_fusogenic', 'sequence_fusogenic', 'uniprotid', 'ncbiid',
     'idtaxonomy', 'virus', 'doi', 'idreferences'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
     'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
     'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
     'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus',
-    'doi': 'DOI', 'idreferences': 'Reference\'s ID'};
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
-  addProtRef: FormGroup;
-  addRef: FormGroup;
+    'doi': 'DOI', 'idreferences': 'Reference\'s ID'}; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
+  addProtRef: FormGroup; // Form to POST a data entry (Protein Reference table)
+  addRef: FormGroup; // Form to POST a data entry (Reference table)
   putProtRef: FormGroup;
   putRef: FormGroup;
-  search_form = new FormControl('');
+  search_form = new FormControl(''); // Form of the search
   protParam: string;
   search_term: string = '49';
   data_aux = [] as any;
@@ -78,7 +78,7 @@ export class ProteinReferencesComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<ProteinReferencesInterface>,
               private proteinreferencesService: ProteinReferencesService,
@@ -134,6 +134,9 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   fetchProteinReference() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.protParam = this.route.snapshot.queryParamMap.get('idprot');
     if (this.protParam !== null) {
       this.search_term = this.protParam;
@@ -210,6 +213,9 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   onSubmitPR(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Protein References).
+     */
     if (!put) {
       if (this.addProtRef.valid) {
         this.proteinreferencesService.add(this.addProtRef.value)
@@ -244,6 +250,9 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   onSubmitRef(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Reference).
+     */
     if (!put) {
       if (this.addRef.valid) {
         this.proteinreferencesService.addRef(this.addRef.value)
@@ -278,11 +287,17 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     this.current_page = 1;
     this.fetchProteinReference();
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -296,6 +311,9 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      customColumn = 'idprotein';
      defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit',
@@ -343,26 +361,41 @@ export class ProteinReferencesComponent implements OnInit {
   }
 
   addDataForm_pr() {
+    /**
+     Function to make the Add Form to show up in the page (Protein References).
+     */
     this.add_form_pr = true;
     this.put_form_pr = false;
   }
 
   putDataForm_pr() {
+    /**
+     Function to make the Update Form to show up in the page (Protein References).
+     */
     this.put_form_pr = true;
     this.add_form_pr = false;
   }
 
   addDataForm_ref() {
+    /**
+     Function to make the Add Form to show up in the page (References).
+     */
     this.add_form_ref = true;
     this.put_form_ref = false;
   }
 
   putDataForm_ref() {
+    /**
+     Function to make the Update Form to show up in the page (References).
+     */
     this.put_form_ref = true;
     this.add_form_ref = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], { type: 'text/csv' });

@@ -43,26 +43,26 @@ export class TaxHostComponent implements OnInit {
   defaultColumns = ['commonname', 'family', 'genre',
     'species', 'subspecies', 'virus_ncbitax', 'host',
     'host_ncbitax', 'idhost', 'idtaxhost'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
     'genre': 'Genus', 'species': 'Species',
     'subspecies': 'Subspecies / Strain', 'virus_ncbitax': 'Virus\' NCBI Tax ID',
-    'host': 'Host', 'host_ncbitax': 'Host\'s NCBI Tax ID', 'idhost': 'Host\'s ID', 'idtaxhost': 'Entry ID'
-  };
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
+    'host': 'Host', 'host_ncbitax': 'Host\'s NCBI Tax ID', 'idhost': 'Host\'s ID', 'idtaxhost': 'Entry ID',
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
 
   taxParam: string;
   search_term: string = '2';
-  search_form = new FormControl('');
+  search_form = new FormControl(''); // Form of the search
   data_aux = [] as any;
   data_all = [] as any;
-  addTaxHostForm: FormGroup;
-  addHostForm: FormGroup;
-  putTaxHostForm: FormGroup;
-  putHostForm: FormGroup;
+  addTaxHostForm: FormGroup; // Form to POST a data entry (TaxHost table)
+  addHostForm: FormGroup; // Form to POST a data entry (Host table)
+  putTaxHostForm: FormGroup; // Form to PUT (update) a data entry (TaxHost table)
+  putHostForm: FormGroup; // Form to PUT (update) a data entry (Host table)
   aux_inter: TaxHostInterface = {};
   dataSource: NbTreeGridDataSource<TaxHostInterface>;
 
@@ -77,7 +77,7 @@ export class TaxHostComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<TaxHostInterface>,
               private taxhostService: TaxHostService,
@@ -140,6 +140,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   fetchTaxHost() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.taxParam = this.route.snapshot.queryParamMap.get('idtax');
     if (this.taxParam !== null) {
       this.search_term = this.taxParam;
@@ -187,6 +190,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     this.current_page = 1;
     this.fetchTaxHost();
   }
@@ -220,6 +226,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   onSubmit(put: boolean = false) {
+    /**
+     Function to create or update a data entry (TaxHost).
+     */
     if (!put) {
       if (this.addTaxHostForm.valid) {
         this.taxhostService.add(this.addTaxHostForm.value)
@@ -254,6 +263,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   onSubmitHost(put: boolean = false) {
+    /**
+     Function to create or update a data entry (Host).
+     */
     if (!put) {
       if (this.addHostForm.valid) {
         this.taxhostService.addHost(this.addHostForm.value)
@@ -288,6 +300,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -301,6 +316,9 @@ export class TaxHostComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      customColumn = 'idtaxonomy';
      defaultColumns = ['commonname', 'family', 'genre',
@@ -345,26 +363,41 @@ export class TaxHostComponent implements OnInit {
   }
 
   addDataForm_th() {
+    /**
+     Function to make the Add Form to show up in the page (TaxHost).
+     */
     this.add_form_th = true;
     this.put_form_th = false;
   }
 
   putDataForm_th() {
+    /**
+     Function to make the Update Form to show up in the page (TaxHost).
+     */
     this.put_form_th = true;
     this.add_form_th = false;
   }
 
   addDataForm_host() {
+    /**
+     Function to make the Add Form to show up in the page (Host).
+     */
     this.add_form_host = true;
     this.put_form_host = false;
   }
 
   putDataForm_host() {
+    /**
+     Function to make the Update Form to show up in the page (Host).
+     */
     this.put_form_host = true;
     this.add_form_host = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});

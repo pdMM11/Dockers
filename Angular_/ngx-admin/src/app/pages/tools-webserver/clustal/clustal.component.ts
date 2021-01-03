@@ -33,7 +33,7 @@ export class ClustalComponent implements OnInit {
     const seqs_id = query_seq_id.split(',');
 
     // let seqs_data = '';
-
+    // this cicle retrieves sequences from the ID's in the URL
     for (let i = 0; i < seqs_id.length; i++) {
       // seqs_data = seqs_data + '>' + seqs_id[i] + '\n';
       this.protein.getPage(1, 'Prot', '', seqs_id[i]).subscribe((data: Array<object>) => {
@@ -50,6 +50,10 @@ export class ClustalComponent implements OnInit {
   }
 
   gotoEBI(): void {
+    /**
+     If there are valid sequences in FASTA format, this functions opens a new tab to
+     https://www.genome.jp/tools-bin/clustalw, providing the sequences and other paramethers necessary to the alignment
+     */
     if (this.sequence.value !== null && this.sequence.value !== ''
       && this.sequence.value.includes('\n') && this.sequence.value.includes('>')) {
       window.open('https://www.genome.jp/tools-bin/clustalw?output=' +
@@ -76,6 +80,10 @@ export class ClustalComponent implements OnInit {
   }
 
   gotoClustal(): void {
+    /**
+     If there are valid sequences in FASTA format, this functions opens 2 new tabs, one with the resul of the
+     Clusltal multiple alignment performed in the bacend, and the other with the guide tree output.
+     */
     let seqSend = '';
     if (this.sequence.value !== null && this.sequence.value !== ''
       && this.sequence.value.includes('\n') && this.sequence.value.includes('>')) {

@@ -120,6 +120,9 @@ export class MlPredictComponent implements OnInit {
   }
 
   gotoML() {
+    /**
+     This function retrieves the probabilities of all possible peptides within the sequence to be a fusion peptide.
+     */
     this.results = [];
     this.pos_prob = [];
     if (this.sequence.value !== null && this.sequence.value !== '') {
@@ -155,6 +158,10 @@ export class MlPredictComponent implements OnInit {
   }
 
   seqColor() {
+    /**
+     This function, from the probabilities of all possible peptides, gets the maximal score for each position,
+     and attributes a color for each symbol. Also completes the link to download the results.
+     */
     let sequence = '';
     if (this.query_seq !== null && this.query_seq !== '') {
       sequence = this.query_seq;
@@ -206,6 +213,9 @@ export class MlPredictComponent implements OnInit {
   }
 
   showTable() {
+    /**
+     This function allow to show / hide the table of the ML results.
+     */
     if (this.table_bool) {
       this.table_bool = false;
     } else {
@@ -214,6 +224,9 @@ export class MlPredictComponent implements OnInit {
   }
 
   writeFile() {
+    /**
+     This function writes the content to the ML results into the Download link.
+     */
     // const currentDate = new Date().toLocaleString();
     let text_file = 'Results Fusion Peptide Prediction\n\n'
       + 'Type of Model: ' + this.option_model + '\n'
@@ -236,6 +249,9 @@ export class MlPredictComponent implements OnInit {
       */
   }
   getConserv() {
+    /**
+     This function gets all the conservation scores for each position of the sequence.
+     */
     this.current_sequence = null;
     let sequence = '';
     if (this.sequence.value !== null && this.sequence.value !== '') {
@@ -269,6 +285,10 @@ export class MlPredictComponent implements OnInit {
     this.conserv_data = data_send;
   }
   graphConserv(new_seq: boolean = true) {
+    /**
+     This function attributes an color for each position of the sequence, regarding conservation score of
+     the selected selected family.
+     */
     if (new_seq) {
       this.print_conserv = [];
       for (let i = 0; i < this.current_sequence.length; i++) {

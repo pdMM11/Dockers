@@ -33,22 +33,22 @@ export class InhibitorantibodyComponent implements OnInit {
 
   customColumn = 'idsubstance';
   defaultColumns = ['type', 'repository', 'id_repository', 'idprotein'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idsubstance': 'ID', 'type': 'Type', 'repository': 'Repository',
-    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID'
-  };
-  current_page = 1;
-  count_entries: number;
-  n_pags: number;
+    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID',
+  }; // names to be shown in the headers
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
 
   protParam: string;
   search_term: string = '2';
-  search_form = new FormControl('');
+  search_form = new FormControl(''); // Form of the search
   data_aux = [] as any;
   data_all = [] as any;
-  addInhibForm: FormGroup;
-  putInhibForm: FormGroup;
+  addInhibForm: FormGroup; // Form to POST a data entry
+  putInhibForm: FormGroup; // Form to PUT (update) a data entry
   aux_inter: InhibitorantibodyInterface = {};
   dataSource: NbTreeGridDataSource<InhibitorantibodyInterface>;
 
@@ -61,7 +61,7 @@ export class InhibitorantibodyComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<InhibitorantibodyInterface>,
               private inhibService: InhibitorantibodyService,
@@ -115,6 +115,9 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   fetchInhib() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.protParam = this.route.snapshot.queryParamMap.get('idprot');
     if (this.protParam !== null) {
       this.search_term = this.protParam;
@@ -163,6 +166,9 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     this.current_page = 1;
     this.fetchInhib();
   }
@@ -196,6 +202,9 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   onSubmit(put: boolean = false) {
+    /**
+     Function to create or update a data entry.
+     */
     if (!put) {
       if (this.addInhibForm.valid) {
         this.inhibService.add(this.addInhibForm.value)
@@ -230,6 +239,9 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -243,6 +255,9 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   saveDataFile() {
+    /**
+     Function to retrieve all the query results and save it into file.
+     */
     /**
      customColumn = 'idsubstance';
      defaultColumns = ['type', 'repository', 'id_repository', 'idprotein'];
@@ -283,17 +298,26 @@ export class InhibitorantibodyComponent implements OnInit {
   }
 
   addDataForm() {
+    /**
+     Function to make the Add Form to show up in the page.
+     */
     this.add_form = true;
     this.put_form = false;
   }
 
   putDataForm() {
+    /**
+     Function to make the Update Form to show up in the page.
+     */
     this.put_form = true;
     this.add_form = false;
   }
 
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});

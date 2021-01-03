@@ -74,6 +74,10 @@ export class WeblogoComponent implements OnInit {
   }
 
   gotoWebLogo(image: boolean = true): void {
+    /**
+     This function sends valid protein sequences in FASTA format into a multiple alignment in the backend, and then
+     send those results to http://weblogo.threeplusone.com/create.cgi to create WebLogos.
+     */
     if (this.sequence.value !== null && this.sequence.value !== '' && this.sequence.value.includes('\n')) {
       this.weblogo.send(encodeURI(this.sequence.value)).subscribe(
         (data_send) => {
@@ -158,6 +162,11 @@ export class WeblogoComponent implements OnInit {
   }
 
   getImageFromService() {
+
+    /**
+     This function sends valid protein sequences in FASTA format to the backend, and it returns the base-64 string
+     of the Weblogo image.
+     */
     this.isImageLoading = true;
 
     if ((this.query_seq.match(/>/g) || []).length > 2)  {
@@ -225,15 +234,16 @@ export class WeblogoComponent implements OnInit {
   transform() {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(this.data_image);
   }
-
-
   saveImage(data: any) {
     this.data_image = data;
     this.transform();
   }
 
-
   downloadWeblogoFile() {
+    /**
+     This function sends valid protein sequences in FASTA format to the backend, and it returns the text matrix
+     of the Weblogo, which it will appear in a new tab.
+     */
     if ((this.query_seq.match(/>/g) || []).length > 2)  {
       this.isImageLoading = true;
       this.weblogo.getImage(this.query_seq, 'txt').subscribe(data => {

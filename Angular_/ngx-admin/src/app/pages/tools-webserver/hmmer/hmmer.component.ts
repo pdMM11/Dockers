@@ -20,6 +20,10 @@ export class HmmerComponent implements OnInit {
   }
 
   gotoEBI(): void {
+    /**
+     If there is a valid sequence, this functions opens a new tab to https://www.ebi.ac.uk/Tools/hmmer/search/phmmer,
+     providing the sequence and database.
+     */
     if (this.sequence.value !== null && this.sequence.value !== '') {
       window.open('https://www.ebi.ac.uk/Tools/hmmer/search/phmmer?seq=' + encodeURI(this.sequence.value)
         + '&seqdb=' + this.selectedItem, '_blank');

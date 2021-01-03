@@ -3,6 +3,12 @@ from django.db import connection
 
 from .models import *
 
+"""
+All the methods allow to serailize the results from the models. Each model has its own serilizer. 
+Some of the methods have some extra attributes declared from the models' foreign keys.
+All the methods contain "create" functions, that will allow to create new objects with the smallest PK possible.
+"""
+
 class FusionPeptidesSerializer(serializers.ModelSerializer):
     protein_name = serializers.CharField(source='protein.name', allow_blank=True, allow_null=True, required=False)
     virus = serializers.CharField(source='protein.idtaxonomy.commonname', allow_blank=True, allow_null=True, required=False)

@@ -46,18 +46,17 @@ export class ProteinListTreeGridComponent implements OnInit {
   customColumn = 'idprotein';
   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
     'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
     'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
     'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
-    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus'
-  };
+    'uniprotid': 'UniProt ID', 'ncbiid': 'NCBI Protein ID', 'idtaxonomy': 'Taxonomy ID', 'virus': 'Virus',
+  }; // names to be shown in the headers
 
-  current_page = 1;
-
-  count_entries: number;
-  n_pags: number;
+  current_page = 1; // page of the table
+  count_entries: number; // entries in the query
+  n_pags: number; // total of pages
 
   search: string = '';
   search_term: string;
@@ -65,9 +64,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   data_all = [] as any;
   idTax: string;
   idProt: string;
-  addProteinForm: FormGroup;
-  putProteinForm: FormGroup;
-  search_form = new FormControl('');
+  addProteinForm: FormGroup; // Form to POST a data entry
+  putProteinForm: FormGroup; // Form to PUT (update) a data entry
+  search_form = new FormControl(''); // Form of the search
 
   aux_inter: ProteinInterface = {};
   dataSource: NbTreeGridDataSource<ProteinInterface>;
@@ -84,7 +83,7 @@ export class ProteinListTreeGridComponent implements OnInit {
   fileUrl;
   data_print;
 
-  API_URL = '';
+  API_URL = ''; // name of the API domain
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<ProteinInterface>,
               private proteinService: ProteinService,
@@ -140,6 +139,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   fetchProtein() {
+    /**
+     Function to retrieve the query results, given the search term, current page and query params from the URL
+     */
     this.protParam = this.route.snapshot.queryParamMap.get('idprot');
     this.taxParam = this.route.snapshot.queryParamMap.get('idtax');
     if (this.route.snapshot.queryParamMap.get('search')) {
@@ -256,6 +258,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   searchTableResult() {
+    /**
+     Function to perform search of the data.
+     */
     if (!this.route.snapshot.queryParamMap.get('search') && !this.route.snapshot.queryParamMap.get('idprot') &&
       !this.route.snapshot.queryParamMap.get('idtax')) {
       this.current_page = 1;
@@ -267,6 +272,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   goToUrl(newUrl, add = false): void {
+    /**
+     Function to open a new tab with a given URl.
+     */
     if (add === false) {
       if (newUrl !== null) {
         window.open(newUrl, '_blank');
@@ -280,6 +288,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   onSubmit(put: boolean = false) {
+    /**
+     Function to create or update a data entry.
+     */
     if (!put) {
       if (this.addProteinForm.valid) {
         // alert(JSON.stringify(this.addProteinForm.value));
@@ -328,6 +339,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   goToTools(type: string) {
+    /**
+     Function to access the tools present in the webserver upon selecting sequences within the table.
+     */
     if (type === 'BLAST') {
       if ((this.search_tools.match(/>/g) || []).length > 0) {
         this.gotoURLSameApp('../../blast?sequence=' + encodeURI(this.search_tools));
@@ -424,6 +438,9 @@ export class ProteinListTreeGridComponent implements OnInit {
 
   saveDataFile() {
     /**
+     Function to retrieve all the query results and save it into file.
+     */
+    /**
      customColumn = 'idprotein';
      defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
      'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
@@ -471,16 +488,25 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   addDataForm() {
+    /**
+     Function to make the Add Form to show up in the page.
+     */
     this.add_form = true;
     this.put_form = false;
   }
 
   putDataForm() {
+    /**
+     Function to make the Update Form to show up in the page.
+     */
     this.put_form = true;
     this.add_form = false;
   }
 
   keepData(data: string) {
+    /**
+     Function to create a link to download the data file from "Download Results" link.
+     */
     this.data_print = data;
 
     const blob = new Blob([this.data_print], {type: 'text/csv'});
@@ -490,7 +516,9 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
 
   gotoURLSameApp(directory, target = '_blank') {
-
+    /**
+     Function to navigate within the app.
+     */
     const url = this.router.serializeUrl(
       this.router.createUrlTree([directory], {relativeTo: this.route}),
     );
