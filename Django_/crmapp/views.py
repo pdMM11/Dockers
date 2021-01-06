@@ -340,7 +340,7 @@ def weblogo_aux(seqs, type_os = "linux"):
 
 def iedb(request):
     """
-    Function that recieve a GET request to perform a request to the IEDB API to perdict the likehood of an epitope within a sequence.
+    Function that recieve a GET request to perform a request to the IEDB API to predict the likelyhood of an epitope within a sequence.
     Inputs within the request:
     - 'method': Type of method to obtain the prediction.
     - 'sequence_text': Protein sequence.
@@ -366,7 +366,7 @@ def clustal(request):  # error no urllib
     Receives a GET request with the following paramethers:
     - 'email': email of the user
     - 'seq': protein sequence.
-    Rigth now, this function does not function, since when requests are made using the official API, an urllib error shows up.
+    Right now, this function does not function, since when requests are made using the official API, an urllib error shows up.
     """
     email = unquote(request.GET.get('email'))
     seqs = unquote(request.GET.get('seq'))
@@ -463,7 +463,7 @@ def clustal_all(request):
 
 def send_clustal_tree(request):
     """
-    Function that, upon recieving a GET request, reads the guide tree information from the last Clustal Alignment.
+    Function that, upon receiving a GET request, reads the guide tree information from the last Clustal Alignment.
     Returns that file's content in a Http Response.
     """
     file_tree_out = open("tree.dnd", "r")
@@ -473,8 +473,8 @@ def send_clustal_tree(request):
 
 def ml_predict(request):
     """
-    Function that, using ML models trained with ProPythia, predicts the likehood a peptide being a fusion peptide.
-    It receives a GET request, with the following paramethers:
+    Function that, using ML models trained with ProPythia, predicts the likelyhood a peptide being a fusion peptide.
+    It receives a GET request, with the following parameters:
     - 'seq': protein sequence.
     - 'window_size': window size
     - 'gap': gap between windows
@@ -563,7 +563,7 @@ def conservation_features(request):
     It receives a POST request, with the following paramethers:
     - 'seq': protein sequence.
     - 'window_size': window size
-    Returns a JSON with the conseravtion scores from positions within the sequence.
+    Returns a JSON with the conservation scores from positions within the sequence.
     """
     if request.method == "POST":
         data = request.data
