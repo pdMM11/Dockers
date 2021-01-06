@@ -402,7 +402,7 @@ def clustal_all(request):
     - 'seqs': at least 3 protein sequences in FASTA format
     - 'type': type of output: FASTA, CLUSTAL or PHYLIP
     - 'os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
-    Return a JSON
+    Return a JSON with the output of the CLustal alignment as text.
     """
     if request.method == "POST":
         # seqs = unquote(request.GET.get('seq'))
