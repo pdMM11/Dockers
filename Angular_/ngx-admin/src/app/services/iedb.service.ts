@@ -18,6 +18,10 @@ export class IedbService {
   }
 
   send(method: string, sequence_text: string, window_size= 9) {
+    /**
+     GET request to the backend to retrieve an epitope prediction by sending an request to the IEDB API
+     (http://tools-cluster-interface.iedb.org/tools_api/bcell/)
+     */
     // this.data = { method: method, sequence_text: sequence_text, window_size: window_size};
     // const dataString = 'method=' + method + '&sequence_text=' +  sequence_text + '&window_size=' + window_size;
     this.httpOptions = {

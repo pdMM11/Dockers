@@ -340,7 +340,7 @@ def weblogo_aux(seqs, type_os = "linux"):
 
 def iedb(request):
     """
-    Function that recieve a GET request to perform a request to the IEDB API to predict the likelyhood of an epitope within a sequence.
+    Function that receive a GET request to perform a request to the IEDB API to predict the likelihood of an epitope within a sequence.
     Inputs within the request:
     - 'method': Type of method to obtain the prediction.
     - 'sequence_text': Protein sequence.
@@ -473,7 +473,7 @@ def send_clustal_tree(request):
 
 def ml_predict(request):
     """
-    Function that, using ML models trained with ProPythia, predicts the likelyhood a peptide being a fusion peptide.
+    Function that, using ML models trained with ProPythia, predicts the likelihood a peptide being a fusion peptide.
     It receives a GET request, with the following parameters:
     - 'seq': protein sequence.
     - 'window_size': window size

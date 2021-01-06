@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {EnvService} from './env.service';
 import {Observable} from 'rxjs';
 
-export interface dataseqs{
+export interface DataSeqs {
   seqs?: string;
   output?: string;
 }
@@ -15,7 +15,7 @@ export interface dataseqs{
 export class WeblogoService {
   API_URL = '';
   httpOptions = {};
-  data: dataseqs = {};
+  data: DataSeqs = {};
 
   constructor(private httpClient: HttpClient,
               private env: EnvService) {
@@ -23,6 +23,10 @@ export class WeblogoService {
   }
 
   send(seqsSend: string) {
+    /**
+     POST request to perform multiple alignment of the sequences to later send to the
+     http://weblogo.threeplusone.com/create.cgi.
+     */
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -32,6 +36,10 @@ export class WeblogoService {
     return this.httpClient.post<any>(`${this.API_URL}/weblogoclustal/`, this.data, this.httpOptions);
   }
   getImage(seqsSend: string, output: string) { // : Observable<Blob>
+    /**
+     POST request to build Weblogos in the backend, using the sequences defined in "seqsSend"; the output will be
+     either "png", which will retrieve a base-64 string of the generated image, or "txt" for the text output.
+     */
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
