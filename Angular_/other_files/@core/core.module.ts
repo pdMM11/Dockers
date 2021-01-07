@@ -12,32 +12,29 @@ import {
   StateService,
 } from './utils';
 import { UserData } from './data/users';
-// import { ElectricityData } from './data/electricity';
+import { ElectricityData } from './data/electricity';
 import { SmartTableData } from './data/smart-table';
 import { UserActivityData } from './data/user-activity';
-
-// import { OrdersChartData } from './data/orders-chart';
-// import { ProfitChartData } from './data/profit-chart';
-// import { TrafficListData } from './data/traffic-list';
-// import { EarningData } from './data/earning';
-// import { OrdersProfitChartData } from './data/orders-profit-chart';
-// import { TrafficBarData } from './data/traffic-bar';
-// import { ProfitBarAnimationChartData } from './data/profit-bar-animation-chart';
-// import { TemperatureHumidityData } from './data/temperature-humidity';
-// import { SolarData } from './data/solar';
-// import { TrafficChartData } from './data/traffic-chart';
-// import { StatsBarData } from './data/stats-bar';
-// import { CountryOrderData } from './data/country-order';
-// import { StatsProgressBarData } from './data/stats-progress-bar';
+import { OrdersChartData } from './data/orders-chart';
+import { ProfitChartData } from './data/profit-chart';
+import { TrafficListData } from './data/traffic-list';
+import { EarningData } from './data/earning';
+import { OrdersProfitChartData } from './data/orders-profit-chart';
+import { TrafficBarData } from './data/traffic-bar';
+import { ProfitBarAnimationChartData } from './data/profit-bar-animation-chart';
+import { TemperatureHumidityData } from './data/temperature-humidity';
+import { SolarData } from './data/solar';
+import { TrafficChartData } from './data/traffic-chart';
+import { StatsBarData } from './data/stats-bar';
+import { CountryOrderData } from './data/country-order';
+import { StatsProgressBarData } from './data/stats-progress-bar';
 import { VisitorsAnalyticsData } from './data/visitors-analytics';
-// import { SecurityCamerasData } from './data/security-cameras';
+import { SecurityCamerasData } from './data/security-cameras';
 
 import { UserService } from './mock/users.service';
-import { SmartTableService } from './mock/smart-table.service';
-import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
-import { UserActivityService } from './mock/user-activity.service';
-/**
 import { ElectricityService } from './mock/electricity.service';
+import { SmartTableService } from './mock/smart-table.service';
+import { UserActivityService } from './mock/user-activity.service';
 import { OrdersChartService } from './mock/orders-chart.service';
 import { ProfitChartService } from './mock/profit-chart.service';
 import { TrafficListService } from './mock/traffic-list.service';
@@ -51,11 +48,9 @@ import { TrafficChartService } from './mock/traffic-chart.service';
 import { StatsBarService } from './mock/stats-bar.service';
 import { CountryOrderService } from './mock/country-order.service';
 import { StatsProgressBarService } from './mock/stats-progress-bar.service';
-
+import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
- */
 import { MockDataModule } from './mock/mock-data.module';
-
 
 const socialLinks = [
   {
@@ -77,12 +72,9 @@ const socialLinks = [
 
 const DATA_SERVICES = [
   { provide: UserData, useClass: UserService },
+  { provide: ElectricityData, useClass: ElectricityService },
   { provide: SmartTableData, useClass: SmartTableService },
   { provide: UserActivityData, useClass: UserActivityService },
-  { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
-  /**
-  { provide: ElectricityData, useClass: ElectricityService },
-
   { provide: OrdersChartData, useClass: OrdersChartService },
   { provide: ProfitChartData, useClass: ProfitChartService },
   { provide: TrafficListData, useClass: TrafficListService },
@@ -96,8 +88,8 @@ const DATA_SERVICES = [
   { provide: StatsBarData, useClass: StatsBarService },
   { provide: CountryOrderData, useClass: CountryOrderService },
   { provide: StatsProgressBarData, useClass: StatsProgressBarService },
+  { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
-   */
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

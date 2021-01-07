@@ -2,13 +2,9 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserService } from './users.service';
-
+import { ElectricityService } from './electricity.service';
 import { SmartTableService } from './smart-table.service';
 import { UserActivityService } from './user-activity.service';
-import { VisitorsAnalyticsService } from './visitors-analytics.service';
-
-/**
-import { ElectricityService } from './electricity.service';
 import { OrdersChartService } from './orders-chart.service';
 import { ProfitChartService } from './profit-chart.service';
 import { TrafficListService } from './traffic-list.service';
@@ -23,17 +19,14 @@ import { TrafficChartService } from './traffic-chart.service';
 import { StatsBarService } from './stats-bar.service';
 import { CountryOrderService } from './country-order.service';
 import { StatsProgressBarService } from './stats-progress-bar.service';
-
+import { VisitorsAnalyticsService } from './visitors-analytics.service';
 import { SecurityCamerasService } from './security-cameras.service';
-*/
+
 const SERVICES = [
   UserService,
+  ElectricityService,
   SmartTableService,
   UserActivityService,
-  VisitorsAnalyticsService,
-  /**
-  ElectricityService,
-
   OrdersChartService,
   ProfitChartService,
   TrafficListService,
@@ -48,8 +41,8 @@ const SERVICES = [
   StatsBarService,
   CountryOrderService,
   StatsProgressBarService,
+  VisitorsAnalyticsService,
   SecurityCamerasService,
-   */
 ];
 
 @NgModule({
