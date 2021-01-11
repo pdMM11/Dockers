@@ -1,8 +1,9 @@
 <nb-card>
   <nb-card-body>
     <p><b>NCBI BLASTP</b></p>
-    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
-                        placeholder="Sequence in FASTA format"></textarea>
+    SEQUENCE:
+    <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
+                        placeholder="Sequence in FASTA format" style="width:90%"></textarea>
     <p></p>
     DATABASE:
     <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
