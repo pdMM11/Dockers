@@ -3,7 +3,8 @@ ENV MYSQL_ROOT_PASSWORD admin
 ENV MYSQL_DATABASE viral_fusion_protein
 ENV MYSQL_USER root_docker
 ENV MYSQL_PASSWORD admin
-ADD Dumps/Dump20200722.sql docker-entrypoint-initdb.d
+# ADD Dumps/Dump20200722.sql docker-entrypoint-initdb.d
+ADD Dumps/Dump20210119.sql docker-entrypoint-initdb.d
 
 EXPOSE 3306
 
