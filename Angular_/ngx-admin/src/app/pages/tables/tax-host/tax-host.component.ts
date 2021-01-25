@@ -38,11 +38,16 @@ interface TaxHostInterface {
 
 
 export class TaxHostComponent implements OnInit {
-
-  customColumn = 'idtaxonomy';
-  defaultColumns = ['commonname', 'family', 'genre',
+  /**
+   customColumn = 'idtaxonomy';
+   defaultColumns = ['commonname', 'family', 'genre',
+   'species', 'subspecies', 'virus_ncbitax', 'host',
+   'host_ncbitax', 'idhost', 'idtaxhost'];
+   */
+  customColumn = 'commonname';
+  defaultColumns = ['family', 'genre',
     'species', 'subspecies', 'virus_ncbitax', 'host',
-    'host_ncbitax', 'idhost', 'idtaxhost'];
+    'host_ncbitax'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',

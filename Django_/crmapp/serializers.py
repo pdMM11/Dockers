@@ -35,7 +35,7 @@ WHERE t2.idFusion_Peptides IS NULL;
 
 
 class InhibitorAntibodySerializer(serializers.ModelSerializer):
-    protein_name = serializers.CharField(source='protein.name', allow_blank=True, allow_null=True, required=False)
+    protein_name = serializers.CharField(source='idprotein.name', allow_blank=True, allow_null=True, required=False)
     virus = serializers.CharField(source='protein.idtaxonomy.commonname', allow_blank=True, allow_null=True, required=False)
     class Meta:
         model = InhibitorAntibody

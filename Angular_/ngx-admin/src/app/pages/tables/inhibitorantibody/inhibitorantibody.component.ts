@@ -19,6 +19,7 @@ interface InhibitorantibodyInterface {
   repository?: string;
   id_repository?: string;
   idprotein?: string;
+  protein_name?: string;
   children?: InhibitorantibodyInterface[];
   expanded?: boolean;
 }
@@ -30,13 +31,16 @@ interface InhibitorantibodyInterface {
   styleUrls: ['./inhibitorantibody.component.scss'],
 })
 export class InhibitorantibodyComponent implements OnInit {
-
+  /**
   customColumn = 'idsubstance';
   defaultColumns = ['type', 'repository', 'id_repository', 'idprotein'];
+   */
+  customColumn = 'type';
+  defaultColumns = ['repository', 'id_repository', 'protein_name'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idsubstance': 'ID', 'type': 'Type', 'repository': 'Repository',
-    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID',
+    'id_repository': 'ID in Repository', 'idprotein': 'Protein\'s ID', 'protein_name': 'Protein Name',
   }; // names to be shown in the headers
   current_page = 1; // page of the table
   count_entries: number; // entries in the query

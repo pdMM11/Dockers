@@ -35,9 +35,13 @@ interface PeptideStructuresInterface {
 
 export class PeptideStructuresComponent implements OnInit {
 
-  customColumn = 'idpeptide_structure';
-  defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
-    'idpeptide', 'idstructure'];
+  /**
+   customColumn = 'idpeptide_structure';
+   defaultColumns = ['exp_method', 'repository', 'pdb', 'idprotein',
+   'idpeptide', 'idstructure'];
+   */
+  customColumn = 'exp_method';
+  defaultColumns = ['repository', 'pdb'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idpeptide_structure': 'ID', 'exp_method': 'Experimental Method', 'repository': 'Repository',

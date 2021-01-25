@@ -10,7 +10,7 @@
 
     <label class="search-label" for="search">Search: </label>
     <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
-           class="search-input">
+           class="search-input shape-rectangle size-medium" size="medium" shape="rectangle">
     <p></p>
     <button nbButton (click)="searchTableResult()">SEARCH</button>
     <p></p>

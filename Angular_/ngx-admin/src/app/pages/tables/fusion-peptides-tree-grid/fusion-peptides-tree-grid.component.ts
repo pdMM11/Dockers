@@ -42,9 +42,13 @@ interface ChildrenFP {
   styleUrls: ['./fusion-peptides-tree-grid.component.scss'],
 })
 export class FusionPeptidesTreeGridComponent implements OnInit {
-  customColumn = 'idfusion_peptides';
-  defaultColumns = ['residues', 'sequence', 'annotation_method', 'protein_name',
-    'exp_evidence', 'protein', 'virus'];
+  // customColumn = 'idfusion_peptides';
+  customColumn = 'residues';
+  /**
+   defaultColumns = ['sequence', 'annotation_method', 'protein_name',
+   'exp_evidence', 'protein', 'virus'];
+   */
+  defaultColumns = ['sequence', 'annotation_method', 'protein_name', 'exp_evidence'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idfusion_peptides': 'ID', 'residues': 'Position', 'sequence': 'Sequence',

@@ -38,9 +38,13 @@ interface ChildrenFP {
   styleUrls: ['./taxonomy-virus-list-tree-grid.component.scss'],
 })
 export class TaxonomyVirusListTreeGridComponent implements OnInit {
-
-  customColumn = 'idtaxonomy';
-  defaultColumns = ['commonname', 'family', 'genre', 'species',
+  /**
+   customColumn = 'idtaxonomy';
+   defaultColumns = ['commonname', 'family', 'genre', 'species',
+   'subspecies', 'ncbitax'];
+   */
+  customColumn = 'commonname';
+  defaultColumns = ['family', 'genre', 'species',
     'subspecies', 'ncbitax'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {

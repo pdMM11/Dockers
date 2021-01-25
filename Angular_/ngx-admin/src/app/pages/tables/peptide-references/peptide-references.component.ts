@@ -36,10 +36,13 @@ interface PeptideReferencesInterface {
 })
 
 export class PeptideReferencesComponent implements OnInit {
-
-  customColumn = 'idpeptide';
-  defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
-    'protein', 'virus', 'doi', 'idreferences'];
+  /**
+   customColumn = 'idpeptide';
+   defaultColumns = ['residues', 'sequence', 'annotation_method', 'exp_evidence',
+   'protein', 'virus', 'doi', 'idreferences'];
+   */
+  customColumn = 'residues';
+  defaultColumns = ['sequence', 'annotation_method', 'exp_evidence', 'doi'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idpeptide': 'Fusion Peptide ID', 'residues': 'Position', 'sequence': 'Sequence',

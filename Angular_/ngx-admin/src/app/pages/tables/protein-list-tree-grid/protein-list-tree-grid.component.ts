@@ -43,9 +43,14 @@ interface ChildrenFP {
 })
 export class ProteinListTreeGridComponent implements OnInit {
 
-  customColumn = 'idprotein';
-  defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
-    'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
+  /**
+   customColumn = 'idprotein';
+   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
+   'sequence_fusogenic', 'uniprotid', 'ncbiid', 'idtaxonomy', 'virus'];
+   */
+  customColumn = 'name';
+  defaultColumns = ['class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
+    'sequence_fusogenic', 'uniprotid', 'ncbiid', 'virus'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = {
     'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
