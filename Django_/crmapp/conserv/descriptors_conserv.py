@@ -1070,12 +1070,39 @@ class Descriptor:
         return family_weblogo
 
 
-    def read_weblogo(self, weblogoDf, fusionpeptide, positions):
+    def read_weblogo(self, weblogoDf, fusionpeptide, positions, column):
         """
         Function that provide the conservation score for a given peptide "fusionpeptide" from a weblogo "weblogoDf",
-        restricted to only certain positions "positions" (from max_coluns function).
+        restricted to only certain positions "positions" (from max_coluns function). The column parameter contains the dataset's columns names.
         """
-        
+
+        best_score = 0.0
+        pos = 0
+
+        tam_check = len(fusionpeptide) / 5
+
+        for i in positions:
+
+            if i + len(fusionpeptide) + 1 >= weblogoDf.shape[0]:
+                pass
+            else:
+                current_score = 0.0
+                for j in range(len(fusionpeptide)):
+                    current_score += weblogoDf[i + j, column[fusionpeptide[j]]]
+
+                    if (j - i) > tam_check and current_score == 0.0:
+                        break
+                    else:
+                        if current_score + np.log2(20) * (len(fusionpeptide) - j) < best_score:
+                            break
+
+                if current_score > best_score:
+                    best_score = current_score
+                    pos = i
+
+        return best_score / len(fusionpeptide)
+
+        """
         best_score = 0.0
         pos = 0
         
@@ -1100,6 +1127,7 @@ class Descriptor:
                     pos = i
     
         return best_score / len(fusionpeptide)
+        """
     
     
     def max_coluns(self, dataset):
@@ -1160,6 +1188,50 @@ class Descriptor:
         - 'window_size': window size of the subpeptides to retrieve the conservation scores
         Output: A dict with the keys as the positions of the peptide within the protein sequence (e.g '0-15': the first 15 aa) and the value anoter dict with all the families conservation scores
         """
+        results_output = {}
+        family_weblogo = self.weblogo_family()
+        family_column_max_index = {}
+        family_consensus = {}
+
+        family_numpy = {}
+        column = []
+
+        for i in family_weblogo.keys():
+            family_column_max_index[i] = self.max_coluns(family_weblogo[i])
+
+        for i in family_weblogo.keys():
+            family_numpy[i] = family_weblogo[i].to_numpy()
+
+            if column == []:
+                column = dict(zip(family_weblogo[i].columns,
+                                  list(range(0, len(family_weblogo[i].columns)))))
+
+        for i in range(len(protein) - window_size):
+            pos_end = i + window_size
+            sequence = protein[i:pos_end]
+            dict_seq = {}
+            # sequence=row['fp']
+
+            for k in family_weblogo.keys():
+                current_family = family_column_max_index[k]
+
+                pos_analysis = []
+
+                for j in range(0, len(sequence)):
+                    if j == 0:
+                        pos_analysis = current_family[sequence[j]]
+                    else:
+                        pos_temp = list(np.array(current_family[sequence[j]]) - j)
+                        pos_temp = np.array(pos_temp)
+                        pos_temp = pos_temp[pos_temp >= 0]
+                        pos_analysis = list(sorted(pos_analysis + list(set(pos_temp) - set(pos_analysis))))
+
+                dict_seq[k] = self.read_weblogo(family_numpy[k], sequence,
+                                                pos_analysis, column)
+            results_output[str(i) + '-' + str(pos_end)] = dict_seq
+
+        return results_output
+        """
         # dataset = self.vfp_seqs()
         results_output = {}
         family_weblogo = self.weblogo_family()
@@ -1198,8 +1270,8 @@ class Descriptor:
         # print(results_output)
         
         # for i in key: return results_output[i]
+        """
 
-        return results_output
         
 
 
