@@ -1034,9 +1034,9 @@ class Descriptor:
         
         return dataset
 
-    def weblogo_family(self):
+    def weblogo_family(self, family_selected = 'Retroviridae'):
         """
-        Function that reads all the weblogos from the families retrieved in the size_families_4_min function, and prerocess the weblogo matrix by multiplying each position of bits by the entropy, like described by Crooks et al, 2004.
+        Function that reads the weblogo from the family selected, if it if present in the list retrieved in the size_families_4_min function, and prerocess the weblogo matrix by multiplying each position of bits by the entropy, like described by Crooks et al, 2004.
         """
         families = self.size_families_4_min()
         
@@ -1045,27 +1045,28 @@ class Descriptor:
         family_weblogo = {}
         
         for i in families:
-            family = i[0]
-            filename = 'crmapp/conserv/Weblogos/' + family + '_weblogo.txt'
-            n_seqs = i[1]
-            
-            weblogoDf = pd.read_csv(filename, skiprows=7, sep='\t')
-        
-            weblogoDf = weblogoDf[:-1]
-        
-            columns = []
-            for i in weblogoDf.columns:
-                j = i.replace(' ','')
-                columns.append(j)
-            weblogoDf.columns = columns
-            
-            weblogo_entropyes = weblogoDf.loc[:, weblogoDf.columns[1:len(weblogoDf.columns)-4]]
-        
-            entropies = list((np.log2(20) - weblogoDf.loc[:,'Entropy']) / n_seqs)
-        
-            weblogo_entropyes = weblogo_entropyes.mul(entropies, axis=0)
-            
-            family_weblogo[family] = weblogo_entropyes
+            if i[0] == family_selected:
+                family = i[0]
+                filename = 'crmapp/conserv/Weblogos/' + family + '_weblogo.txt'
+                n_seqs = i[1]
+
+                weblogoDf = pd.read_csv(filename, skiprows=7, sep='\t')
+
+                weblogoDf = weblogoDf[:-1]
+
+                columns = []
+                for i in weblogoDf.columns:
+                    j = i.replace(' ','')
+                    columns.append(j)
+                weblogoDf.columns = columns
+
+                weblogo_entropyes = weblogoDf.loc[:, weblogoDf.columns[1:len(weblogoDf.columns)-4]]
+
+                entropies = list((np.log2(20) - weblogoDf.loc[:,'Entropy']) / n_seqs)
+
+                weblogo_entropyes = weblogo_entropyes.mul(entropies, axis=0)
+
+                family_weblogo[family] = weblogo_entropyes
             
         return family_weblogo
 
@@ -1073,7 +1074,7 @@ class Descriptor:
     def read_weblogo(self, weblogoDf, fusionpeptide, positions, column):
         """
         Function that provide the conservation score for a given peptide "fusionpeptide" from a weblogo "weblogoDf",
-        restricted to only certain positions "positions" (from max_coluns function). The column parameter contains the dataset's columns names.
+        restricted to only certain positions "positions" (from max_coluns function). The "column" parameter contains the dataset's columns names.
         """
 
         best_score = 0.0
@@ -1180,16 +1181,17 @@ class Descriptor:
 
 
 
-    def scores_sequence(self, protein, window_size = 15):
+    def scores_sequence(self, protein, window_size = 15, family_selected = 'Retroviridae'):
         """
-        Function that retrieves the conservation features of all Weblogos for the all the subpeptides of size "window_size" of "protein" sequence.
+        Function that retrieves the conservation features of a "family" Weblogo for the all the subpeptides of size "window_size" of "protein" sequence.
         Inputs:
         - 'protein': protein sequence
         - 'window_size': window size of the subpeptides to retrieve the conservation scores
+        - 'family': Virus' taxonomy family
         Output: A dict with the keys as the positions of the peptide within the protein sequence (e.g '0-15': the first 15 aa) and the value anoter dict with all the families conservation scores
         """
         results_output = {}
-        family_weblogo = self.weblogo_family()
+        family_weblogo = self.weblogo_family(family_selected)
         family_column_max_index = {}
         family_consensus = {}
 

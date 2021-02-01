@@ -260,7 +260,7 @@ export class MlPredictComponent implements OnInit {
       sequence = this.query_seq;
     }
     if (sequence !== '') {
-      this.MLService.getWeblogo(sequence, this.window_size.value).subscribe(
+      this.MLService.getWeblogo(sequence, this.window_size.value, this.option_conserv).subscribe(
         (data_send) => {
           // const data_parse = JSON.parse(data_send);
           // alert(data_parse);

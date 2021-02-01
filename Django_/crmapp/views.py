@@ -561,8 +561,9 @@ def conservation_features(request):
     """
     Function that retrieves the conservation scores of a protein against different taxonomy Family's Weblogos.
     It receives a POST request, with the following paramethers:
-    - 'seq': protein sequence.
+    - 'seq': protein sequence
     - 'window_size': window size
+    - 'family': Virus' Taxonomy family
     Returns a JSON with the conservation scores from positions within the sequence.
     """
     if request.method == "POST":
@@ -572,6 +573,9 @@ def conservation_features(request):
             window_size = data['window_size']
         except:
             window_size = 15
+        try:
+            family = data['family']
+        except: family = 'Retroviridae'
         """
         try:
             gap = int(unquote(request.GET.get('gap')))
@@ -580,11 +584,11 @@ def conservation_features(request):
         """
         features = Descriptor(sequence)
 
-        data_conserv = features.scores_sequence(sequence, window_size)
+        data_conserv = features.scores_sequence(sequence, window_size, family)
 
         pos = list(data_conserv.keys())
 
-        pos_new =[]
+        pos_new = []
 
         # print(pos)
 
@@ -604,18 +608,19 @@ def conservation_features(request):
         # print(len(sequence))
 
         for i in range(len(sequence)):
-          aux = {}
-          for j in pos_new:
-              if i >= (j[1]) and i < (j[2]):
-                if aux == {}:
-                    aux = data_conserv[j[0]]
-                else:
-                    for k in families:
-                        if data_conserv[j[0]][k] > aux[k]:
-                            aux[k] = data_conserv[j[0]][k]
-          # aux['caract'] = sequence[i]
-          data_send[i] = aux
-          # print(data_send)
+            aux = {}
+            for j in pos_new:
+                if i >= (j[1]) and i < (j[2]):
+                    if aux == {}:
+                        aux = data_conserv[j[0]]
+                    else:
+                        for k in families:
+                            if data_conserv[j[0]][k] > aux[k]:
+                                aux[k] = data_conserv[j[0]][k]
+            if i == len(sequence) - 1 and aux == {}:
+                aux = data_conserv[j[0]]
+
+            data_send[i] = aux
 
         return JsonResponse(data_send, safe=False)
 
@@ -951,7 +956,7 @@ class WriteResultsAPIView(APIView):
 
 """
 From now on, all the tables are similar, just for different serializers:
-(TableName)APIView is each tables API View, that have its queryset from each model, and on each are defined filterset and search are defoned all the possible attributes to run the search against.
+(TableName)APIView is each tables API View, that have its queryset from each model, and on each are defined filterset and search are defined all the possible attributes to run the search against.
 Each of those methods have 3 functions: get_object (to get object to modify / delete); put (to modify an object) and delete (to delete an object).
 (TableName)APIView_Save are very similar to the first ones, but with CustomPagination, to allow all objects to be in the same page; this will be used to save query results. 
 """

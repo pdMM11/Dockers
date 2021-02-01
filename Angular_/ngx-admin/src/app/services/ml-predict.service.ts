@@ -44,10 +44,10 @@ export class MlPredictService {
     };
     return this.httpClient.post<any>(`${this.API_URL}/save_ml_results/`, text, this.httpOptions);
   }
-  getWeblogo(seq: string, window_size: number = 15) {
+  getWeblogo(seq: string, window_size: number = 15, family = 'Retroviridae') {
     /**
-     POST request to retrieve all the conservation features for a sequence "seq",
-     split into subsequences of size "window_size".
+     POST request to retrieve the conservation features for a sequence "seq",
+     split into subsequences of size "window_size" against a Weblogo with VFP from the same Taxonomy "family".
      */
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -57,6 +57,7 @@ export class MlPredictService {
     this.data = {};
     this.data.seq = seq;
     this.data.window_size = window_size;
+    this.data.family = family;
     return this.httpClient.post<any>(`${this.API_URL}/conserv/`, this.data, this.httpOptions);
   }
 }

@@ -23,8 +23,6 @@
     <p></p>
     <button nbButton (click)="gotoML()">PREDICT FUSION PEPTIDES</button>
     <p></p>
-    <button nbButton (click)="getConserv()">PREDICT CONSERVATION</button>
-    <p></p>
   </nb-card-body>
 </nb-card>
 
@@ -87,16 +85,18 @@
 
 </nb-card>
 
-<nb-card *ngIf="conserv_card">
-  <nb-card-header>
-    Conservation Results
-  </nb-card-header>
+ <!-- <nb-card *ngIf="conserv_card">
+ -->
 
-  <nb-card-body>
+<nb-card>
+ <nb-card-header>
+   Conservation Scores
+ </nb-card-header>
+ <nb-card-body>
 
-    WEBLOGO FAMILY:
-    <nb-select placeholder="{{option_conserv}}" [(selected)]="option_conserv"
-                > <!-- onChange()="graphConserv(false)" -->
+   WEBLOGO FAMILY:
+   <nb-select placeholder="{{option_conserv}}" [(selected)]="option_conserv"
+               > <!-- onChange()="graphConserv(false)" -->
       <nb-option value="Arenaviridae">Arenaviridae</nb-option>
       <nb-option value="Coronaviridae">Coronaviridae</nb-option>
       <nb-option value="Flaviviridae">Flaviviridae</nb-option>
@@ -111,11 +111,14 @@
       <nb-option value="Retroviridae">Retroviridae</nb-option>
       <nb-option value="Togaviridae">Togaviridae</nb-option>
     </nb-select>
-
+    <p></p>
+    <button nbButton (click)="getConserv()">PREDICT CONSERVATION</button>
+    <p></p>
+    <!--
     <p></p>
     <button nbButton (click)="graphConserv(false)">UPDATE FAMILY</button>
     <p></p>
-
+    -->
     <div *ngIf="conserv_card">
       <p></p>
       {{name_family}}
