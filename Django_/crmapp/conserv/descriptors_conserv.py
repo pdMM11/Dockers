@@ -1198,8 +1198,10 @@ class Descriptor:
         family_numpy = {}
         column = []
 
+        """
         for i in family_weblogo.keys():
             family_column_max_index[i] = self.max_coluns(family_weblogo[i])
+        """
 
         for i in family_weblogo.keys():
             family_numpy[i] = family_weblogo[i].to_numpy()
@@ -1215,10 +1217,13 @@ class Descriptor:
             # sequence=row['fp']
 
             for k in family_weblogo.keys():
-                current_family = family_column_max_index[k]
+                # current_family = family_column_max_index[k]
 
+                pos_analysis = list(range(len(family_numpy[k])))
+
+                """
                 pos_analysis = []
-
+                
                 for j in range(0, len(sequence)):
                     if j == 0:
                         pos_analysis = current_family[sequence[j]]
@@ -1227,6 +1232,7 @@ class Descriptor:
                         pos_temp = np.array(pos_temp)
                         pos_temp = pos_temp[pos_temp >= 0]
                         pos_analysis = list(sorted(pos_analysis + list(set(pos_temp) - set(pos_analysis))))
+                """
 
                 dict_seq[k] = self.read_weblogo(family_numpy[k], sequence,
                                                 pos_analysis, column)
