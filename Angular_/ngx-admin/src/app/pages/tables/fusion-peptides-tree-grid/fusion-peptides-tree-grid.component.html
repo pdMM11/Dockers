@@ -18,11 +18,18 @@
     <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
     -->
 
-    <a [href]="fileUrl" download="data_fusion_peptides_results.csv">Download Results</a>
+    <a [href]="fileUrl" download="data_fusion_peptides_results.csv"
+       nbPopover="Save query results as a CSV file."
+       nbPopoverTrigger="hint"
+       nbPopoverPlacement="bottom">Download Results</a>
 
     <p></p>
 
-    <button nbButton (click)="goToUrl(null, true)">MANAGE DATA</button>
+    <button nbButton
+            nbPopover="Access to this page within the administrator module of the back-end."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToUrl(null, true)">MANAGE DATA</button>
     <!--
         <label class="search-label" for="search">Search:</label>
         <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">

@@ -4,44 +4,79 @@
     <p>
       Welcome to the Viral Fusion Peptides WebServer, developed by a joint effort of the Centre of Biological
       Engineering of University of Minho and ITQB NOVA, in a project funded by FCT (Fundação para a Cieência e
-      Tecnologia), which is "is the Portuguese public agency that supports science, technology and innovation, in all
+      Tecnologia), which is "the Portuguese public agency that supports science, technology and innovation, in all
       scientific domains, under responsibility of the Ministry for Science, Technology and Higher Education", under the
       "ViralFP" project.
     </p>
     <p>
       The aim of this webserver is to act as a centralized datasource for all data relevant for the understanding of
       viral fusion peptides. The gathered data is mostly originally from sources such as <a href="https://www.uniprot.org/"
+                                                                                            nbPopover="Link to Uniprot's web location."
+                                                                                            nbPopoverTrigger="hint"
+                                                                                            nbPopoverPlacement="bottom"
                                                                                             target="_blank">UniProt</a>,
       <a href="https://www.ncbi.nlm.nih.gov/protein/"
-         target="_blank">NCBI Protein</a> and <a href="https://www.rcsb.org/" target="_blank">PDB</a>.
+         nbPopover="Link to NCBI Protein's web location."
+         nbPopoverTrigger="hint"
+         nbPopoverPlacement="bottom"
+         target="_blank">NCBI Protein</a> and <a href="https://www.rcsb.org/"
+                                                 nbPopover="Link to PDB's web location."
+                                                 nbPopoverTrigger="hint"
+                                                 nbPopoverPlacement="bottom"
+                                                 target="_blank">PDB</a>.
     <p>
       This database contains the sequence, structure, key annotations and databases' entries (and references) for each
-      known fusion protein (page <a href="https://viralfp.bio.di.uminho.pt/pages/tables/protein" target="_blank">Fusion
-      Proteins</a>).
+      known fusion protein (page <a routerLink="../tables/protein" routerLinkActive="active"
+                                    nbPopover="Redirect to the Fusion Protein's page."
+                                    nbPopoverTrigger="hint"
+                                    nbPopoverPlacement="bottom">Fusion Proteins</a>).
     </p>
     <p>
-      In the page <a href="https://viralfp.bio.di.uminho.pt/pages/tables/fusion-peptide" target="_blank"> Fusion Peptides</a>,
+      In the page <a routerLink="../tables/fusion-peptide" routerLinkActive="active"
+                     nbPopover="Redirect to the Fusion Peptides's page."
+                     nbPopoverTrigger="hint"
+                     nbPopoverPlacement="bottom">Fusion Peptides</a>,
       the user can find the protein's fusion peptide (when known) information, referring its position, sequence and
       structure.
     </p>
     <p>
       Finally it also contains the taxonomy data of each protein's enveloped virus (a group that contains HIV, Dengue,
-      Influenza and SARS) (on the page <a href="https://viralfp.bio.di.uminho.pt/pages/tables/taxonomy-virus"
-                                          target="_blank">Virus' Taxonomy</a>).
+      Influenza and SARS) (on the page <a routerLink="../tables/taxonomy-virus" routerLinkActive="active"
+                                          nbPopover="Redirect to the Virus' Taxonomy's page."
+                                          nbPopoverTrigger="hint"
+                                          nbPopoverPlacement="bottom">Virus' Taxonomy</a>).
     </p>
     <p>
       Besides those pages (and all those that can be accessed through them to display any related data), this webserver contains links to several Tools: <a
       href="https://blast.ncbi.nlm.nih.gov/Blast.cgi"
+      nbPopover="Link to NCBI BLAST's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
       target="_blank">NCBI BLAST</a>, <a
       href="https://www.ebi.ac.uk/Tools/hmmer/"
+      nbPopover="Link to EBI HMMER's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
       target="_blank">EBI HMMER</a>, <a
       href="http://www.clustal.org/"
+      nbPopover="Link to Clustal's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
       target="_blank">Clustal</a> and <a
       href="http://weblogo.threeplusone.com/create.cgi"
+      nbPopover="Link to Weblogo's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
       target="_blank">Weblogo</a>.
       Finally, this server has peptide prediction tools: epitope prediction (using <a href="https://www.iedb.org/"
+                                                                                      nbPopover="Link to IEDB's web location."
+                                                                                      nbPopoverTrigger="hint"
+                                                                                      nbPopoverPlacement="bottom"
                                                                                       target="_blank">IEDB</a>)
       and Fusion Peptide prediction (using machine learning models trained with <a href="https://pypi.org/project/propythia/"
+                                                                                   nbPopover="Link to Propythia's web location."
+                                                                                   nbPopoverTrigger="hint"
+                                                                                   nbPopoverPlacement="bottom"
         target="_blank">Propythia</a>).
     </p>
     <div>
@@ -49,15 +84,24 @@
       <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP8AAADGCAMAAAAqo6adAAAA7VBMVEX////YUhOWIRiEhISBgYGPAACWIBfWQwCTGhO/ZFLaUQz23NKgOzTp1dKMjIx/f3/5+fmcnJyTk5PFxcXW1tbXTACxsbHg4ODkzs3w396+vr7o6Oi4uLiKioqUEgD19fWeNC3tuKrjimyhoaHl5eXR0dF3d3fbZDTVPgDww7T77+nyy7zZWBvqq5fecUXMoJ3nnH7gelffwsHoo4jbYC+yZWGSFAjmlHTAgn6YLCTcZzv89e67eHTihWL35t/12MvqppGsWFPIk5DTr6ujSEOqUVHNn52tX1ugQDzfe1i1bWjZWiThek3GjYq9WEI+nsycAAAU7UlEQVR4nO2cCXvTuNPA3cZO8qaL74PaSQzrOKUFChQaCoVCKcvCwv6//8d5Z3TYcuJIjsPSlnqeh1LHOuYnjUajI9X+6O9eowz/b7RzraL90b/OBuj4O/7r5r9G/I7/BvDfdfvv+O82/zXid/w3gP+u23/Hf7f5rxG/478B/Hfd/jv+u81/jfg3gv+u93/H3/G3k/7UMKbD6+EfjVZ/a8ffHn/3bH//7M02DdCaPzh4G5Cso+DgIGjfAtv0v3FfA9k3fj1/EByenz9+GwD+weHR0eFBcA3803cakastGqAd/+D9EVZ8/na0E5wTHV63bYD2/P3pfcp/7037IdSGfxS8tmnNjwfBU/qbdtjSC/wE/v0H7T1AC/4geKhxebSzx3+9OB605G+p+jXxBz+OtJL/yV758HTQwgRuWf+Pgpd2SfxhINgCjIFXm3uB28UfBB8E3ouD0c7gQvjAfv7ot+Yf/CnYvnb4BOe/0aG2/NmG/C1V/+X8o8FTgdRmwx1mA7EB9o43a4Dbwz94K/g6sP1B/QsIBTYxqdti/6PB83PRzkXI0Y7oBbXD7xuYwC3hD6qIy+FetXEuNpgHbgX/aHAsunnB9ov2eVIZAx8bx0K3YfwHr6r2XefjR5VIQHvcdAzcAv7BD7HztedrwrzqPNA0HL7x9j8KPopce6u2XzTAEzE4gjHQZGgp+BfGAlHb8PfJ/tB0S/7goDKwH+5I7Ho0qjTVhyZuUMo/NC6vTg1jTQKDr3/r2wfop59Ozgypcaj4B+9Fx37+WmHUg2+VGOGFegzIxv9wFwnts+mi9vXilFbzpX7/Y2GcqUeHnD8IKsHth0DZoUElRtQ+KncFZPyLK9bBp/WbnFPy/qq2dfrG6T2a+0Q2wKT8wbHYm/bLRqFC8F5cI+ypxoDE/odfi6Xm1Zu6Pu4bZ8+enS2W2wbLM4ZXhQ5fJQYg4x+8Fm3/6EfDOT34/ljM9l6eTcK/uBTKudqt82QLo25swMD/IqzSL9vxV/3+odr2uYwePRdqh/myJf/ws6jA/rthvRtYzbf4Z1/M2a7/R6+E3rc3298MXggRg30gGzdS/3dfxNDu/SX35SyTsahmuy9rNgn/j7KID2833NsLAmEMfJS1nYy/Pz2pkGgnn9fNhWWWN8+W8kxlWST8xwLA5vtag3Kf7KWCX2IA/aola+mXN9KAZrF4V82wfyrFb2L/FwoPtkaCYz4PPFHYv0TB/sL4klaAjs7WhHR99IaXVdM//0TCxzXxkZyfx/OPZRGftAGeHKq7Xx3/T3evjipQ997Vx0ND4++rSkK7fs5oyg8z+Ye9PVXEJ5FR8Hpvb++5vPnU67+h8bXKpd3/XBMPwcC3q6n+buAuZf0fDAbBoPXBHi2CFKLgV67/hst2jfEQYSuyLox/q1Zy8c5oMl2u5Q++Pz18uH6t11RGg5cPpRuCzda/i8Vp1a/Zn0RHWAa7TNJPatOX8gc/iDG1Ptbk+K+wV45+rC+m4fof5rVPVfPe/6cgXAxPqu9wnmy2q7CGf3RAve7Rdvg7LAw42pof+3g5GrhiDWCcLbXMaZM4Scpf7OV82278/8mKWT8HbLD/NZz+VXUDz8iiaPGu8uHRWb+Z6Uv5n7PSHm/lAYrT8acy/sYN0F/2coTfqJjF1R/ygKcZfxH8Xbza5nLPI67tej+y4f5fdWVH+YUA6f7n5qYv498pzjn/3GIAjA64Xj9h/DPpG5+L/qY3f4wiOth/t7IX0JqfW+42A6Ao5MP6Qjbf/x0afC48IwN98TeziGe7G5m+lB8Uo2Jv0//ciCQhcIv9f3ADZ/s4x7M9IeMdjoCrB6q14Ub8j/jWV/sQoDD/o7frnUi7/f/pg8vLr0V8t/h6enrZ7h7k+vjvI1P+sDV/MYnsScZQK/7+bn84FHiHi40Hvop/9IKNqvPvbWeAQRMTasH/M+8Lrx//xcWW9y0NYHTMN9Bkc+i29/+3bIz1/MFLtfOWSllA2/0/JenCmE4bLfNa8I/eMvXPj9sNgEfcgNYHfzvN7b9f0waLS3D86eU2DSBZ/zeZvSQy4jPoNvtf8iZ5Q13U8v72T4h/UYroRea+10sxgRy13f9fojKMJVvngd/9ytkQJDK2Xv+hNIleZfx8B1y6/d10/MP6/4rs5oof1Z1/T9/BmuPqLxIL8X/t+MvVS5sBULgPW76EbsY/5Uc6p6UF1PKzM7Ot939QCgt+3IK/WPpfKPc/lQ2wMN7xhf+9MnUdf3+Xb5Pt/9NoEEj5XzSZwNfIoKH3VPMPjb/LbQ+7PMys4x9elqtj9WGRgr8M4BR72HXynQ8eRfio3v9/cyWs+BX8xVqQON5P6hNT+fk/j2A2nwGKDTRp8LOjHP9T41Pl/Edp/5V9YPVOoJS/mAE2D4EG/DacNPhR8S+fZGtHgqur93+fq8dlJ5/lflBx/6f1AHjEFVCtnmT2P3ywdOxx8lUw6Pr5b/G1mif9R/rtKMX9H96Lm+4CBfzw/EL1hQAJf+nMme1fVqx5zf23cnuIyWm783+UMgTakH/A700pQwfZ/ZdTEWPl/sfa+3+L3S9iC+zvyk7Y5fZfrGE22wUafWf57G9b3P+a/iuY8afp8ube+vuPfWNXODG1pR5Gzt9yFyh4wbLtKbM1u//zZbo6imX3P4fG58IN2LILgCp+HgIdbRQCFeav8v7y8T9kO931kYz8/uticcYGQf39wGb8OyM+ADY6CAt48CO9+qTih8kMEVgku5JqLT/bKjAeXK1tncb8RU8ebuABg/cs04XaaKTx32L677NLXPTWJVHe/x4alycn/8r3hZX9X+xhb2D/jYOfHVX815dsbzW4/74wDMWRiPr+Ox8AGxyEDbj5v2jEf6Pv/xc3oB9u8qUmKucNxsyN5y+uQTb+aucG3v/m85fG3Ji/2PlqMmfceP5iDfCI3udSSXl2ftGksW78959G9CYURPLB4P2fSvk2KL4Q+7DJlHnj+3+H/rWHw53B+4vqPaNasfeORwMyAPYaHRzefP6d4Mnzl8eDIqZXyfmr0eD1w4dPpccet4kfx/2o9OpKAbunjqAhf0vVf/H3vwcf5NSlbHRgenv4G/f/RptFt8L+Uapfb5XJj9/x+//CeahCmn1N7vbx7wy+PVTL0wbf+Vzib6l6yf+r/v7TKBgEA7kEm/4ptC3uv0y/UP6TX/73v36ibPX338gO11Gbe3+/Bf/wzdX+/rPr+ft/N4G/3zeMDe563FT+bfTfVjr+6+fv/v5rx3+X+a8R/0bw3/X+7/g7/rvMf434N4L/rvd/x9/x32X+a8S/Efx3vf87/o7/7vLvGtcq/1McaPzXot27Xtnfu15peqjaSSeddNJJJ5108htJ5JXSOFPqRaoktuevfZeXVSrLkeiwvoINxDPdQhpnSiaxKkk6Cde+c8oqleVIdBirEzmu6ta0Z+ZpwqR53aZSb9uU8Se8znRtIrUODfjdBvwtTHBr/gZ32dU6NOD3c1WK35tfLav8tuSpqJvz27Xv7Qr/SpIlfnsl1RoVKgkZf222QivbXnm3JMv8XmaaGbeaWeiaDp8W8vIN47cxsRMvFZ2OIZPP+RN4cr1qkip/1Iu1BCrKfJ7fMd1wFoUm1pzG8DQmbiLVQ3h0J1Qj5E9RP6ZsFLoTN6QwPcfWcsdJNde0y3ezBvyhmcXjzAxJhb7pjOOMgfA3dsGfZmaG77OKE0scM4xDN3ZJtsh14YnmWsdverkLZbuuT/NDjjFMEeEYNEsyzO+6WEVqjiPXGUPzeFSHyM3gySUNkJOK2IOZ2aEbQqvTmmKXFlI30qv8ESG3x7QG14EpIQ1NLDOnb0JeN2mRGD+KzUrgkBEVIofw244TkUoqSZb5M2IgvpvRdibdnlFtaeU+KSw1MwctYeZA94IONBs0CbybUTpQOSX8OW1MUhN0Y0K6IquZbTzXIUIbLmatQTKHVAXbhOpSJyM625lpc/6IGkZK9WbiM9cwI2bjTahRZ2aVn9WZUn5nxj4mILS0GUGOmJOLTewJkyoJjZKiDqw/Q9QojekD7U7XYe8Ifzqm5Y/Nmhnec7OQiE/rKYMqm3P5KWKxHvQwRdX/kw7gErq0EjL+7Yz1dF6xMrANKozf4x/bQkWk1DErbYafptylEpDC/5PW4JITe3HdUCiyQK2b6pbtPyu8RCQGZ9wwIEVc4U/yseuUlXA7ofypw/SYVQaAU4k0C37SWFGFP2OlaaQ0JX/k0dFXDHWB3wdPpeSHwmDs0PJoUxafs0qIEpw/9bKJ6VT4ecsT/sQNfSJexWBW/J/An1Ts381yWoCZKfmjsTlxKb/JNeI1+SG8cxrww/zngo9NCL+wwCj4bYE/h0krnmkif6EVSTcrA30xWJHxg6XlduH/ysWJih+mQjfMU590mplV+GeZ6YS+3cD+UXFoK+IwK/xZTf97OM1rmoQ/McMZE9H1SPlhisH5j7awmUVlfhk/zMUhVlHHDzNynNSh1vJrpC0zwRPRShIBkPAnHENm/7Ux6hp+3llh6DjUHWvcm9CyJfx8Eq7jD9m00ZgfW9NmI7BIxowhx4oIf+EfRX47c0T/l4lTo4qfjn9wmXbKPVroCHYj48/oXFrLz+f9JvwJL9MuuTwIOiLuwEJMT/h95h99kR90oxNIQpQtzCavzn/r+X0We3LtWLNHuZyfF8n8X4WfPaVq/w9eh2ifOg55FVMSyG+zNxFxz6z/eYTrCBonZkZLIG9nrG7frPo/UYMqPwSupgnxURYSN8hipBTLkfHTWA0yu94Kv0OMCNjcmh0jD+JsLgl4dMdL04SOGMgRp7ZPYymI0vI0ZQ+EH5oEPvHc3BWNFEKWME0jB+Jv6s2zGSYSTQS0KqqECHbJ/0HEn6G4ZNEAK4OIVDuT939uZok9yxyPfFrl95hGsVmzGxBPzAmXGRoztL7Jp/eMPHAzn5gwiZKHmY61RLCyMyceLLJEu7LDielOwpRZRYxFTKqRt1tWCe0S6dyPTMj4dyIyDcCkRUJ/kp+Egbj+o8Q68pdPKWkTqNVJoglabo8PMLL+sxEDVMh767ckSom82EuEh5yrbvtxnFfWcamYtJRZLG5rpnns1a4868UpBtOMLfDzuNEuaRTHazdEfcm7GyaF6Vbn3zsj4HOot85dt/3m6O2VNATvn2WOK6zE7pTY0TiD6W/s38Xe76STTjrppJNOOumkk0466aSTTv4DwauY5GwMZHnDIar5TCFYTHnivPZKqa8oOWJa1b9hxabFDdJ8tbi04d1S17Is3BrVLWu+nD6cW9aGe1BQjFVoklmWXn/tCkpeqU2UMbyv37BFnUBVcj5Nf401zbRWFI2ghCb341y9p2NNk17PWuG3dH1D/p6u6yW/3uut4YdaZfyx1bPq+cdQJqjq0ULw1xghVhSN9J61Lf/YdOtuzEiLc4VdWyn/Sm2iqPj1jBVP+R3TdZcUbczfW8+/rfxX/e/2dBdPA3XTpfw10rL/kyiKtCR2ya21KM/z1IcfeIYE/+ERXJ65DnVNJKnm49kfZHAzchUip6nxbsA4DRk/ZnJDtp+bZvQNaW3bhzdxxXST0AyTgj8aF3caS34HsGdaYukOPCE/aBJBg8DPFG9p4gEC8OtjvPfITpNnnuvSgzUpf4aOaQLjHh+I/4upI0F/4mmJC690q4cHc5jUDtFP+T3wP7qFBzfM/3ngBywX1OyRG02YSbcm5BIePJA32P9pRorThWNJHyq3TKdH+KF4C0sSLkEAsR5mOryNLD0MKb9JHDX4w3mOJZImwXRjHd6T4+hxD2uar14AXOLHLptb8AONBx8SLMghFtmLbEytW9TboA3Hlg5+HD7LxvCbR4rppVqCQxRUp/xzUKKn46C14Y2Ob3TW2kgHOs4LCwCj5u/98r2VifxWDFwh1G9FjB/Vmmk+VGjNsdY54WcqYEXevIcNAONG1f/wmGGxeLiK/DPNhFwpvIC8UANewQV36zD3C101y8FY4TEMoRt7hH8M6ZxoDL9PbLAOHQ0IUpspNqPuRjGtLZpDcbbm6HrBB2X1zMibEH7S9KntiM4C+38MepiQzUpL/h7h100/N4E/JfzmeOaSgZaiqraNqZdPwFf7H1hsi3hYyk99lYtNjq2TEFvQGT8eDnvAz8+FKT82zIz7PzuZ4bhDy0g0qg8rk3kBYC5u8GVURexlnxQMNgVcpSsj/Bo0XGLqjr3Mz/JSfjyjx76BhrZIspRiKfp/vsSPmf1kgkaKxE6WYXW0qUhrJsTuJuSKFeWfE1sv/b/vZWQwJPie3Nbg/HqWZQ5tVa7OJOH+PyQkWH6pNuWHURJOoFFW+AEBjI/yY6PRz0KduhO9DT+aewjFgd5kOM3nGHfZpFDa66FFhkLPZ/w2GSYFv++iV6T8OhlMrOexfIuUZhX8tH0oPzTM3K7lh58utv4Kv1/Ln9ERZNf0v6Pkx//M3EIihMgjIprAb/sYgPV0GOzE/9nzMkCx0U/3emE04f1f4bd8Whx38Mv9b9X3f056Im3KP2b9X8OPA86T86NfGeto6y61VJt8a6nkJ4MgI8ZK7d8krBqd/xlFOf5nIj92vPAlqIxqSvk9OqB96gYKfivUZiTyK7RX8bPxH1G3XhEPnWaUhMwwl/lJWI0+mVgiepM4TbKe6Qr8ketOwE30MAmd//DVOI1M5Ef3bSUp+mPgx+rClLllMp0kKRRX3HnBj5w0cfWq/+/NBH70a9jCPY2U7av5U1BrkqK3XFl1pTgzkwl3ztYUy/6f2jGZOXF2ximZpC34bZhZzTGdFGn/k8kXpl8y/5PcPYvyk/kdIyhibfSB9GihTo+/9+l7F9uivGA/plwZ+U/Orxf84KGgl9F6J9qyJCw6IzEdLlmx/8EnZXSVivy40Jx7YuIxS8ruR2LMBVEbdKLF4r85lhiS9S9Ejvg6o6tWnzyEdLVNw0ldwNNmc/wA3+OFR/ZeGLSoU0hUggJsWL3jOpmuf326aMa1M/BbJGzN6We2wyqq2XSwPZiCMrbd4Hseudns4ZdLE+aYyEYD+1ZDnDkODchZUvIrfpmD7EBwX5ZDkWkak42KJHScPJ1BcpIC3iRaTDcsYGXAi+MShU4201iFtgcFZ2LMEtF9jZQUYOdQaML3PxKaCVLAAoDtfyQ0AaREFfP61djdlf8H2XPnATRULgcAAAAASUVORK5CYII='
            alt='image' >
       -->
-      <a href="https://www.ceb.uminho.pt/" target="_blank">
+      <a href="https://www.ceb.uminho.pt/" target="_blank"
+         nbPopover="Link to Center of Biologic Engineering's web location."
+         nbPopoverTrigger="hint"
+         nbPopoverPlacement="bottom">
         <img src='https://repositorium.sdum.uminho.pt/retrieve/a4304981-e708-43fa-aead-58797f8e780b'
              alt='image'>
       </a>
-      <a href="https://www.itqb.unl.pt/" target="_blank">
+      <a href="https://www.itqb.unl.pt/" target="_blank"
+         nbPopover="Link to ITQB's web location."
+         nbPopoverTrigger="hint"
+         nbPopoverPlacement="bottom">
         <img src='https://pbs.twimg.com/profile_images/1193926199850012673/MqO-CqBf_400x400.jpg'
              alt='image'>
       </a>
-      <a href="https://www.fct.pt/index.phtml.en" target="_blank">
+      <a href="https://www.fct.pt/index.phtml.en" target="_blank"
+         nbPopover="Link to FCT's web location."
+         nbPopoverTrigger="hint"
+         nbPopoverPlacement="bottom">
         <img
           src='https://thumbs.web.sapo.io/?W=775&H=0&png=1&delay_optim=1&webp=1&epic=NjgynnOUEp1tZxv6lYur9fx5aliGV6x/RbYQ0NQ+eCW24tu8fDrphhVZ2HPNJqmcqH06SNFnyZRFhAMxbx+mff6vkW1Eu5lS8Elwmkz16cdgELk='
           alt='image'>

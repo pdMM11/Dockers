@@ -1,5 +1,12 @@
 import {NgModule} from '@angular/core';
-import {NbCardModule, NbMenuModule, NbRadioModule, NbSelectModule, NbTooltipModule} from '@nebular/theme';
+import {
+  NbCardModule,
+  NbMenuModule,
+  NbPopoverModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 
 import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
@@ -49,6 +56,7 @@ import { ResetPasswordComponent } from './admin-pages/reset-password/reset-passw
     ReactiveFormsModule,
     Ng2SmartTableModule,
     NbTooltipModule,
+    NbPopoverModule,
     // FlexLayoutModule,
   ],
   declarations: [

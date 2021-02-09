@@ -1,5 +1,12 @@
 import { NgModule } from '@angular/core';
-import {NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbTreeGridModule} from '@nebular/theme';
+import {
+  NbCardModule,
+  NbCheckboxModule,
+  NbIconModule,
+  NbInputModule,
+  NbPopoverModule,
+  NbTreeGridModule,
+} from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -38,6 +45,7 @@ import { InhibitorantibodyComponent } from './inhibitorantibody/inhibitorantibod
         Ng2SearchPipeModule,
         ReactiveFormsModule,
         NbCheckboxModule,
+        NbPopoverModule,
     ],
   declarations: [
     ...routedComponents,
