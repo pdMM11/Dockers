@@ -90,6 +90,8 @@ export class ProteinListTreeGridComponent implements OnInit {
 
   API_URL = ''; // name of the API domain
 
+  autocomplete = [];
+
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<ProteinInterface>,
               private proteinService: ProteinService,
               private route: ActivatedRoute,
@@ -529,5 +531,69 @@ export class ProteinListTreeGridComponent implements OnInit {
     );
 
     window.open(decodeURIComponent(url), target);
+  }
+
+  onSearchChange(): void {
+    /**
+     Function to retrieve autocomplete sugestions for search form.
+     */
+    if (this.search_form.value.length > 1) {
+      this.proteinService.get_autocomplete(this.search_form.value)
+        .subscribe(
+          (data) => {
+            this.complete_aux(data['results']);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          });
+    } else {
+      this.autocomplete = [];
+    }
+  }
+  complete_aux(data: any) {
+    /**
+     Function to complement the function onSearchChange, so  retrieve autocomplete sugestions for search form.
+     */
+    let aux_string = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]['idprotein'].toString().toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['idprotein'].toString());
+        continue;
+      } else if (data[i]['virus'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['virus']);
+        continue;
+      } else if (data[i]['name'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['name']);
+        continue;
+      } else if (data[i]['class_field'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['class_field']);
+        continue;
+      } else if (data[i]['activation'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['activation']);
+        continue;
+      } else if (data[i]['name_fusogenic_unit'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['name_fusogenic_unit']);
+        continue;
+      } else if (data[i]['location_fusogenic'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['location_fusogenic']);
+        continue;
+      } else if (data[i]['sequence_fusogenic'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+      aux_string.push(data[i]['sequence_fusogenic']);
+      continue;
+      } else if (data[i]['uniprotid'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['uniprotid']);
+        continue;
+      } else if (data[i]['ncbiid'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['ncbiid']);
+        continue;
+      } else if (data[i]['idtaxonomy'].toString().toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['idtaxonomy'].toString());
+        continue;
+      }
+    }
+    this.autocomplete = [...new Set(aux_string)];
+    if (this.autocomplete.length > 5) {
+      this.autocomplete = this.autocomplete.slice(0, 5);
+    }
   }
 }

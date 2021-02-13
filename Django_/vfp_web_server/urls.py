@@ -32,6 +32,7 @@ urlpatterns = [
     path(r'fusionpeptides/<int:pk>/', views.FusionPeptidesAPIView.as_view()),
     path(r'fusionpeptides/save/', views.FusionPeptidesAPIView_Save.as_view()),
     path(r'save_fusionpeptides_results/', views.WriteResultsAPIView.write_fusion_peptide_results),
+    path(r'fusionpeptides/autocomplete/', views.FusionPeptidesAPIView_Autocomplete.as_view()),
 
     path(r'inhibitorantibody/', views.InhibitorAntibodyAPIView.as_view(), name='inhibitor-antibody'),
     path(r'inhibitorantibody/<int:pk>/', views.InhibitorAntibodyAPIView.as_view()),
@@ -55,6 +56,7 @@ urlpatterns = [
     path(r'protein/<int:pk>/', views.ProteinAPIView.as_view()),
     path(r'protein/save/', views.ProteinAPIView_Save.as_view()),
     path(r'save_protein_results/', views.WriteResultsAPIView.write_protein_results),
+    path(r'protein/autocomplete/', views.ProteinAPIView_Autocomplete.as_view()),
 
     path(r'proteinreferences/', views.ProteinReferencesAPIView.as_view(), name='protein-references'),
     path(r'proteinreferences/<int:pk>/', views.ProteinReferencesAPIView.as_view()),
@@ -76,6 +78,7 @@ urlpatterns = [
     path('taxonomyvirus/<int:pk>/', views.TaxonomyVirusAPIView.as_view()),
     path(r'taxonomyvirus/save/', views.TaxonomyVirusAPIView_Save.as_view()),
     path(r'save_taxonomy_results/', views.WriteResultsAPIView.write_taxonomy_virus_results, name='save-tax-predict'),
+    path(r'taxonomyvirus/autocomplete/', views.TaxonomyVirusAPIView_Autocomplete.as_view()),
 
 
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -101,5 +104,13 @@ urlpatterns = [
     path(r'conserv/', views.conservation_features, name="conservation_features"),
 
 ]
+
+"""
+    path(
+        r'^taxonomy-virus-autocomplete/',
+        views.TaxonomyVirusAutocomplete.as_view(),
+        name='taxonomy-virus-autocomplete',
+    ),
+"""
 
 urlpatterns += staticfiles_urlpatterns()

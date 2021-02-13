@@ -13,7 +13,7 @@ import {EnvService} from '../../../services/env.service';
 
 export interface TaxonomyVirusInterface {
   idtaxonomy?: string;
-  commonname?: any;
+  commonname?: string;
   family?: string;
   genre?: string;
   species?: string;
@@ -76,6 +76,8 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   data_print;
 
   API_URL = ''; // name of the API domain
+
+  autocomplete = [];
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<TaxonomyVirusInterface>,
               private taxonomyvirusService: TaxonomyVirusService,
@@ -376,4 +378,55 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
     window.open(decodeURIComponent(url), target);
   }
 
+  onSearchChange(): void {
+    /**
+     Function to retrieve autocomplete sugestions for search form.
+     */
+    if (this.search_form.value.length > 1) {
+      this.taxonomyvirusService.get_autocomplete(this.search_form.value)
+        .subscribe(
+          (data) => {
+            this.complete_aux(data['results']);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          });
+    } else {
+      this.autocomplete = [];
+    }
+  }
+  complete_aux(data: any) {
+    /**
+     Function to complement the function onSearchChange, so  retrieve autocomplete sugestions for search form.
+     */
+    let aux_string = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]['idtaxonomy'].toString().toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['idtaxonomy'].toString());
+        continue;
+      } else if (data[i]['commonname'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['commonname']);
+        continue;
+      } else if (data[i]['family'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['family']);
+        continue;
+      } else if (data[i]['genre'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['genre']);
+        continue;
+      } else if (data[i]['species'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['species']);
+        continue;
+      } else if (data[i]['subspecies'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['subspecies']);
+        continue;
+      } else if (data[i]['ncbitax'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
+        aux_string.push(data[i]['ncbitax']);
+        continue;
+      }
+    }
+    this.autocomplete = [...new Set(aux_string)];
+    if (this.autocomplete.length > 5) {
+      this.autocomplete = this.autocomplete.slice(0, 5);
+    }
+  }
 }

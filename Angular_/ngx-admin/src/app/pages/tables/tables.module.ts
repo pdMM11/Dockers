@@ -32,21 +32,23 @@ import {TaxonomyVirusListTreeGridComponent} from './taxonomy-virus-list-tree-gri
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {ReactiveFormsModule} from '@angular/forms';
 import { InhibitorantibodyComponent } from './inhibitorantibody/inhibitorantibody.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
-    imports: [
-        NbCardModule,
-        NbTreeGridModule,
-        NbIconModule,
-        NbInputModule,
-        ThemeModule,
-        TablesRoutingModule,
-        Ng2SmartTableModule,
-        Ng2SearchPipeModule,
-        ReactiveFormsModule,
-        NbCheckboxModule,
-        NbPopoverModule,
-    ],
+  imports: [
+    NbCardModule,
+    NbTreeGridModule,
+    NbIconModule,
+    NbInputModule,
+    ThemeModule,
+    TablesRoutingModule,
+    Ng2SmartTableModule,
+    Ng2SearchPipeModule,
+    ReactiveFormsModule,
+    NbCheckboxModule,
+    NbPopoverModule,
+    MatAutocompleteModule,
+  ],
   declarations: [
     ...routedComponents,
     FsIconComponent,

@@ -67,6 +67,25 @@ class CustomPagination(PageNumberPagination):
             'results': data
         })
 
+class AutoCompletePagination(PageNumberPagination):
+    """
+    Pagination method for the views that require the entirety of the data
+    """
+    page_size = 15
+    page_size_query_param = 'page_size'
+    max_page_size = 50000
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+                'next': self.get_next_link(),
+                'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'page_size': self.page_size,
+            'results': data
+        })
+
 @api_view(["POST"])
 @csrf_exempt
 def weblogo(request):
@@ -1011,6 +1030,20 @@ class FusionPeptidesAPIView_Save(generics.ListCreateAPIView):
     pagination_class = CustomPagination
 
 
+class FusionPeptidesAPIView_Autocomplete(generics.ListCreateAPIView):
+    queryset = FusionPeptides.objects.all()
+    serializer_class = FusionPeptidesSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['idfusion_peptides', 'residues', 'sequence', 'annotation_method',
+                        'exp_evidence', 'protein', 'protein__name', 'protein__idtaxonomy',
+                        'protein__idtaxonomy__family',
+                        'protein__idtaxonomy__commonname']
+    search_fields = ['idfusion_peptides', 'residues', 'sequence', 'annotation_method',
+                     'exp_evidence', 'protein__name', 'protein__idtaxonomy__family',
+                     'protein__idtaxonomy__commonname']
+    pagination_class = AutoCompletePagination
+
+
 class HostAPIView(generics.ListCreateAPIView):
     queryset = Host.objects.all()
     serializer_class = HostSerializer
@@ -1219,6 +1252,20 @@ class ProteinAPIView_Save(generics.ListCreateAPIView):
     pagination_class = CustomPagination
 
 
+class ProteinAPIView_Autocomplete(generics.ListCreateAPIView):
+    queryset = Protein.objects.all()
+    serializer_class = ProteinSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['idprotein', 'name', 'class_field', 'activation',
+                        'name_fusogenic_unit', 'sequence_fusogenic',
+                        'uniprotid', 'ncbiid', 'idtaxonomy', 'idtaxonomy__commonname']
+    # search_fields = filterset_fields
+    search_fields = ['idprotein', 'name', 'class_field', 'activation',
+                     'name_fusogenic_unit', 'sequence_fusogenic',
+                     'uniprotid', 'ncbiid', 'idtaxonomy__commonname']
+    pagination_class = AutoCompletePagination
+
+
 class ProteinReferencesAPIView(generics.ListCreateAPIView):
     queryset = ProteinReferences.objects.all()
     serializer_class = ProteinReferencesSerializer
@@ -1408,3 +1455,53 @@ class TaxonomyVirusAPIView_Save(generics.ListCreateAPIView):
                         'species', 'subspecies', 'ncbitax']
     search_fields = filterset_fields
     pagination_class = CustomPagination
+
+
+class TaxonomyVirusAPIView_Autocomplete(generics.ListCreateAPIView):
+    queryset = TaxonomyVirus.objects.all()
+    serializer_class = TaxonomyVirusSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['idtaxonomy', 'commonname', 'family', 'genre',
+                        'species', 'subspecies', 'ncbitax']
+    search_fields = filterset_fields
+    pagination_class = AutoCompletePagination
+
+"""
+############################## AUTOCOMPLETE ###################
+
+
+from dal import autocomplete
+from django.db.models import Q
+
+class TaxonomyVirusAutocomplete(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        if 'q' in self.request.GET:
+            #query = self.request.GET.get('q', '')
+
+            qs = TaxonomyVirus.objects.all()
+
+            query = self.q
+
+            # qs_dict = {}
+
+            if query:
+                # qs = qs.filter(commonname__istartswith=query)
+                qs = qs.filter(Q(commonname__icontains=query) | Q(family__icontains=query) | Q(
+                    genre__icontains=query) | Q(species__icontains=query) | Q(subspecies__icontains=query) | Q(
+                    ncbitax__icontains=query)).values()
+
+                
+                for i in qs:
+                    qs_dict[index] = {"id": i.idtaxonomy,
+                                      "text": str(i.idtaxonomy) + ',' + str(i.commonname) + ',' + str(i.family) + ',' +
+                                        str(i.genre) + ',' + str(i.species) + ',' + str(i.subspecies) + ',' + str(i.ncbitax),
+                                      "selected_text": self.q}
+                return json.dumps(qs_dict)
+                
+    
+                return qs
+
+            else: return qs
+        return None
+"""

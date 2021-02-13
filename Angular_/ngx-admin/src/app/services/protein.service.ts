@@ -100,4 +100,10 @@ export class ProteinService {
     return this.httpClient.post<any>(`${this.API_URL}/save_protein_results/`,
       data, this.httpOptions);
   }
+  get_autocomplete(search: string) {
+    /**
+     GET request to retrieve 5 autocomplete sugestions for the search form.
+     */
+    return this.httpClient.get(`${this.API_URL}/protein/autocomplete/?search=` + search);
+  }
 }

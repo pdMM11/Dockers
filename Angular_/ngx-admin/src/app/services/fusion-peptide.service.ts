@@ -84,5 +84,10 @@ export class FusionPeptideService {
     };
     return this.httpClient.post<any>(`${this.API_URL}/save_fusionpeptides_results/`, data, this.httpOptions);
   }
-
+  get_autocomplete(search: string) {
+    /**
+     GET request to retrieve 5 autocomplete sugestions for the search form.
+     */
+    return this.httpClient.get(`${this.API_URL}/fusionpeptides/autocomplete/?search=` + search);
+  }
 }

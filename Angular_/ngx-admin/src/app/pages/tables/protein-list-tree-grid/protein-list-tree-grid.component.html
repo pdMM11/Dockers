@@ -9,8 +9,14 @@
 
     <label class="search-label" for="search">Search: </label>
     <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
-           class="search-input">
+           class="search-input" (input)="onSearchChange()" [matAutocomplete]="auto">
     <p></p>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of autocomplete | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
 
     <button nbButton (click)="searchTableResult()">SEARCH</button>
     <p></p>
