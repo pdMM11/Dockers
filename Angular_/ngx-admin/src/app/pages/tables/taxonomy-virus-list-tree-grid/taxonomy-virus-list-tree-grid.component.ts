@@ -424,7 +424,7 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
         continue;
       }
     }
-    this.autocomplete = [...new Set(aux_string)];
+    this.autocomplete = Array.from(new Set(aux_string));
     if (this.autocomplete.length > 5) {
       this.autocomplete = this.autocomplete.slice(0, 5);
     }
