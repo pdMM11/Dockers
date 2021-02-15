@@ -23,7 +23,7 @@ import {NbWindowService} from '@nebular/theme';
 
 import {TemplateRef, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'ngx-header',
@@ -80,8 +80,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private windowService: NbWindowService,
               private route: ActivatedRoute,
               private router: Router) {
-
-
     this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
         this.value = data.term;

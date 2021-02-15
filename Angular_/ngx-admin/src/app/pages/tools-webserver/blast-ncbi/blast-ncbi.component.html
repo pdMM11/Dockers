@@ -1,6 +1,14 @@
 <nb-card>
+  <nb-card-header>
+    <a
+      href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome"
+      nbPopover="Link to NCBI BLAST's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
+      target="_blank">NCBI BLASTP</a>
+  </nb-card-header>
+
   <nb-card-body>
-    <p><b>NCBI BLASTP</b></p>
     SEQUENCE:
     <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequence in FASTA format" style="width:90%"></textarea>

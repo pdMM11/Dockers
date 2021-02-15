@@ -1,5 +1,9 @@
 <nb-card>
-  <nb-card-header><b>Fusion Peptide Prediction - Propythia</b></nb-card-header>
+  <nb-card-header>Fusion Peptide Prediction - <a href="https://pypi.org/project/propythia/"
+                                                 nbPopover="Link to Propythia's web location."
+                                                 nbPopoverTrigger="hint"
+                                                 nbPopoverPlacement="bottom"
+                                                 target="_blank">Propythia</a></nb-card-header>
   <nb-card-body>
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequence" style="width:90%"></textarea>

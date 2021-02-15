@@ -19,8 +19,8 @@ interface ProteinInterface {
   name_fusogenic_unit?: string;
   location_fusogenic?: string;
   sequence_fusogenic?: string;
-  uniprotid?: object;
-  ncbiid?: string;
+  uniprotid?: any;
+  ncbiid?: any;
   idtaxonomy?: object;
   virus?: string;
   children?: ChildrenFP[];
@@ -175,6 +175,14 @@ export class ProteinListTreeGridComponent implements OnInit {
         const aux = data['results'][i];
         this.idProt = String(aux['idprotein']);
         this.idTax = String(aux['idtaxonomy']);
+        if (aux['uniprotid'] !== null) {
+           aux['uniprotid'] = '<a href="https://www.uniprot.org/uniprot/' + aux['uniprotid'] + '" target="_blank">'
+             + aux['uniprotid'] + '</a>';
+        }
+        if (aux['ncbiid'] !== null) {
+           aux['ncbiid'] = '<a href="https://www.ncbi.nlm.nih.gov/protein/' + aux['ncbiid'] + '" target="_blank">'
+             + aux['ncbiid'] + '</a>';
+        }
         this.aux_inter.actions = null;
         this.aux_inter = aux;
         this.aux_inter.children = [
@@ -535,7 +543,7 @@ export class ProteinListTreeGridComponent implements OnInit {
 
   onSearchChange(): void {
     /**
-     Function to retrieve autocomplete sugestions for search form.
+     Function to retrieve autocomplete sugestions for the search form.
      */
     if (this.search_form.value.length > 1) {
       this.proteinService.get_autocomplete(this.search_form.value)
@@ -552,7 +560,7 @@ export class ProteinListTreeGridComponent implements OnInit {
   }
   complete_aux(data: any) {
     /**
-     Function to complement the function onSearchChange, so  retrieve autocomplete sugestions for search form.
+     Function to complement the function onSearchChange, so to retrieve autocomplete sugestions for the search form.
      */
     let aux_string = [];
     for (let i = 0; i < data.length; i++) {

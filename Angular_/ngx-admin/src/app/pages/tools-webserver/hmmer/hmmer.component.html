@@ -1,6 +1,14 @@
 <nb-card>
+  <nb-card-header>
+    <a
+      href="https://www.ebi.ac.uk/Tools/hmmer/"
+      nbPopover="Link to EBI HMMER's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
+      target="_blank">EBI HMMER</a>
+  </nb-card-header>
+
   <nb-card-body>
-    <p><b>EBI HMMER</b></p>
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequence" style="width:90%"></textarea>
 

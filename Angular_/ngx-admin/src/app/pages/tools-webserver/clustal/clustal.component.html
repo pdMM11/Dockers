@@ -1,6 +1,14 @@
 <nb-card>
+  <nb-card-header>
+    <a
+      href="http://www.clustal.org/"
+      nbPopover="Link to Clustal's web location."
+      nbPopoverTrigger="hint"
+      nbPopoverPlacement="bottom"
+      target="_blank">CLUSTAL</a>
+  </nb-card-header>
+
   <nb-card-body>
-    <p><b>CLUSTAL</b></p>
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequences in FASTA format" style="width:90%"></textarea>
     <p></p>

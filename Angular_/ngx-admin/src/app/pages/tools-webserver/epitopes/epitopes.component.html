@@ -22,7 +22,13 @@
 {{printstuff}}
 -->
 <nb-card>
-  <nb-card-header><b>IEDB Epitopes</b></nb-card-header>
+  <nb-card-header>
+    <a href="https://www.iedb.org/"
+       nbPopover="Link to IEDB's web location."
+       nbPopoverTrigger="hint"
+       nbPopoverPlacement="bottom"
+       target="_blank">IEDB</a> Epitopes
+  </nb-card-header>
   <nb-card-body>
 
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"

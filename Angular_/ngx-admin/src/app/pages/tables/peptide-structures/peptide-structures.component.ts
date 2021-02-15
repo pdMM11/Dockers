@@ -159,6 +159,10 @@ export class PeptideStructuresComponent implements OnInit {
         this.data_aux = [];
         for (let i = 0; i < data['results'].length; i++) {
           const aux = data['results'][i];
+          if (aux['pdb'] !== null) {
+            aux['pdb'] = '<a href="https://www.rcsb.org/structure/' +
+              aux['pdb'] + '" target="_blank">' + aux['pdb'] + '</a>';
+          }
           this.aux_inter = aux;
           this.aux_inter.expanded = false;
           this.data_aux.push(this.aux_inter);

@@ -162,6 +162,14 @@ export class TaxHostComponent implements OnInit {
         this.data_aux = [];
         for (let i = 0; i < data['results'].length; i++) {
           const aux = data['results'][i];
+          if (aux['virus_ncbitax'] !== null) {
+            aux['virus_ncbitax'] = '<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' +
+              aux['virus_ncbitax'] + '" target="_blank">' + aux['virus_ncbitax'] + '</a>';
+          }
+          if (aux['host_ncbitax'] !== null) {
+            aux['host_ncbitax'] = '<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' +
+              aux['host_ncbitax'] + '" target="_blank">' + aux['host_ncbitax'] + '</a>';
+          }
           this.aux_inter = aux;
           this.aux_inter.expanded = false;
           this.data_aux.push(this.aux_inter);

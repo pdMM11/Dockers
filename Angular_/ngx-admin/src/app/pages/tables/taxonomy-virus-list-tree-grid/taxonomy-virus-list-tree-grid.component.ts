@@ -150,6 +150,10 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
           this.aux_inter = aux;
           this.aux_inter.actions = null;
           this.idTax = String(aux['idtaxonomy']);
+          if (aux['ncbitax'] !== null) {
+            aux['ncbitax'] = '<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' +
+              aux['ncbitax'] + '" target="_blank">' + aux['ncbitax'] + '</a>';
+          }
           this.aux_inter.children = [
             {
               idtaxonomy: '', actions:
@@ -380,7 +384,7 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
 
   onSearchChange(): void {
     /**
-     Function to retrieve autocomplete sugestions for search form.
+     Function to retrieve autocomplete sugestions for the search form.
      */
     if (this.search_form.value.length > 1) {
       this.taxonomyvirusService.get_autocomplete(this.search_form.value)
@@ -397,7 +401,7 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
   }
   complete_aux(data: any) {
     /**
-     Function to complement the function onSearchChange, so  retrieve autocomplete sugestions for search form.
+     Function to complement the function onSearchChange, so to retrieve autocomplete sugestions for the search form.
      */
     let aux_string = [];
     for (let i = 0; i < data.length; i++) {

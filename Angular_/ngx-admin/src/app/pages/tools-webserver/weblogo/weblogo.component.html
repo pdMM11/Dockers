@@ -1,32 +1,54 @@
 <nb-card>
+  <nb-card-header>
+    WEBLOGO (through <a
+    href="http://weblogo.threeplusone.com/create.cgi"
+    nbPopover="Link to Weblogo's web location."
+    nbPopoverTrigger="hint"
+    nbPopoverPlacement="bottom"
+    target="_blank">Weblogo 3</a> portal)
+  </nb-card-header>
   <nb-card-body>
-    <p><b>WEBLOGO</b></p>
-    SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
-                        placeholder="Sequences in FASTA format" style="width:90%"></textarea>
+    SEQUENCE: <textarea nbInput fullWidth type='text' value='{{query_seq}}' [formControl]='sequence'
+                        placeholder='Sequences in FASTA format' style='width:90%'></textarea>
     <p></p>
-    <button nbButton (click)="gotoWebLogo(true)">WEBLOGO 3 (FROM http://weblogo.threeplusone.com/) (FILE IMAGE)</button>
+    <button nbButton (click)='gotoWebLogo(true)'>WEBLOGO 3 (FILE IMAGE)</button>
     <p></p>
-    <button nbButton (click)="gotoWebLogo(false)">WEBLOGO 3 (FROM http://weblogo.threeplusone.com/) (RAW DATA)</button>
+    <button nbButton (click)='gotoWebLogo(false)'>WEBLOGO 3 (RAW DATA)</button>
   </nb-card-body>
 </nb-card>
 
-
 <nb-card>
+  <nb-card-header>
+    WEBLOGO (through the the Python packages '<a
+    href="https://weblogo.readthedocs.io/en/latest/intro.html"
+    nbPopover="Link to weblogo's web location."
+    nbPopoverTrigger="hint"
+    nbPopoverPlacement="bottom"
+    target="_blank">weblogo</a>' and '<a
+    href="https://logomaker.readthedocs.io/en/latest/"
+    nbPopover="Link to logomaker\'s web location."
+    nbPopoverTrigger="hint"
+    nbPopoverPlacement="bottom"
+    target="_blank">logomaker</a>')
+  </nb-card-header>
+
   <nb-card-body>
-    <button nbButton (click)="getImageFromService()">WEBLOGO FROM BACKEND (FILE IMAGE)</button>
+    <button nbButton (click)="getImageFromService()">WEBLOGO (FILE IMAGE)</button>
     <p></p>
-    <button nbButton (click)="downloadWeblogoFile()">WEBLOGO FROM BACKEND (TEXT IMAGE)</button>
+    <button nbButton (click)="downloadWeblogoFile()">WEBLOGO (TEXT IMAGE)</button>
     <p></p>
 
       <img style='height: 100%; width: 100%; object-fit: contain'
-        [src]="transform()"
-        alt="Place image title"
-        *ngIf="!isImageLoading; else noImageFound">
+        [src]='transform()'
+        alt='Place image title'
+        *ngIf='!isImageLoading; else noImageFound'>
       <ng-template #noImageFound>
         <p></p>
       </ng-template>
 
   </nb-card-body>
+
 </nb-card>
+
 
 

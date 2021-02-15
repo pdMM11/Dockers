@@ -156,6 +156,14 @@ export class ProteinReferencesComponent implements OnInit {
         this.data_aux = [];
         for (let i = 0; i < data['results'].length; i++) {
           const aux = data['results'][i];
+          if (aux['uniprotid'] !== null) {
+            aux['uniprotid'] = '<a href="https://www.uniprot.org/uniprot/' + aux['uniprotid'] + '" target="_blank">'
+              + aux['uniprotid'] + '</a>';
+          }
+          if (aux['ncbiid'] !== null) {
+            aux['ncbiid'] = '<a href="https://www.ncbi.nlm.nih.gov/protein/' + aux['ncbiid'] + '" target="_blank">'
+              + aux['ncbiid'] + '</a>';
+          }
           this.aux_inter = aux;
           this.aux_inter.expanded = false;
           this.data_aux.push(this.aux_inter);

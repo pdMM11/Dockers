@@ -40,6 +40,7 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -74,7 +75,7 @@ const PIPES = [
 ];
 
 @NgModule({
-    imports: [CommonModule, ...NB_MODULES, ReactiveFormsModule],
+  imports: [CommonModule, ...NB_MODULES, ReactiveFormsModule, MatAutocompleteModule],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

@@ -506,7 +506,7 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
 
   onSearchChange(): void {
     /**
-     Function to retrieve autocomplete sugestions for search form.
+     Function to retrieve autocomplete sugestions for the search form.
      */
     if (this.search_form.value.length > 1) {
       this.fusionpeptideService.get_autocomplete(this.search_form.value)
@@ -523,7 +523,7 @@ export class FusionPeptidesTreeGridComponent implements OnInit {
   }
   complete_aux(data: any) {
     /**
-     Function to complement the function onSearchChange, so  retrieve autocomplete sugestions for search form.
+     Function to complement the function onSearchChange, so to retrieve autocomplete sugestions for the search form.
      */
     let aux_string = [];
     for (let i = 0; i < data.length; i++) {

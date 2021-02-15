@@ -79,7 +79,14 @@
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{headers[column]}}
         </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        <div *ngIf="column=='ncbitax'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div [innerHtml]="row.data[column]"></div>
+          </td>
+        </div>
+        <div *ngIf="column!='ncbitax'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || ''}}</td>
+        </div>
         <!-- It was removed '-' -->
       </ng-container>
 
