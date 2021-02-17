@@ -2,7 +2,6 @@
 
   <nb-card-header>
     Fusion Peptides
-    <p></p>
   </nb-card-header>
 
   <nb-card-body>
@@ -10,15 +9,13 @@
     <label class="search-label" for="search">Search: </label>
     <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
            class="search-input" size="medium" shape="rectangle" (input)="onSearchChange()" [matAutocomplete]="auto">
-    <p></p>
+    <button nbButton style="width: 100px; margin: 20px;" (click)="searchTableResult()">SEARCH</button>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of autocomplete" [value]="option">
         {{option}}
       </mat-option>
     </mat-autocomplete>
-
-    <button nbButton (click)="searchTableResult()">SEARCH</button>
     <p></p>
     <!--
     <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>

@@ -2,7 +2,6 @@
 
   <nb-card-header>
     Viruses' Taxonomy
-    <p></p>
   </nb-card-header>
 
   <nb-card-body>
@@ -10,14 +9,12 @@
     <label class="search-label" for="search">Search: </label>
     <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
            class="search-input" (input)="onSearchChange()" [matAutocomplete]="auto">
-    <p></p>
+    <button nbButton style="width: 100px; margin: 20px;" (click)="searchTableResult()">SEARCH</button>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of autocomplete" [value]="option">
         {{option}}
       </mat-option>
     </mat-autocomplete>
-
-    <button nbButton (click)="searchTableResult()">SEARCH</button>
     <p></p>
 
 
@@ -81,7 +78,10 @@
         </th>
         <div *ngIf="column=='ncbitax'">
           <td nbTreeGridCell *nbTreeGridCellDef="let row">
-            <div [innerHtml]="row.data[column]"></div>
+            <div [innerHtml]="row.data[column]"
+                 nbPopover="Access this NCBI Taxonomy's entry."
+                 nbPopoverTrigger="hint"
+                 nbPopoverPlacement="bottom"></div>
           </td>
         </div>
         <div *ngIf="column!='ncbitax'">

@@ -22,7 +22,7 @@ interface StateGroup {
            #input
            [class.hidden]="!isInputShown"
            (blur)="hideInput()"
-           (input)="onInput($event)"
+           (input)="onChange()"
            [formControl]="search_form"
            [matAutocomplete]="autoGroup"
            (keyup.enter)="onInput($event)"
@@ -63,7 +63,12 @@ export class SearchInputComponent {
   }
 
   onInput(val: string) {
-    // this.search.emit(val);
+    this.search.emit(val);
+    // this.fetchFusionPeptide(val);
+    // this.fetchProtein(val);
+    // this.fetchTaxonomyVirus(val);
+  }
+  onChange() {
 
     if (this.search_form.value.length > 1) {
       this.onSearchChange_prot();
@@ -72,10 +77,6 @@ export class SearchInputComponent {
     } else {
       this.autocomplete = [];
     }
-
-    // this.fetchFusionPeptide(val);
-    // this.fetchProtein(val);
-    // this.fetchTaxonomyVirus(val);
   }
 
   fetchFusionPeptide(val) {

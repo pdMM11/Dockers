@@ -2,7 +2,6 @@
 
   <nb-card-header>
     Antibodies & Inhibitors
-    <p></p>
   </nb-card-header>
 
   <nb-card-body>
@@ -10,8 +9,7 @@
     <label class="search-label" for="search">Search: </label>
     <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
            class="search-input shape-rectangle size-medium" size="medium" shape="rectangle">
-    <p></p>
-    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <button nbButton style="width: 100px; margin: 20px;" (click)="searchTableResult()">SEARCH</button>
     <p></p>
     <!--
     <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>

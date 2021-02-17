@@ -53,3 +53,25 @@
     }
   }
 }
+.buttons_tools {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.buttons button {
+  width: 50px;
+  margin: 2px;
+  align-content: center;
+}
+
+.buttons_tools button {
+  width: 15%;
+  margin: 5px;
+}
+
+.table-button button {
+  width: 75%;
+  align: center;
+}
+

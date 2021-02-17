@@ -2,7 +2,6 @@
 
   <nb-card-header>
     Fusion Proteins
-    <p></p>
   </nb-card-header>
 
   <nb-card-body>
@@ -10,15 +9,13 @@
     <label class="search-label" for="search">Search: </label>
     <input nbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
            class="search-input" (input)="onSearchChange()" [matAutocomplete]="auto">
-    <p></p>
+    <button nbButton style="width: 100px; margin: 20px;" (click)="searchTableResult()">SEARCH</button>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of autocomplete" [value]="option">
         {{option}}
       </mat-option>
     </mat-autocomplete>
-
-    <button nbButton (click)="searchTableResult()">SEARCH</button>
     <p></p>
     <!--
     <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
@@ -60,6 +57,7 @@
         </th>
 
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div class="table-button">
           <button nbTreeGridRowToggle
                   *ngIf="row.hasChildren()"
                   [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
@@ -67,6 +65,7 @@
                       aria-hidden="true">
                 </span>
           </button>
+          </div>
           {{row.data[customColumn]}}
           <p *ngIf="row.data['idprotein']!=''&&!verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
             <nb-checkbox
@@ -92,9 +91,20 @@
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{headers[column]}}
         </th>
-        <div *ngIf="column=='uniprotid'||column=='ncbiid'">
+        <div *ngIf="column=='uniprotid'">
           <td nbTreeGridCell *nbTreeGridCellDef="let row">
-            <div [innerHtml]="row.data[column]"></div>
+            <div [innerHtml]="row.data[column]"
+                 nbPopover="Access this UniProt's entry."
+                 nbPopoverTrigger="hint"
+                 nbPopoverPlacement="bottom"></div>
+          </td>
+        </div>
+        <div *ngIf="column=='ncbiid'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div [innerHtml]="row.data[column]"
+                 nbPopover="Access this NCBI Protein's entry."
+                 nbPopoverTrigger="hint"
+                 nbPopoverPlacement="bottom"></div>
           </td>
         </div>
         <div *ngIf="column!='uniprotid'&&column!='ncbiid'">
@@ -104,16 +114,6 @@
       </ng-container>
 
     </table>
-
-
-    <div class="buttons">
-      <button nbButton (click)="goToTools('BLAST')">BLAST</button>
-      <button nbButton (click)="goToTools('CLUSTAL')">CLUSTAL</button>
-      <button nbButton (click)="goToTools('IEDB')">IEDB</button>
-      <button nbButton (click)="goToTools('HMMER')">HMMER</button>
-      <button nbButton (click)="goToTools('WEBLOGO')">WEBLOGO</button>
-      <button nbButton (click)="goToTools('ML')">Fusion Peptide Prediction</button>
-    </div>
 
   </nb-card-body>
 
@@ -129,6 +129,52 @@
     </div>
 
   </nb-card-footer>
+
+</nb-card>
+
+<nb-card>
+
+  <nb-card-header>
+    LINK TO THE TOOLS
+  </nb-card-header>
+
+  <nb-card-body>
+  <div class="buttons_tools">
+    <p>The following buttons will allow to send the selected data sequences (through the check boxes) to the Tools present in the server.</p>
+    <p></p>
+    <button nbButton
+            nbPopover="Access this BLASTP's page. Select one sequence."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('BLAST')">BLAST</button>
+    <button nbButton
+            nbPopover="Access this CLUSTAL's page. Select at least three sequences."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('CLUSTAL')">CLUSTAL</button>
+    <button nbButton
+            nbPopover="Access this IEDB's page. Select one sequence."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('IEDB')">IEDB</button>
+    <button nbButton
+            nbPopover="Access this HMMER's page. Select one sequence."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('HMMER')">HMMER</button>
+    <button nbButton style="margin:5px;"
+            nbPopover="Access this WEBLOGO's page. Select at least three sequences."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('WEBLOGO')">WEBLOGO</button>
+    <button nbButton
+            nbPopover="Access this Fusion Peptide Prediction's page. Select one sequence."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="goToTools('ML')">Fusion Peptide Prediction</button>
+    <p></p>
+  </div>
+  </nb-card-body>
 
 </nb-card>
 

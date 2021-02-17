@@ -2,17 +2,14 @@
 
   <nb-card-header>
     Fusion Proteins' References
-    <p></p>
   </nb-card-header>
-
 
   <nb-card-body>
 
     <label class="search-label" for="search">Search: </label>
     <input NbInput (keyup.enter)="searchTableResult()" type="text" [formControl]="search_form" id="search"
            class="search-input shape-rectangle size-medium" size="medium" shape="rectangle">
-    <p></p>
-    <button nbButton (click)="searchTableResult()">SEARCH</button>
+    <button nbButton style="width: 100px; margin: 20px;" (click)="searchTableResult()">SEARCH</button>
     <p></p>
     <!--
     <button nbButton (click)="saveDataFile()">SAVE DATA IN FILE</button>
@@ -56,9 +53,20 @@
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{headers[column]}}
         </th>
-        <div *ngIf="column=='uniprotid'||column=='ncbiid'">
+        <div *ngIf="column=='uniprotid'">
           <td nbTreeGridCell *nbTreeGridCellDef="let row">
-            <div [innerHtml]="row.data[column]"></div>
+            <div [innerHtml]="row.data[column]"
+                 nbPopover="Access this UniProt's entry."
+                 nbPopoverTrigger="hint"
+                 nbPopoverPlacement="bottom"></div>
+          </td>
+        </div>
+        <div *ngIf="column=='ncbiid'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div [innerHtml]="row.data[column]"
+                 nbPopover="Access this NCBI Protein's entry."
+                 nbPopoverTrigger="hint"
+                 nbPopoverPlacement="bottom"></div>
           </td>
         </div>
         <div *ngIf="column!='uniprotid'&&column!='ncbiid'">
