@@ -59,7 +59,7 @@
                   *ngIf="row.hasChildren()"
                   [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
                 <span [ngClass]="{'nb-chevron-down': row.expanded, 'nb-chevron-right': !row.expanded}"
-                      aria-hidden="true">
+                      aria-hidden="true" style="float:left">
                 </span>
           </button>
 

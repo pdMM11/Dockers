@@ -62,20 +62,22 @@
                   *ngIf="row.hasChildren()"
                   [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
                 <span [ngClass]="{'nb-chevron-down': row.expanded, 'nb-chevron-right': !row.expanded}"
-                      aria-hidden="true">
+                      aria-hidden="true" style="float:left">
                 </span>
           </button>
           </div>
           {{row.data[customColumn]}}
           <p *ngIf="row.data['idprotein']!=''&&!verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
             <nb-checkbox
-              (checkedChange)="seq_tools(true,row.data['idprotein'],row.data['sequence_fusogenic'])">
+              (checkedChange)="seq_tools(true,row.data['idprotein'],row.data['sequence_fusogenic'])"
+              style="float:left"
+            >
               Select
             </nb-checkbox>
           </p>
           <p *ngIf="row.data['idprotein']!=''&&verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
             <nb-checkbox (checkedChange)="seq_tools(false,row.data['idprotein'],row.data['sequence_fusogenic'])"
-                         [checked]="true">
+                         [checked]="true" style="float:left">
               Select
             </nb-checkbox>
           </p>

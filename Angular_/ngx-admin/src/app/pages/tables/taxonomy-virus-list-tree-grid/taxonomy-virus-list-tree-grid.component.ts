@@ -23,6 +23,7 @@ export interface TaxonomyVirusInterface {
   expanded?: boolean;
   actions?: any;
   page?: any;
+  buttons?: any;
 }
 
 interface ChildrenFP {
@@ -43,11 +44,11 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
    defaultColumns = ['commonname', 'family', 'genre', 'species',
    'subspecies', 'ncbitax'];
    */
-  customColumn = 'commonname';
-  defaultColumns = ['family', 'genre', 'species',
+  customColumn = 'buttons';
+  defaultColumns = ['commonname','family', 'genre', 'species',
     'subspecies', 'ncbitax'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
-  headers = {
+  headers = { 'buttons': 'Additional Links',
     'idtaxonomy': 'ID', 'commonname': 'Common Name', 'family': 'Family',
     'genre': 'Genus', 'species': 'Species',
     'subspecies': 'Subspecies / Strain', 'ncbitax': 'NCBI Tax ID',

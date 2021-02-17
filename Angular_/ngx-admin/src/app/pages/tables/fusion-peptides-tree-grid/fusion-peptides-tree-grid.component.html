@@ -46,7 +46,7 @@
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
 
-      <ng-container [nbTreeGridColumnDef]="customColumn">
+      <ng-container class="TGtable" [nbTreeGridColumnDef]="customColumn">
         <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
           {{headers[customColumn]}}
           <span *nbSortHeaderIcon="let asc = isAscending; let desc = isDescending">
@@ -60,7 +60,7 @@
                   *ngIf="row.hasChildren()"
                   [attr.aria-label]="row.expanded ? 'collapse' : 'expand'">
                 <span [ngClass]="{'nb-chevron-down': row.expanded, 'nb-chevron-right': !row.expanded}"
-                      aria-hidden="true">
+                      aria-hidden="true" style="float:left">
                 </span>
           </button>
           <!--
