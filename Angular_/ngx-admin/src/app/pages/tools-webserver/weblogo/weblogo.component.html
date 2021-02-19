@@ -8,8 +8,35 @@
     target="_blank">Weblogo 3</a> portal)
   </nb-card-header>
   <nb-card-body>
+    <!--
     SEQUENCE: <textarea nbInput fullWidth type='text' value='{{query_seq}}' [formControl]='sequence'
                         placeholder='Sequences in FASTA format' style='width:90%'></textarea>
+    -->
+
+    <table>
+
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 85%;">
+      </colgroup>
+
+      <tbody>
+
+      <tr>
+        <th><label>SEQUENCES:</label></th>
+        <th style="padding-left:50px;">
+          <textarea nbInput fullWidth type='text' value='{{query_seq}}' [formControl]='sequence'
+                    placeholder='Sequences in FASTA format' style="width:1000px"></textarea>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
     <p></p>
     <button nbButton (click)='gotoWebLogo(true)'>WEBLOGO 3 (FILE IMAGE)</button>
     <p></p>

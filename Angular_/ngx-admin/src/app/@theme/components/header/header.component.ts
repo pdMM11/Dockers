@@ -65,6 +65,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   userMenu = [{title: 'Profile'}, {title: 'Log out'}];
   search_form = new FormControl('');
+  prots_autocomplete = [];
+  fps_autocomplete = [];
+  tax_autocomplete = [];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -87,6 +90,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.fetchFusionPeptide(this.value);
         this.fetchProtein(this.value);
         this.fetchTaxonomyVirus(this.value);
+        this.onSearchChange_prot(this.value);
+        this.onSearchChange_fp(this.value);
+        this.onSearchChange_Tax(this.value);
 
         this.openWindow();
 
@@ -223,5 +229,179 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
 
     window.open(decodeURIComponent(url), target);
+  }
+
+
+  onSearchChange_prot(value: string): void {
+    /**
+     Function to retrieve autocomplete sugestions from the Fusion Protein page for the search form.
+     */
+    this.prots_autocomplete = [];
+    this.proteinService.get_autocomplete(value)
+      .subscribe((data) => {
+          this.complete_aux_prot(data['results'], value);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        });
+  }
+
+  complete_aux_prot(data: any, value: string) {
+    /**
+     Function to complement the function onSearchChange_prot,
+     so to retrieve autocomplete sugestions for the search form.
+     */
+    let aux_string = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]['idprotein'].toString().toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['idprotein'].toString());
+        continue;
+      } else if (data[i]['virus'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['virus']);
+        continue;
+      } else if (data[i]['name'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['name']);
+        continue;
+      } else if (data[i]['class_field'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['class_field']);
+        continue;
+      } else if (data[i]['activation'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['activation']);
+        continue;
+      } else if (data[i]['name_fusogenic_unit'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['name_fusogenic_unit']);
+        continue;
+      } else if (data[i]['location_fusogenic'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['location_fusogenic']);
+        continue;
+      } else if (data[i]['sequence_fusogenic'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['sequence_fusogenic']);
+        continue;
+      } else if (data[i]['uniprotid'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['uniprotid']);
+        continue;
+      } else if (data[i]['ncbiid'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['ncbiid']);
+        continue;
+      } else if (data[i]['idtaxonomy'].toString().toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['idtaxonomy'].toString());
+        continue;
+      }
+    }
+    let aux_array = Array.from(new Set(aux_string));
+    if (aux_array.length > 5) {
+      aux_array = aux_array.slice(0, 5);
+    }
+    // this.autocomplete.push({page: 'Fusion Proteins', sugestions: aux_array});
+    this.prots_autocomplete = aux_array;
+
+  }
+
+  onSearchChange_fp(value: string): void {
+    /**
+     Function to retrieve autocomplete sugestions from the Fusion Peptide page for the search form.
+     */
+    this.fps_autocomplete = [];
+    this.fusionpeptideService.get_autocomplete(value)
+      .subscribe(
+        (data) => {
+          this.complete_aux_fp(data['results'], value);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        });
+  }
+
+  complete_aux_fp(data: any, value:string) {
+    /**
+     Function to complement the function onSearchChangeFP, so to retrieve autocomplete sugestions for the search form.
+     */
+    let aux_string = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]['idfusion_peptides'].toString().toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['idfusion_peptides'].toString());
+        continue;
+      } else if (data[i]['protein_name'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['protein_name']);
+        continue;
+      } else if (data[i]['virus'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['virus']);
+        continue;
+      } else if (data[i]['residues'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['residues']);
+        continue;
+      } else if (data[i]['sequence'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['sequence']);
+        continue;
+      } else if (data[i]['annotation_method'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['annotation_method']);
+        continue;
+      } else if (data[i]['exp_evidence'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['exp_evidence']);
+        continue;
+      } else if (data[i]['protein'].toString().toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['protein'].toString());
+        continue;
+      }
+    }
+    let aux_array = Array.from(new Set(aux_string));
+    if (aux_array.length > 5) {
+      aux_array = aux_array.slice(0, 5);
+    }
+    // this.autocomplete.push({page: 'Fusion Peptides', sugestions: aux_array});
+    this.fps_autocomplete = aux_array;
+  }
+
+  onSearchChange_Tax(value: string): void {
+    /**
+     Function to retrieve autocomplete sugestions from the Virus' Taxonomy page for search form.
+     */
+    this.tax_autocomplete = [];
+    this.taxonomyvirusService.get_autocomplete(value)
+      .subscribe(
+        (data) => {
+          this.complete_aux_tax(data['results'], value);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        });
+  }
+
+  complete_aux_tax(data: any, value: string) {
+    /**
+     Function to complement the function onSearchChange_Tax, so to retrieve autocomplete sugestions for the search form.
+     */
+    let aux_string = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]['idtaxonomy'].toString().toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['idtaxonomy'].toString());
+        continue;
+      } else if (data[i]['commonname'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['commonname']);
+        continue;
+      } else if (data[i]['family'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['family']);
+        continue;
+      } else if (data[i]['genre'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['genre']);
+        continue;
+      } else if (data[i]['species'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['species']);
+        continue;
+      } else if (data[i]['subspecies'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['subspecies']);
+        continue;
+      } else if (data[i]['ncbitax'].toUpperCase().includes(value.toUpperCase())) {
+        aux_string.push(data[i]['ncbitax']);
+        continue;
+      }
+    }
+    let aux_array = Array.from(new Set(aux_string));
+    if (aux_array.length > 5) {
+      aux_array = aux_array.slice(0, 5);
+    }
+    // this.autocomplete.push({page: 'Virus\' Taxonomy', sugestions: aux_array});
+
+    this.tax_autocomplete = aux_array;
   }
 }

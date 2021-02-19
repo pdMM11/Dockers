@@ -9,6 +9,7 @@
   </nb-card-header>
 
   <nb-card-body>
+    <!--
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequences in FASTA format" style="width:90%"></textarea>
     <p></p>
@@ -34,10 +35,79 @@
       <nb-option value="blosum">BLOSUM</nb-option>
       <nb-option value="pam">PAM</nb-option>
     </nb-select>
+    -->
+
+    <table>
+
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 85%;">
+      </colgroup>
+
+      <tbody>
+
+      <tr>
+        <th><label>SEQUENCES:</label></th>
+        <th style="padding-left:50px;">
+      <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
+                placeholder="Sequences in FASTA format" style="width:1000px"></textarea>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>OUTPUT:</label></th>
+        <th style="padding-left:50px;">
+          <nb-radio-group [(ngModel)]="option">
+            <nb-radio
+              *ngFor="let option of options"
+              [disabled]="option.disabled"
+              [value]="option.value"
+              [checked]="option.checked">
+              {{ option.label }}
+            </nb-radio>
+          </nb-radio-group>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>PAIRWISE ALIGNMENT:</label></th>
+        <th style="padding-left:50px;">
+          <nb-select placeholder="Select Showcase" [(selected)]="selectedItemPair">
+            <nb-option value="fast">FAST/APPROXIMATE</nb-option>
+            <nb-option value="slow">SLOW/ACCURATE</nb-option>
+          </nb-select>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>WEIGHT MATRIX:</label></th>
+        <th style="padding-left:50px;">
+          <nb-select placeholder="Select Showcase" [(selected)]="selectedItemMat">
+            <nb-option value="blosum">BLOSUM</nb-option>
+            <nb-option value="pam">PAM</nb-option>
+          </nb-select>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
     <p></p>
-    <button nbButton (click)="gotoEBI()">GO TO GENOME CLUSTAL W (GENOME.JP)</button>
+    <button nbButton (click)="gotoEBI()">GO TO CLUSTAL W (GENOME.JP)</button>
     <p></p>
-    <button nbButton (click)="gotoClustal()">GO TO CLUSTAL OMEGA (BACKEND)</button>
+    <button nbButton (click)="gotoClustal()">GO TO CLUSTAL OMEGA (BACK-END)</button>
 
   </nb-card-body>
 </nb-card>
+
+

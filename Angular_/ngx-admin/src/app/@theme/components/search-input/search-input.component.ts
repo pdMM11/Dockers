@@ -18,11 +18,11 @@ interface StateGroup {
   template: `
     <i class="control-icon ion ion-ios-search"
        (click)="showInput()"></i>
-    <input placeholder="Type your search request here..."
+    <input placeholder="Type your search term here"
            #input
            [class.hidden]="!isInputShown"
            (blur)="hideInput()"
-           (input)="onChange()"
+           (input)="onChange($event.target.value)"
            [formControl]="search_form"
            [matAutocomplete]="autoGroup"
            (keyup.enter)="onInput($event)"
@@ -68,8 +68,9 @@ export class SearchInputComponent {
     // this.fetchProtein(val);
     // this.fetchTaxonomyVirus(val);
   }
-  onChange() {
-
+  onChange(searchValue: string) {
+    alert(searchValue);
+    alert(this.search_form.value);
     if (this.search_form.value.length > 1) {
       this.onSearchChange_prot();
       this.onSearchChangeFP();

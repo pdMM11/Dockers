@@ -45,16 +45,71 @@
       text-align: center;
     }
   </style>
-  <div *ngIf="fp_data.length>0">
-    <button (click)="openResults(value, true,false,false)" nbButton>Fusion Peptides</button>
+  <div *ngIf="prot_data.length>0">
+    <button (click)="openResults(value, false,true,false)" nbButton
+            nbPopover="Access all the results from that query in the Fusion Proteins page."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom">Fusion Protein</button>
+    <p></p>
+    <div *ngFor="let sug of prots_autocomplete">
+      <div *ngIf="sug.length<21">
+        <button nbButton (click)="openResults(sug, false,true,false)" status="basic"
+                nbPopover="Access all the results from that query in the Fusion Proteins page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug}}</button>
+      </div>
+      <div *ngIf="sug.length>20">
+        <button nbButton (click)="openResults(sug, false,true,false)" status="basic"
+                nbPopover="Access all the results from that query in the Fusion Proteins page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug.substring(20)}}...</button>
+      </div>
+    </div>
     <p></p>
   </div>
-  <div *ngIf="prot_data.length>0">
-    <button (click)="openResults(value, false,true,false)" nbButton>Fusion Protein</button>
+  <div *ngIf="fp_data.length>0">
+    <button (click)="openResults(value, true,false,false)" nbButton
+            nbPopover="Access all the results from that query in the Fusion Peptides page."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom">Fusion Peptides</button>
+    <p></p>
+    <div *ngFor="let sug of fps_autocomplete">
+      <div *ngIf="sug.length<21">
+        <button nbButton (click)="openResults(sug, true,false,false)" status="basic"
+                nbPopover="Access this result in the Fusion Peptides page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug}}</button>
+      </div>
+      <div *ngIf="sug.length>20">
+        <button nbButton (click)="openResults(sug, true,false,false)" status="basic"
+                nbPopover="Access this result in the Fusion Peptides page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug.substring(20)}}...</button>
+      </div>
+    </div>
     <p></p>
   </div>
   <div *ngIf="tax_data.length>0">
-    <button (click)="openResults(value, false,false,true)" nbButton>Taxonomy Virus</button>
+    <button (click)="openResults(value, false,false,true)" nbButton
+            nbPopover="Access all the results from that query in the Virus' Taxonomy page."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+    >Taxonomy Virus</button>
+    <p></p>
+    <div *ngFor="let sug of tax_autocomplete">
+      <div *ngIf="sug.length<21">
+        <button nbButton (click)="openResults(sug, false,false,true)" status="basic"
+                nbPopover="Access this result in the Virus' Taxonomy page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug}}</button>
+      </div>
+      <div *ngIf="sug.length>20">
+        <button nbButton (click)="openResults(sug, false,false,true)" status="basic"
+                nbPopover="Access this result in the Virus' Taxonomy page."
+                nbPopoverTrigger="hint"
+                nbPopoverPlacement="bottom">{{sug.substring(20)}}...</button>
+      </div>
+    </div>
     <p></p>
   </div>
   <div *ngIf="fp_data.length==0&&prot_data.length==0&&tax_data.length==0">

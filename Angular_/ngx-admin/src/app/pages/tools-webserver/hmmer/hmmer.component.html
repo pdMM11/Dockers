@@ -9,6 +9,7 @@
   </nb-card-header>
 
   <nb-card-body>
+    <!--
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequence" style="width:90%"></textarea>
 
@@ -20,7 +21,49 @@
       <nb-option value="swissprot">Swiss-Prot</nb-option>
       <nb-option value="pdb">PDB</nb-option>
     </nb-select>
+    -->
+
+    <table>
+
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 85%;">
+      </colgroup>
+
+      <tbody>
+
+      <tr>
+        <th><label>SEQUENCE:</label></th>
+        <th style="padding-left:50px;">
+      <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
+                placeholder="Sequence" style="width:1000px"></textarea>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>DATABASE:</label></th>
+        <th style="padding-left:50px;">
+          <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
+            <nb-option value="uniprotrefprot">Reference Proteomes</nb-option>
+            <nb-option value="uniprotkb">UniProtKB</nb-option>
+            <nb-option value="swissprot">Swiss-Prot</nb-option>
+            <nb-option value="pdb">PDB</nb-option>
+          </nb-select>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
     <p></p>
     <button nbButton (click)="gotoEBI()">GO TO EBI HMMER</button>
   </nb-card-body>
 </nb-card>
+
+

@@ -5,6 +5,8 @@
                                                  nbPopoverPlacement="bottom"
                                                  target="_blank">Propythia</a></nb-card-header>
   <nb-card-body>
+
+    <!--
     SEQUENCE: <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
                         placeholder="Sequence" style="width:90%"></textarea>
     <p></p>
@@ -24,6 +26,69 @@
     <p></p>
     <p></p>
     GAP SIZE: <input nbInput type="number" min="1" max="4" placeholder="1" [formControl]="gap_size">
+    -->
+
+    <table>
+
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 85%;">
+      </colgroup>
+
+      <tbody>
+
+      <tr>
+        <th><label>SEQUENCE:</label></th>
+        <th style="padding-left:50px;">
+      <textarea nbInput fullWidth type="text" value="{{query_seq}}" [formControl]="sequence"
+                placeholder="Sequence" style="width:1000px"></textarea>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>MODEL:</label></th>
+        <th style="padding-left:50px;">
+          <nb-select placeholder="{{option_model}}" [(selected)]="option_model">
+            <nb-option value="svm">Support Vector Machine</nb-option>
+            <nb-option value="rf">Random Forest</nb-option>
+            <nb-option value="gboosting">Gradient Boosting</nb-option>
+            <nb-option value="knn"><i>K</i>-Nearest Neighbors</nb-option>
+            <nb-option value="lr">Linear Regression</nb-option>
+            <nb-option value="gnb">Gaussian Naive Bayes</nb-option>
+            <nb-option value="nn">Neural Network</nb-option>
+          </nb-select>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>WINDOW SIZE:</label></th>
+        <th style="padding-left:50px;">
+          <input nbInput type="number" min="5" placeholder="15" [formControl]="window_size"
+                 class="search-input shape-rectangle size-medium">
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>GAP SIZE:</label></th>
+        <th style="padding-left:50px;">
+          <input nbInput type="number" min="1" max="4" placeholder="1" [formControl]="gap_size"
+                 class="search-input shape-rectangle size-medium">
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
     <p></p>
     <button nbButton (click)="gotoML()">PREDICT FUSION PEPTIDES</button>
     <p></p>
@@ -98,9 +163,10 @@
  </nb-card-header>
  <nb-card-body>
 
+   <!--
    WEBLOGO FAMILY:
    <nb-select placeholder="{{option_conserv}}" [(selected)]="option_conserv"
-               > <!-- onChange()="graphConserv(false)" -->
+               >
       <nb-option value="Arenaviridae">Arenaviridae</nb-option>
       <nb-option value="Coronaviridae">Coronaviridae</nb-option>
       <nb-option value="Flaviviridae">Flaviviridae</nb-option>
@@ -115,6 +181,46 @@
       <nb-option value="Retroviridae">Retroviridae</nb-option>
       <nb-option value="Togaviridae">Togaviridae</nb-option>
     </nb-select>
+    -->
+
+   <table>
+
+     <colgroup>
+       <col span="1" style="width: 15%;">
+       <col span="1" style="width: 85%;">
+     </colgroup>
+
+     <tbody>
+
+     <tr>
+       <th><label>WEBLOGO FAMILY:</label></th>
+       <th style="padding-left:92px;">
+         <nb-select placeholder="{{option_conserv}}" [(selected)]="option_conserv"
+         > <!-- onChange()="graphConserv(false)" -->
+           <nb-option value="Arenaviridae">Arenaviridae</nb-option>
+           <nb-option value="Coronaviridae">Coronaviridae</nb-option>
+           <nb-option value="Flaviviridae">Flaviviridae</nb-option>
+           <nb-option value="Filoviridae">Filoviridae</nb-option>
+           <nb-option value="Herpesviridae">Herpesviridae</nb-option>
+           <nb-option value="Orthomyxoviridae">Orthomyxoviridae</nb-option>
+           <nb-option value="Paramyxoviridae">Paramyxoviridae</nb-option>
+           <nb-option value="Peribunyaviridae">Peribunyaviridae</nb-option>
+           <nb-option value="Phenuiviridae">Phenuiviridae</nb-option>
+           <nb-option value="Pneumoviridae">Pneumoviridae</nb-option>
+           <nb-option value="Rhabdoviridae">Rhabdoviridae</nb-option>
+           <nb-option value="Retroviridae">Retroviridae</nb-option>
+           <nb-option value="Togaviridae">Togaviridae</nb-option>
+         </nb-select>
+       </th>
+     </tr>
+     <tr class="blank_row">
+       <td colspan="2"></td>
+     </tr>
+
+     </tbody>
+
+   </table>
+
     <p></p>
     <button nbButton (click)="getConserv()">PREDICT CONSERVATION</button>
     <p></p>
@@ -155,4 +261,6 @@
   </nb-card-body>
 
 </nb-card>
+
+
 

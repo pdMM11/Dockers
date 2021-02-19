@@ -74,5 +74,13 @@ dt, dd
 .White {background-color:white;}
 
 button {
-  width: 250px;
+  width: 300px;
+}
+
+table, th, tr {
+  vertical-align: top;
+}
+
+.blank_row {
+  height: 10px !important; /* overwrites any other rules */
 }
