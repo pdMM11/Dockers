@@ -105,7 +105,6 @@ export class ClustalComponent implements OnInit {
       });
       this.clustal.clustalTreeBackend().subscribe(data => {
         const data_result = data as string;
-        alert(data_result);
         const blob = new Blob([data_result], {type: 'text/plain'});
         const url = window.URL.createObjectURL(blob);
         window.open(url);

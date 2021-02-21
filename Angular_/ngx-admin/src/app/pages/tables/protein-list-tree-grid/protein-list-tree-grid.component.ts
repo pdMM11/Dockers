@@ -9,6 +9,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
+import {LocalDataSource} from 'ng2-smart-table';
 
 
 interface ProteinInterface {
@@ -36,6 +37,13 @@ interface ChildrenFP {
   page?: any;
 }
 
+interface STSeqTools {
+  idprotein?: string;
+  name?: string;
+  seq?: string;
+  sequence?: string;
+}
+
 
 @Component({
   selector: 'ngx-protein-list-tree-grid',
@@ -53,7 +61,8 @@ export class ProteinListTreeGridComponent implements OnInit {
   defaultColumns = ['name', 'class_field', 'activation', 'name_fusogenic_unit', 'location_fusogenic',
     'sequence_fusogenic', 'uniprotid', 'ncbiid', 'virus'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
-  headers = { 'buttons': 'Select / Additional Links',
+  headers = {
+    'buttons': 'Select / Additional Links',
     'idprotein': 'ID', 'name': 'Protein Name', 'class_field': 'Class',
     'activation': 'Activation Method', 'name_fusogenic_unit': 'Name of Fusogenic Unit',
     'location_fusogenic': 'Location of Fusogenic Unit', 'sequence_fusogenic': 'Sequence of Fusogenic Unit',
@@ -93,6 +102,48 @@ export class ProteinListTreeGridComponent implements OnInit {
 
   autocomplete = [];
 
+  seqTools = new LocalDataSource([]);
+  aux_seqTools: STSeqTools[] = [];
+
+  settings_seqtools = {
+    /**
+     add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+     edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+     */
+    mode: 'inline',
+    hideSubHeader: true,
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
+    actions: {
+      add: false,
+      edit: false,
+    },
+    columns: {
+      idprotein: {
+        title: 'Entry\'s ID',
+        type: 'string',
+      },
+      name: {
+        title: 'Protein\'s Name',
+        type: 'string',
+      },
+      seq: {
+        title: 'Sequence',
+        type: 'string',
+      },
+    },
+  };
+
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<ProteinInterface>,
               private proteinService: ProteinService,
               private route: ActivatedRoute,
@@ -103,7 +154,6 @@ export class ProteinListTreeGridComponent implements OnInit {
   ) {
     this.API_URL = env.apiUrl;
   }
-
 
   ngOnInit() {
     this.fetchProtein();
@@ -177,12 +227,12 @@ export class ProteinListTreeGridComponent implements OnInit {
         this.idProt = String(aux['idprotein']);
         this.idTax = String(aux['idtaxonomy']);
         if (aux['uniprotid'] !== null) {
-           aux['uniprotid'] = '<a href="https://www.uniprot.org/uniprot/' + aux['uniprotid'] + '" target="_blank">'
-             + aux['uniprotid'] + '</a>';
+          aux['uniprotid'] = '<a href="https://www.uniprot.org/uniprot/' + aux['uniprotid'] + '" target="_blank">'
+            + aux['uniprotid'] + '</a>';
         }
         if (aux['ncbiid'] !== null) {
-           aux['ncbiid'] = '<a href="https://www.ncbi.nlm.nih.gov/protein/' + aux['ncbiid'] + '" target="_blank">'
-             + aux['ncbiid'] + '</a>';
+          aux['ncbiid'] = '<a href="https://www.ncbi.nlm.nih.gov/protein/' + aux['ncbiid'] + '" target="_blank">'
+            + aux['ncbiid'] + '</a>';
         }
         this.aux_inter.actions = null;
         this.aux_inter = aux;
@@ -344,13 +394,88 @@ export class ProteinListTreeGridComponent implements OnInit {
     }
   }
 
-  seq_tools(checked: boolean, id: string, seq: string) {
-    if (checked) {
-      if (!this.search_tools.includes('>' + String(id) + '\n' + seq + '\n')) {
-        this.search_tools = this.search_tools + '>' + String(id) + '\n' + seq + '\n';
+  seq_tools(checked: boolean, id: string, seq: string = '', name: string = '', table = false) {
+    /**
+     * Function to add / remove seqeunces from the selected list (checkboxes)
+     */
+    let aux_seq = '';
+    if (seq.length > 50) {
+      aux_seq = seq.substring(0, 50) + '...';
+    }
+    if (seq !== null) {
+      const aux: STSeqTools = {idprotein: id, name: name, seq: aux_seq, sequence: seq};
+      if (checked) {
+        if (!this.search_tools.includes('>' + String(id) + '\n' + seq + '\n')) {
+          this.search_tools = this.search_tools + '>' + String(id) + '\n' + seq + '\n';
+          this.aux_seqTools.push(aux);
+          this.seqTools = new LocalDataSource(this.aux_seqTools);
+        }
+      } else {
+        this.search_tools = this.search_tools.replace('>' + String(id) + '\n' + seq + '\n', '');
+
+        this.aux_seqTools = this.aux_seqTools.filter(item => item.idprotein !== id);
+        if (table) {
+          this.seqTools = new LocalDataSource(this.aux_seqTools);
+        }
       }
+    }
+  }
+
+  selectAllQuerySequences() {
+    /**
+     * Select all the sequences from a given query
+     */
+    let protein = '';
+    let taxonomy = '';
+    if (this.protParam !== null) {
+      protein = this.protParam;
+    }
+    if (this.taxParam !== null) {
+      taxonomy = this.taxParam;
+    }
+    this.proteinService.receive_all(this.search_form.value, protein, taxonomy).subscribe(
+      (data: Array<object>) => {
+        this.select_all_aux(data);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+    this.fetchProtein();
+  }
+
+  select_all_aux(data: Array<object>) {
+    /**
+     * Auxiliar function to add all the sequences from a given query
+     */
+    for (const i of data) {
+      if (i['sequence_fusogenic'] !== null) {
+        this.seq_tools(true, i['idprotein'], i['sequence_fusogenic'], i['name']);
+      }
+    }
+    alert('NOTICE: ALL SEQUENCES ARE SELECTED');
+  }
+
+  clearAllSelected() {
+    /**
+     * Delete contains all the selected sequences from the checkboxes
+     */
+    this.search_tools = '';
+    this.aux_seqTools = [];
+    this.seqTools = new LocalDataSource(this.aux_seqTools);
+    this.fetchProtein();
+  }
+
+  onDeleteConfirm(event): void {
+    /**
+     * Delete a entry from the Smart table that contains all the selected sequences
+     */
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.seq_tools(false, event.data.idprotein, event.data.sequence, '', true);
+      this.fetchProtein();
+      event.confirm.resolve();
+      // this.service.deleteTheRow(event.data.id);
     } else {
-      this.search_tools = this.search_tools.replace('>' + String(id) + '\n' + seq + '\n', '');
+      event.confirm.reject();
     }
   }
 
@@ -360,7 +485,7 @@ export class ProteinListTreeGridComponent implements OnInit {
      */
     if (type === 'BLAST') {
       if ((this.search_tools.match(/>/g) || []).length > 0) {
-        this.gotoURLSameApp('../../blast?sequence=' + encodeURI(this.search_tools));
+        this.gotoURLSameApp('../../tools/blast?sequence=' + encodeURI(this.search_tools));
         /**
          window.open('http://localhost:4201/pages/tools/blast?sequence=' + encodeURI(this.search_tools),
          '_blank');
@@ -413,7 +538,7 @@ export class ProteinListTreeGridComponent implements OnInit {
         alert('ERROR: SELECT 1 SEQUENCE');
       }
     } else if (type === 'WEBLOGO') {
-      if ((this.search_tools.match(/>/g) || []).length > 1) {
+      if ((this.search_tools.match(/>/g) || []).length > 2) {
 
         let string_url = '';
 
@@ -433,7 +558,7 @@ export class ProteinListTreeGridComponent implements OnInit {
          '_blank');
          */
       } else {
-        alert('ERROR: SELECT AT LEAST 2 SEQUENCES');
+        alert('ERROR: SELECT AT LEAST 3 SEQUENCES');
       }
     } else if (type === 'ML') {
       if ((this.search_tools.match(/>/g) || []).length === 1) {
@@ -559,11 +684,12 @@ export class ProteinListTreeGridComponent implements OnInit {
       this.autocomplete = [];
     }
   }
+
   complete_aux(data: any) {
     /**
      Function to complement the function onSearchChange, so to retrieve autocomplete sugestions for the search form.
      */
-    let aux_string = [];
+    const aux_string = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i]['idprotein'].toString().toUpperCase().includes(this.search_form.value.toUpperCase())) {
         aux_string.push(data[i]['idprotein'].toString());
@@ -587,8 +713,8 @@ export class ProteinListTreeGridComponent implements OnInit {
         aux_string.push(data[i]['location_fusogenic']);
         continue;
       } else if (data[i]['sequence_fusogenic'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
-      aux_string.push(data[i]['sequence_fusogenic']);
-      continue;
+        aux_string.push(data[i]['sequence_fusogenic']);
+        continue;
       } else if (data[i]['uniprotid'].toUpperCase().includes(this.search_form.value.toUpperCase())) {
         aux_string.push(data[i]['uniprotid']);
         continue;
@@ -604,5 +730,13 @@ export class ProteinListTreeGridComponent implements OnInit {
     if (this.autocomplete.length > 5) {
       this.autocomplete = this.autocomplete.slice(0, 5);
     }
+  }
+
+  verify_search_tools() {
+    /**
+     * Function to verify the presence of selected sequences,
+     * so to show the HTML card with its options to link to the tools.
+     */
+    return (this.search_tools.match(/>/g) || []).length > 0;
   }
 }

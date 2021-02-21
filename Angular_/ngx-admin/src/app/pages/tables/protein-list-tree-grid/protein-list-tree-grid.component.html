@@ -69,15 +69,16 @@
           {{row.data[customColumn]}}
           <p *ngIf="row.data['idprotein']!=''&&!verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
             <nb-checkbox
-              (checkedChange)="seq_tools(true,row.data['idprotein'],row.data['sequence_fusogenic'])"
+              (checkedChange)="seq_tools(true,row.data['idprotein'],row.data['sequence_fusogenic'],
+              row.data ['name'])"
               style="float:left"
             >
               Select
             </nb-checkbox>
           </p>
-          <p *ngIf="row.data['idprotein']!=''&&verify_checkbox(row.data['idprotein'],row.data['sequence_fusogenic'])">
-            <nb-checkbox (checkedChange)="seq_tools(false,row.data['idprotein'],row.data['sequence_fusogenic'])"
-                         [checked]="true" style="float:left">
+          <p *ngIf="row.data['idprotein']!=''&&verify_checkbox(row.data['idprotein'], row.data['sequence_fusogenic'])">
+            <nb-checkbox (checkedChange)="seq_tools(false, row.data['idprotein'],
+            row.data['sequence_fusogenic'], row.data ['name'])" [checked]="true" style="float:left">
               Select
             </nb-checkbox>
           </p>
@@ -116,6 +117,12 @@
       </ng-container>
 
     </table>
+    <p></p>
+    <button nbButton
+            nbPopover="Select all the sequences from this query."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="selectAllQuerySequences()">Select All Sequences</button>
 
   </nb-card-body>
 
@@ -134,7 +141,7 @@
 
 </nb-card>
 
-<nb-card>
+<nb-card *ngIf="verify_search_tools()">
 
   <nb-card-header>
     Link to the Tools
@@ -143,6 +150,17 @@
   <nb-card-body>
   <div class="buttons_tools">
     <p>The following buttons will allow to send the selected sequence(s) (through the check boxes) to the Tools present in the server.</p>
+    <nb-card-body *ngIf="verify_search_tools()">
+      <ng2-smart-table [settings]="settings_seqtools" [source]="seqTools"
+                       (deleteConfirm)="onDeleteConfirm($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+    <p></p>
+    <button nbButton
+            nbPopover="Remove all the selected sequences."
+            nbPopoverTrigger="hint"
+            nbPopoverPlacement="bottom"
+            (click)="clearAllSelected()">Clear All Selections</button>
     <p></p>
     <button nbButton
             nbPopover="Access this BLASTP's page. Select one sequence."
