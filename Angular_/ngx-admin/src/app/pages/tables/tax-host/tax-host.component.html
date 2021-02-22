@@ -28,6 +28,8 @@
             nbPopoverPlacement="bottom"
             (click)="goToUrl(null, true)">MANAGE DATA</button>
 
+    <p></p>
+
     <table [nbTreeGrid]="dataSource"
            [nbSort]="dataSource"
            (sort)="updateSort($event)"
