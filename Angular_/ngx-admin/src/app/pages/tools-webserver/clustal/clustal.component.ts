@@ -96,13 +96,20 @@ export class ClustalComponent implements OnInit {
     }
     if (seqSend !== '') {
       this.clustal.clustalBackend(seqSend, this.option).subscribe(data => {
-        const data_result = data as string;
-        const blob = new Blob([data_result], {type: 'text/plain'});
-        const url = window.URL.createObjectURL(blob);
+
+        let data_result = data['align'] as string;
+        let blob = new Blob([data_result], {type: 'text/plain'});
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+
+        data_result = data['tree'] as string;
+        blob = new Blob([data_result], {type: 'text/plain'});
+        url = window.URL.createObjectURL(blob);
         window.open(url);
       }, error => {
         alert(error.message);
       });
+      /**
       this.clustal.clustalTreeBackend().subscribe(data => {
         const data_result = data as string;
         const blob = new Blob([data_result], {type: 'text/plain'});
@@ -111,6 +118,7 @@ export class ClustalComponent implements OnInit {
       }, error => {
         alert(error.message);
       });
+       */
     }
   }
 

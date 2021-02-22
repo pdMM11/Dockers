@@ -42,7 +42,6 @@ export class ClustalService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      responseType: 'text/plain',
     };
     this.data = {};
     this.data.seqs = seqsSend;

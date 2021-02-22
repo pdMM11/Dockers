@@ -473,11 +473,16 @@ def clustal_all(request):
 
         file_out = open(out_file, "r")
 
-        data_send = file_out.read()
+        data_send = {}
+
+        data_send['align'] = file_out.read()
 
         # data_send['dnd'] = file_tree_out.read()
 
-        return HttpResponse(data_send, content_type="text/plain")
+        file_tree_out = open("tree.dnd", "r")
+        data_send['tree'] = file_tree_out.read()
+
+        return HttpResponse(json.dumps(data_send))
 
 
 def send_clustal_tree(request):

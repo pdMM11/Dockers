@@ -1,50 +1,47 @@
 CLUSTAL O(1.2.2) multiple sequence alignment
 
 
-4      STSHLDDTCSDEVQLWGPTARIFASILA----PG----------VAAAQALREIERLACW
-2      ----------------EPVSLTLALLLGGLTMGGIAAGVGT--GTTALVATQQFQQLQAA
-5      ------------------------FVL-----GAIALGVATAAAVTAGVAIAKTIRLEGE
-6      -------------------AVQFIPLLVGLGITGATLAGG----TGLGVSVHTYHKLSNQ
-                                :*      .          .    :     :*   
+56      MRCIGISNRDFVEGVSGGSWVDIVLEHGSCVTTMAKNKP--------TLDFELIETEAKQ
+59      ------------------------------------------------------------
+60      --------------------------MGNCNGASKSNQPDSSRATQPAAEFRRVAHSSLY
+                                                                    
 
-4      -----------------SVKQANLTTSLLGDLLDDVTSI-RHAVLQ--------------
-2      -----------------MHDDLKEVEKSITNLEKSLTSL-SEVVLQ--------------
-5      VAAIKGALRKTNEAVSTLGNGVRVLATAVNDLKDFISKKLTPAINKNKCDISDLKMAVSF
-6      -----------------LIEDVQALSGTINDLQDQIDSL-AEVVLQ--------------
-                          .  .     : :* . : .    .: :              
+56      P-------------------ATLRKYCIEAKLTNTTTDSRCPTQGEPSLNEEQDKRFVCK
+59      -----------------------------AKLTNTTTDSRCPTQGEPSLNEEQDKRFVCK
+60      GRYNCKCCWFADTNLITCNDHYLCLRCHQGMLRNSDLCNICWKP-LPTTITVPVEPTAPP
+                                     . * *:   . * .   *:      :  .  
 
-4      ---NRAAIDFL--LLAHGHGCEDVAGMCCFNLSDHSESIQKKFQLMKEHVNKIGVDSD--
-2      ---NRRGLDLL--FLKEGGLCAALKEECCFYAD-HTGLVRDSMAKLRERLSQRQKLFE--
-5      GQYNRRFLNVVRQFSDNAGITPAIS----LDLMTDAELVRA-VSNMPTSSGQINLMLENR
-6      ---NRRGLDLL--TAEQGGICLALQEKCCFYAN-KSGIVRDKIRKLQEDLLARKRALY--
-          **  ::.:     ..     :     :    .:  ::  .  :              
+56      HSMVDRGWGNGCGLFGKGGIVTCAMFTCKKNMKGKVVQPENLEYTIVITPHSGEEHAVGN
+59      HSMVDRGWGNGCGLFGKGGI----------------------------------------
+60      PGSVDRGWGNGCGLFGKGG-----------------------------------------
+         . ****************                                         
 
-4      -----PIGSWLRGLFGGIGEWAVHLLKGLLLGLVVILLLVVCLPCLLQIVCGNIRKMINN
-2      -----SQQGWFEGLFNKSPWFT-TLISTIMGPLIILLLILLFGPCILNRLVQFIKDRISV
-5      AMVRRKGFGILIGVYGSSVVYM------VQLPIFG----VIDTPCWKVKAAPLCSGK-DG
-6      -----DNPLW-----NGLNGFL-PYLLPSLGPLFGLILFLTLGPCIRKTLTRIIHDKIQG
-                           :           :.     :   **             . 
+56      DTGKHGKEIKITPQSSITEAELTGYGTVTMECSPRTGLDFNEMVLLQMENKAWLVHRQWF
+59      ------------------------------------------------------------
+60      ------------------------------------------------------------
+                                                                    
 
-4      SISYH------------T--EYKKLQKAC-------------------------------
-2      VQAL--------------------------------------------------------
-5      SYACLLREDQGWYCQNAGSTVYYPNEEDCEVRSDHVFCDTAAGINVAKESEECNRNISTT
-6      SKNPR------------ISPAVQATPNRD-------------------------------
-                                                                   
+56      LDLPLPWLPGADTQGSNWIQKETLVTFKNPHAKKQDVVVLGSQEGAMHTALTGATEIQMS
+59      ------------------------------------------------------------
+60      ------------------------------------------------------------
+                                                                    
 
-4      ---------GQPESRIV-------------------------------------------
-2      ------------------------------------------------------------
-5      KYPCKVSTGRHPISMVALSPLGALVACYDGVSCSIGSNKVGIIRPLGKGCSYISNQDADT
-6      ---------GYPRSMV--------------------------------------------
-                                                                   
+56      SGNLLFTGHLKCRLRMDKLQLKGMSYSMCTGKFKVVKEIAETQHGTIVIRVQYEGDGSPC
+59      ------------------------------------------------------------
+60      ------------------------------------------------------------
+                                                                    
 
-4      ------------------------------------------------------------
-2      ------------------------------------------------------------
-5      VTIDNPVYQLSKVEGEQHTIKGKPVSSNFDPIEFPEDQFNIALDQVFESVEKSKNLIDQS
-6      ------------------------------------------------------------
-                                                                   
+56      KIPFEIMDLEKRHVLGRLITVNPIVTEKDSPVNIEAEPPFGDSYIIIGVEPGQLKLNWFK
+59      ------------------------------------------------------------
+60      ------------------------------------------------------------
+                                                                    
 
-4      ------------------------------------------------------------
-2      ------------------------------------------------------------
-5      NKILDSTEKGNAGFVMVIVLIVLLMLAAVGVGIFFVVKKRKAAPKFPMEMNGVNNKGFIP
-6      ------------------------------------------------------------
-                                                                   
+56      KGSSIGQMIETTMRGAKRMAILGDTAWDFGSLGGVFTSIGKALHQVFGAIYGAAFSGVSW
+59      ------------------------------------------------------------
+60      ------------------------------------------------------------
+                                                                    
+
+56      IMKILIGVIITWIGMNSRSTSLSVSLVLVGVVTLYLGVMVQA
+59      ------------------------------------------
+60      ------------------------------------------
+                                                  
