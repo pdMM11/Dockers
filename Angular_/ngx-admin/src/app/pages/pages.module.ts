@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {
-  NbCardModule,
-  NbMenuModule,
-  NbPopoverModule,
-  NbRadioModule,
-  NbSelectModule,
-  NbTooltipModule,
+    NbCardModule, NbCheckboxModule,
+    NbMenuModule,
+    NbPopoverModule,
+    NbRadioModule,
+    NbSelectModule,
+    NbTooltipModule,
 } from '@nebular/theme';
 
 import {ThemeModule} from '../@theme/theme.module';
@@ -41,24 +41,25 @@ import { ResetPasswordComponent } from './admin-pages/reset-password/reset-passw
 // import { FusionPeptideCreateComponent } from './tables/fusion-peptide-create/fusion-peptide-create.component';
 
 @NgModule({
-  imports: [
-    PagesRoutingModule,
-    ThemeModule,
-    NbMenuModule,
-    // DashboardModule,
-    // ECommerceModule,
-    MiscellaneousModule,
-    NbCardModule,
-    NbSelectModule,
-    NbSelectModule,
-    NbRadioModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Ng2SmartTableModule,
-    NbTooltipModule,
-    NbPopoverModule,
-    // FlexLayoutModule,
-  ],
+    imports: [
+        PagesRoutingModule,
+        ThemeModule,
+        NbMenuModule,
+        // DashboardModule,
+        // ECommerceModule,
+        MiscellaneousModule,
+        NbCardModule,
+        NbSelectModule,
+        NbSelectModule,
+        NbRadioModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Ng2SmartTableModule,
+        NbTooltipModule,
+        NbPopoverModule,
+        NbCheckboxModule,
+        // FlexLayoutModule,
+    ],
   declarations: [
     PagesComponent,
     FrontPageComponent,

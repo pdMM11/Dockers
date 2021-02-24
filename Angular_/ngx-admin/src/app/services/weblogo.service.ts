@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
 export interface DataSeqs {
   seqs?: string;
   output?: string;
+  line_size?: number;
+  colour?: string;
 }
 
 @Injectable({
@@ -35,7 +37,7 @@ export class WeblogoService {
     this.data.seqs = seqsSend;
     return this.httpClient.post<any>(`${this.API_URL}/weblogoclustal/`, this.data, this.httpOptions);
   }
-  getImage(seqsSend: string, output: string) { // : Observable<Blob>
+  getImage(seqsSend: string, output: string, stack_line: number, colour: string) { // : Observable<Blob>
     /**
      POST request to build Weblogos in the backend, using the sequences defined in "seqsSend"; the output will be
      either "png", which will retrieve a base-64 string of the generated image, or "txt" for the text output.
@@ -48,6 +50,8 @@ export class WeblogoService {
     };
     this.data.seqs = seqsSend;
     this.data.output = output;
+    this.data.colour = colour;
+    this.data.line_size = stack_line;
     // return this.httpClient.post<Blob>(`${this.API_URL}/weblogobackend/`, this.data , this.httpOptions);
     return this.httpClient.post(`${this.API_URL}/weblogobackend/`, this.data , this.httpOptions);
   }

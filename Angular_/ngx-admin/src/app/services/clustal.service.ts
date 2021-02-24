@@ -5,6 +5,9 @@ import {EnvService} from './env.service';
 export interface DataSeqs {
   seqs?: string;
   type?: string;
+  // dists?: boolean;
+  guide_tree?: boolean;
+  mat?: string;
 }
 
 
@@ -34,7 +37,7 @@ export class ClustalService {
     };
     return this.httpClient.get(url, this.httpOptions );
   }
-  clustalBackend(seqsSend: string, output: string) { // : Observable<Blob>
+  clustalBackend(seqsSend: string, output: string, guide_tree: boolean, mat: string) { //  dists: boolean,
     /**
      POST Request to get Clustal Omega Alignment from backend's Clustal Console (clustal_all view).
      */
@@ -46,6 +49,9 @@ export class ClustalService {
     this.data = {};
     this.data.seqs = seqsSend;
     this.data.type = output;
+    // this.data.dists = dists;
+    this.data.guide_tree = guide_tree;
+    this.data.mat = mat;
     return this.httpClient.post(`${this.API_URL}/clustal_all/`, this.data , this.httpOptions);
   }
   clustalTreeBackend() { // : Observable<Blob>

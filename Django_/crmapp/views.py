@@ -28,6 +28,7 @@ from sklearn2pmml import sklearn2pmml
 from pypmml import Model
 from datetime import date, datetime
 from Bio.Align.Applications import ClustalOmegaCommandline
+from Bio.SubsMat import MatrixInfo as matlist
 
 import csv
 
@@ -112,6 +113,8 @@ def weblogologomaker(request):
      - 'seqs', containing at least 3 protein sequences in FASTA format.
      - 'type_output', either 'txt' or 'png'.
      - 'type_os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
+     - 'line_size': the number of stacks per line.
+     - 'colour': Weblogo's colour scheme.
     Output is a JSON with that weblogo in a txt format or the base-64 string of the PNG output.
     """
     if request.method == "POST":
@@ -126,6 +129,14 @@ def weblogologomaker(request):
             type_os = data['os']
         except:
             type_os = "linux"
+        try:
+            line_size = data['line_size']
+        except:
+            line_size = 25
+        try:
+            colour = data['colour']
+        except:
+            colour = 'NajafabadiEtAl2017'
 
 
         ##########################
@@ -191,8 +202,6 @@ def weblogologomaker(request):
             height_per_row = 2
             width_per_col = 1.5
 
-            line_size = 25
-
             num_rows = int(data.shape[0] / line_size) + 1
 
             fig = plt.figure(figsize=[width_per_col * line_size,
@@ -213,7 +222,7 @@ def weblogologomaker(request):
 
                 logo = logomaker.Logo(data.loc[range(i * line_size, (i + 1) * line_size), :],
                                       ax=ax,
-                                      color_scheme='NajafabadiEtAl2017', )
+                                      color_scheme=colour, )
 
                 # style using Axes methods
                 # logo.ax.set_ylabel("$-\Delta \Delta G$ (kcal/mol)", labelpad=-1)
@@ -243,7 +252,7 @@ def weblogologomaker(request):
 
                 logo = logomaker.Logo(data_aux.loc[range(i * line_size, (i + 1) * line_size), :],
                                       ax=ax,
-                                      color_scheme='NajafabadiEtAl2017', )
+                                      color_scheme=colour, )
 
                 # style using Axes methods
                 # logo.ax.set_ylabel("$-\Delta \Delta G$ (kcal/mol)", labelpad=-1)
@@ -421,6 +430,7 @@ def clustal_all(request):
     - 'seqs': at least 3 protein sequences in FASTA format
     - 'type': type of output: FASTA, CLUSTAL or PHYLIP
     - 'os': either 'windows' to use the Clustal console present in the project, or 'linux' for the one present in the Docker container.
+    - 'guide_tree': boolean to determine whether the guide tree output is provided
     Return a JSON with the output of the CLustal alignment as text.
     """
     if request.method == "POST":
@@ -433,6 +443,26 @@ def clustal_all(request):
             type_os = data['os']
         except:
             type_os = "linux"
+        """
+        try:
+            dists = data['dists']
+        except:
+            dists = False
+        """
+        try:
+            guide_tree = data['guide_tree']
+        except:
+            guide_tree = False
+        try:
+            mat_select = data['matrix']
+            if mat_select == 'blosum':
+                mat = matlist.blosum62
+            elif mat_select == 'blosum':
+                mat = matlist.pam250
+        except:
+            mat = matlist.blosum62
+
+
 
         ##########################
         # type_os = "windows"
@@ -454,12 +484,41 @@ def clustal_all(request):
         file.write(seqs)
         file.close()
 
-        clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
-                                                     outfile=out_file,
-                                                     verbose=True,
-                                                     auto=False,
-                                                     outfmt=type,
-                                                     guidetree_out="tree.dnd")
+        """
+        if guide_tree and dists:
+            clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
+                                                         outfile=out_file,
+                                                         verbose=True,
+                                                         auto=False,
+                                                         outfmt=type,
+                                                         guidetree_out="tree.dnd")
+        """
+        if guide_tree:
+            clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
+                                                         outfile=out_file,
+                                                         verbose=True,
+                                                         auto=False,
+                                                         outfmt=type,
+                                                         distmat_in=mat,
+                                                         guidetree_out="tree.dnd")
+        else:
+            clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
+                                                         outfile=out_file,
+                                                         verbose=True,
+                                                         auto=False,
+                                                         outfmt=type,
+                                                         distmat_in=mat)
+        """
+        elif dists:
+            clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
+                                                         outfile=out_file,
+                                                         verbose=True,
+                                                         auto=False,
+                                                         outfmt=type,
+                                                         distmat_out="output.distmat")
+        """
+
+
         print(clustalomega_cline)
         if type_os == "windows":
             os.system('cmd /c crmapp\clustal-omega-1.2.2-win64\\' + str(clustalomega_cline) + ' --force')
@@ -477,10 +536,16 @@ def clustal_all(request):
 
         data_send['align'] = file_out.read()
 
-        # data_send['dnd'] = file_tree_out.read()
+        if guide_tree:
+            # data_send['dnd'] = file_tree_out.read()
+            file_tree_out = open("tree.dnd", "r")
+            data_send['tree'] = file_tree_out.read()
 
-        file_tree_out = open("tree.dnd", "r")
-        data_send['tree'] = file_tree_out.read()
+        """
+        if dists:
+            file_tree_out = open("output.distmat", "r")
+            data_send['dists'] = file_tree_out.read()
+        """
 
         return HttpResponse(json.dumps(data_send))
 

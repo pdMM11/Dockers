@@ -54,13 +54,13 @@
     <div *ngFor="let sug of prots_autocomplete">
       <div *ngIf="sug.length<21">
         <button nbButton (click)="openResults(sug, false,true,false)" status="basic"
-                nbPopover="Access all the results from that query in the Fusion Proteins page."
+                nbPopover="Access this result in the Fusion Proteins page."
                 nbPopoverTrigger="hint"
                 nbPopoverPlacement="bottom">{{sug}}</button>
       </div>
       <div *ngIf="sug.length>20">
         <button nbButton (click)="openResults(sug, false,true,false)" status="basic"
-                nbPopover="Access all the results from that query in the Fusion Proteins page."
+                nbPopover="Access this result in the Fusion Proteins page."
                 nbPopoverTrigger="hint"
                 nbPopoverPlacement="bottom">{{sug.substring(20)}}...</button>
       </div>

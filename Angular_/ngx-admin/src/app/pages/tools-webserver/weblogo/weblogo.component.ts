@@ -42,6 +42,9 @@ export class WeblogoComponent implements OnInit {
 
   aux_data= '';
 
+  select_color_weblogo = 'NajafabadiEtAl2017';
+  stack_per_line = 25;
+
   // @ViewChild('imgRef', {static: false}) img: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -170,7 +173,8 @@ export class WeblogoComponent implements OnInit {
     this.isImageLoading = true;
 
     if ((this.query_seq.match(/>/g) || []).length > 2)  {
-      this.weblogo.getImage(this.query_seq, 'png').subscribe(data => {
+      this.weblogo.getImage(this.query_seq, 'png',
+        this.stack_per_line, this.select_color_weblogo).subscribe(data => {
 
         // this.createImageFromBlob(data);
 
@@ -189,7 +193,8 @@ export class WeblogoComponent implements OnInit {
         // console.log(error);
       });
     } else if ((this.sequence.value.match(/>/g) || []).length > 2) {
-      this.weblogo.getImage(this.sequence.value, 'png').subscribe(data => {
+      this.weblogo.getImage(this.sequence.value, 'png',
+        this.stack_per_line, this.select_color_weblogo).subscribe(data => {
 
         // this.createImageFromBlob(data);
 
@@ -246,9 +251,9 @@ export class WeblogoComponent implements OnInit {
      */
     if ((this.query_seq.match(/>/g) || []).length > 2)  {
       this.isImageLoading = true;
-      this.weblogo.getImage(this.query_seq, 'txt').subscribe(data => {
+      this.weblogo.getImage(this.query_seq, 'txt',
+        this.stack_per_line, this.select_color_weblogo).subscribe(data => {
         const data_result = data as string;
-        alert(data_result);
         const blob = new Blob([data_result], {type: 'text/plain'});
         const url = window.URL.createObjectURL(blob);
         window.open(url);
@@ -258,9 +263,9 @@ export class WeblogoComponent implements OnInit {
       });
     } else if ((this.sequence.value.match(/>/g) || []).length > 2) {
         this.isImageLoading = true;
-        this.weblogo.getImage(this.query_seq, 'txt').subscribe(data => {
+        this.weblogo.getImage(this.query_seq, 'txt',
+          this.stack_per_line, this.select_color_weblogo).subscribe(data => {
           const data_result = data as string;
-          alert(data_result);
           const blob = new Blob([data_result], {type: 'text/plain'});
           const url = window.URL.createObjectURL(blob);
           window.open(url);

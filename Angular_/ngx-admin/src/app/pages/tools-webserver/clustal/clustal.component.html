@@ -97,6 +97,30 @@
       <tr class="blank_row">
         <td colspan="2"></td>
       </tr>
+      <!--
+      <tr>
+        <th><label>DISTANCE MATRIX:</label></th>
+        <th style="padding-left:50px;">
+          <nb-checkbox status="primary"
+                       [checked]="dists"
+                       (checkedChange)="checkboxes(true)"></nb-checkbox>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      -->
+      <tr>
+        <th><label>GUIDE TREE OUTPUT:</label></th>
+        <th style="padding-left:50px;">
+          <nb-checkbox status="primary"
+                       [checked]="guide_tree"
+                       (checkedChange)="checkboxes(false)"></nb-checkbox>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
 
       </tbody>
 
@@ -109,5 +133,6 @@
 
   </nb-card-body>
 </nb-card>
+
 
 

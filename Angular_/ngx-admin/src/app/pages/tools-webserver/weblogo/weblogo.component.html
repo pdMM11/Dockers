@@ -60,6 +60,49 @@
   </nb-card-header>
 
   <nb-card-body>
+
+    <table>
+
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 85%;">
+      </colgroup>
+
+      <tbody>
+
+      <tr>
+        <th><label>COLOUR SCHEME:</label></th>
+        <th style="padding-left:92px;">
+          <nb-select placeholder="{{select_color_weblogo}}" [(selected)]="select_color_weblogo">
+            <nb-option value='charge'>Charge</nb-option>
+            <nb-option value='chemistry'>Chemistry</nb-option>
+            <nb-option value='hydrophobicity'>Hydrophobicity</nb-option>
+            <nb-option value='NajafabadiEtAl2017'><i>Najafabadi Et Al, 2017</i></nb-option>
+            <nb-option value='skylign_protein'>Skylign</nb-option>
+            <nb-option value='weblogo_protein'>Weblogo - Protein</nb-option>
+          </nb-select>
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <th><label>STACK PER LINE:</label></th>
+        <th style="padding-left:92px;">
+          <input nbInput type="number" min="15" max="50" placeholder="25" [formControl]="stack_per_line"
+                 class="search-input shape-rectangle size-medium">
+        </th>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="2"></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
+    <p></p>
+
     <button nbButton (click)="getImageFromService()">WEBLOGO (FILE IMAGE)</button>
     <p></p>
     <button nbButton (click)="downloadWeblogoFile()">WEBLOGO (TEXT IMAGE)</button>
@@ -76,6 +119,3 @@
   </nb-card-body>
 
 </nb-card>
-
-
-
