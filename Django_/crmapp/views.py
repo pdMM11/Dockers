@@ -454,10 +454,10 @@ def clustal_all(request):
         except:
             guide_tree = False
         try:
-            mat_select = data['matrix']
+            mat_select = data['mat']
             if mat_select == 'blosum':
                 mat = matlist.blosum62
-            elif mat_select == 'blosum':
+            elif mat_select == 'pam':
                 mat = matlist.pam250
         except:
             mat = matlist.blosum62
@@ -499,7 +499,7 @@ def clustal_all(request):
                                                          verbose=True,
                                                          auto=False,
                                                          outfmt=type,
-                                                         distmat_in=mat,
+                                                         # distmat_in=mat,
                                                          guidetree_out="tree.dnd")
         else:
             clustalomega_cline = ClustalOmegaCommandline(infile=in_file,
@@ -507,7 +507,8 @@ def clustal_all(request):
                                                          verbose=True,
                                                          auto=False,
                                                          outfmt=type,
-                                                         distmat_in=mat)
+                                                         # distmat_in=mat
+                                                         )
         """
         elif dists:
             clustalomega_cline = ClustalOmegaCommandline(infile=in_file,

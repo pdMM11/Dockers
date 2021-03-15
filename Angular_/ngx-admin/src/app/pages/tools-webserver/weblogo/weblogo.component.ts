@@ -45,6 +45,8 @@ export class WeblogoComponent implements OnInit {
   select_color_weblogo = 'NajafabadiEtAl2017';
   stack_per_line = 25;
 
+  show_image = false;
+
   // @ViewChild('imgRef', {static: false}) img: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -215,6 +217,7 @@ export class WeblogoComponent implements OnInit {
     } else {
       alert('ERROR: ENTER AT LEAST 3 SEQUENCES');
     }
+    this.show_image = true;
   }
 
   /**

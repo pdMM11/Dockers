@@ -105,9 +105,10 @@
 
     <button nbButton (click)="getImageFromService()">WEBLOGO (FILE IMAGE)</button>
     <p></p>
-    <button nbButton (click)="downloadWeblogoFile()">WEBLOGO (TEXT IMAGE)</button>
+    <button nbButton (click)="downloadWeblogoFile()">WEBLOGO (TEXT OUTPUT)</button>
     <p></p>
 
+    <div *ngIf="show_image">
       <img style='height: 100%; width: 100%; object-fit: contain'
         [src]='transform()'
         alt='Place image title'
@@ -115,7 +116,7 @@
       <ng-template #noImageFound>
         <p></p>
       </ng-template>
-
+    </div>
   </nb-card-body>
 
 </nb-card>
