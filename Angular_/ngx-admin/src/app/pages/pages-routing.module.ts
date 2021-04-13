@@ -12,6 +12,7 @@ import {EpitopesComponent} from './tools-webserver/epitopes/epitopes.component';
 import {WeblogoComponent} from './tools-webserver/weblogo/weblogo.component';
 import {ClustalComponent} from './tools-webserver/clustal/clustal.component';
 import {MlPredictComponent} from './tools-webserver/ml-predict/ml-predict.component';
+import {AuthComponent} from '../auth/auth.component';
 // import { TaxonomyVirusCreateComponent } from './tables/taxonomy-virus-create/taxonomy-virus-create.component';
 // import { TaxonomyVirusListComponent } from './tables/taxonomy-virus-list/taxonomy-virus-list.component';
 // import { ProteinListComponent } from './tables/protein-list/protein-list.component';
@@ -27,6 +28,10 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: FrontPageComponent,
+    },
+    {
+      path: 'log',
+      component: AuthComponent,
     },
     /**
      {

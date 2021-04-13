@@ -34,6 +34,7 @@ import {RequestPasswordComponent} from './pages/admin-pages/request-password/req
 import {ResetPasswordComponent} from './pages/admin-pages/reset-password/reset-password.component';
 */
 import {RegisterComponent} from './pages/admin-pages/register/register.component';
+import {NgxAuthModule} from './auth/auth.module';
 
 const formSetting: any = {
   redirectDelay: 0,
@@ -53,7 +54,7 @@ const formSetting: any = {
     ResetPasswordComponent,
      */
 
-    RegisterComponent,
+    // RegisterComponent,
 
   ],
   imports: [
@@ -74,6 +75,7 @@ const formSetting: any = {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({

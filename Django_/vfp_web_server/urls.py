@@ -19,6 +19,7 @@ from django.urls import path, include
 from crmapp import views
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework_jwt.views import verify_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
@@ -102,6 +103,9 @@ urlpatterns = [
     path(r'weblogobackend/', views.weblogologomaker, name='weblogologomaker'),
 
     path(r'conserv/', views.conservation_features, name="conservation_features"),
+
+    path(r'token-auth/', obtain_jwt_token),
+    path(r'token-refresh/', refresh_jwt_token),
 
 ]
 

@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
-        component: RegisterComponent,
+        component: NbRegisterComponent,
       },
       {
         path: 'logout',

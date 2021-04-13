@@ -29,6 +29,7 @@ import { RegisterComponent } from './admin-pages/register/register.component';
 import { LogoutComponent } from './admin-pages/logout/logout.component';
 import { RequestPasswordComponent } from './admin-pages/request-password/request-password.component';
 import { ResetPasswordComponent } from './admin-pages/reset-password/reset-password.component';
+import {AuthComponent} from '../auth/auth.component';
 
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -76,7 +77,7 @@ import { ResetPasswordComponent } from './admin-pages/reset-password/reset-passw
     RequestPasswordComponent,
     ResetPasswordComponent,
      */
-
+    AuthComponent,
   ],
 })
 export class PagesModule {
