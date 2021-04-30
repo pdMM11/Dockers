@@ -7,7 +7,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {CoreModule} from './@core/core.module';
+import {CoreModule, NB_CORE_PROVIDERS} from './@core/core.module';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -33,8 +33,7 @@ import {LogoutComponent} from './pages/admin-pages/logout/logout.component';
 import {RequestPasswordComponent} from './pages/admin-pages/request-password/request-password.component';
 import {ResetPasswordComponent} from './pages/admin-pages/reset-password/reset-password.component';
 */
-import {RegisterComponent} from './pages/admin-pages/register/register.component';
-import {NgxAuthModule} from './auth/auth.module';
+
 
 const formSetting: any = {
   redirectDelay: 0,
@@ -76,6 +75,8 @@ const formSetting: any = {
     }),
     CoreModule.forRoot(),
 
+
+    /**
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
@@ -126,6 +127,7 @@ const formSetting: any = {
         },
       },
     }),
+     */
   ],
   bootstrap: [AppComponent],
   providers: [CookieService, EnvServiceProvider],

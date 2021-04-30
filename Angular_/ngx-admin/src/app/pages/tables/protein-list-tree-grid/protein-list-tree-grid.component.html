@@ -199,8 +199,8 @@
 
 </nb-card>
 
-<!--
-<nb-card>
+
+<nb-card *ngIf="user.user_id">
 
   <nb-card-header>
     <p *ngIf="add_form">Add Entry</p>
@@ -209,9 +209,9 @@
 
   <nb-card-body>
 
-    <button nbButton (click)="addDataForm()">ADD ENTRY</button>
+    <button nbButton (click)="addDataForm()" style="width: 300px;">ADD ENTRY</button>
     <p></p>
-    <button nbButton (click)="putDataForm()">UPDATE ENTRY</button>
+    <button nbButton (click)="putDataForm()" style="width: 300px;">UPDATE ENTRY</button>
     <p></p>
 
     <form [formGroup]="addProteinForm" (ngSubmit)="onSubmit()" *ngIf="add_form" novalidate>
@@ -337,4 +337,4 @@
   </nb-card-body>
 
 </nb-card>
--->
+

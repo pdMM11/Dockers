@@ -1,6 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
+  NbInputModule, // add this line
+  NbAlertModule, // add this line
   NbActionsModule,
   NbLayoutModule,
   NbMenuModule,
@@ -40,9 +43,33 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+/**
+import {
+  LoginComponent,
+  LogoutComponent,
+  RegisterComponent,
+  RequestPasswordComponent,
+  ResetPasswordComponent,
+} from './components/auth/components';
+
+import {LoginComponent} from './components/auth/components/login/login.component';
+import {LogoutComponent} from './components/auth/components/logout/logout.component';
+import {RegisterComponent} from './components/auth/components/register/register.component';
+import {RequestPasswordComponent} from './components/auth/components/request-password/request-password.component';
+import {ResetPasswordComponent} from './components/auth/components/reset-password/reset-password.component';
+import {AuthBlockComponent} from './components/auth/components/auth-block/auth-block.component';
+
+import {LoginComponent} from '../custom-auth/admin-pages/login/login.component';
+import {RegisterComponent} from '../custom-auth/admin-pages/register/register.component';
+import {LogoutComponent} from '../custom-auth/admin-pages/logout/logout.component';
+import {RequestPasswordComponent} from '../custom-auth/admin-pages/request-password/request-password.component';
+import {ResetPasswordComponent} from '../custom-auth/admin-pages/reset-password/reset-password.component';
+*/
 
 const NB_MODULES = [
+  NbInputModule, // add this line
+  NbAlertModule, // add this line
   NbLayoutModule,
   NbMenuModule,
   NbUserModule,
@@ -65,6 +92,16 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+
+/**
+  AuthBlockComponent,
+  LoginComponent,
+  RegisterComponent,
+  LogoutComponent,
+  RequestPasswordComponent,
+  ResetPasswordComponent,
+*/
+
 ];
 const PIPES = [
   CapitalizePipe,
@@ -75,7 +112,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES, ReactiveFormsModule, MatAutocompleteModule],
+  imports: [CommonModule, ...NB_MODULES, ReactiveFormsModule, MatAutocompleteModule, RouterModule],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

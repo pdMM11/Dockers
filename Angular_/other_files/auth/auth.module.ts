@@ -40,8 +40,10 @@ import {ResetPasswordComponent} from './admin-pages/reset-password/reset-passwor
   ],
 })
 export class NgxAuthModule {
+  /**
   static forRoot(param: { strategies: [NbAuthStrategyClass, NbPasswordAuthStrategyOptions][];
   forms: { requestPassword: any; resetPassword: any; logout: { redirectDelay: number }; login: any; register: any } }) {
     return undefined;
   }
+   */
 }

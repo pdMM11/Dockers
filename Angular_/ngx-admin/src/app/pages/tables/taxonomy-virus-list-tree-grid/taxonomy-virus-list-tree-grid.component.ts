@@ -9,6 +9,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 
 export interface TaxonomyVirusInterface {
@@ -45,7 +46,7 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
    'subspecies', 'ncbitax'];
    */
   customColumn = 'buttons';
-  defaultColumns = ['commonname','family', 'genre', 'species',
+  defaultColumns = ['commonname', 'family', 'genre', 'species',
     'subspecies', 'ncbitax'];
   allColumns = [this.customColumn, ...this.defaultColumns]; // columns to be displayed in the table
   headers = { 'buttons': 'Additional Links',
@@ -80,6 +81,8 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
 
   autocomplete = [];
 
+  user = {};
+
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<TaxonomyVirusInterface>,
               private taxonomyvirusService: TaxonomyVirusService,
               private route: ActivatedRoute,
@@ -87,8 +90,19 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private router: Router,
               private env: EnvService,
+              private authService: NbAuthService,
   ) {
     this.API_URL = env.apiUrl;
+
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+
+        if (token.isValid()) {
+          this.user = token.getPayload();
+          // here we receive a payload from the token and assigns it to our `user` variable
+        }
+      });
+    // alert(JSON.stringify(this.user));
   }
 
   ngOnInit() {

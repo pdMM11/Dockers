@@ -11,13 +11,20 @@ import {
 import {AuthGuard} from './services/auth-guard.service';
 
 /**
-import {LoginComponent} from './pages/admin-pages/login/login.component';
-import {RegisterComponent} from './pages/admin-pages/register/register.component';
-import {LogoutComponent} from './pages/admin-pages/logout/logout.component';
-import {RequestPasswordComponent} from './pages/admin-pages/request-password/request-password.component';
-import {ResetPasswordComponent} from './pages/admin-pages/reset-password/reset-password.component';
+import {LoginComponent} from './custom-admin/login/login.component';
+import {LogoutComponent} from './custom-admin/logout/logout.component';
+ import {RegisterComponent} from './custom-admin/register/register.component';
+ import {RequestPasswordComponent} from './custom-admin/request-password/request-password.component';
+import {ResetPasswordComponent} from './custom-admin/reset-password/reset-password.component';
+
+
+
+ import { LoginComponent } from './@theme/components/auth/components/login/login.component';
+ import {LogoutComponent} from './@theme/components/auth/components/logout/logout.component';
+ import {RegisterComponent} from './@theme/components/auth/components/register/register.component';
+ import {RequestPasswordComponent} from './@theme/components/auth/components/request-password/request-password.component';
+ import {ResetPasswordComponent} from './@theme/components/auth/components/reset-password/reset-password.component';
 */
-import {RegisterComponent} from './pages/admin-pages/register/register.component';
 
 const routes: Routes = [
   {
@@ -26,6 +33,7 @@ const routes: Routes = [
     loadChildren: () => import('app/pages/pages.module')
       .then(m => m.PagesModule),
   },
+  /**
   {
     path: 'auth',
     component: NbAuthComponent,
@@ -56,8 +64,15 @@ const routes: Routes = [
       },
     ],
   },
+   */
+  {
+    path: 'auth',
+    loadChildren: './custom-auth/custom-auth.module#CustomAuthModule',
+    // loadChildren: () => import('app/pages/pages.module').then(m => m.PagesModule),
+
+  },
   {path: '', redirectTo: 'pages', pathMatch: 'full'},
-  {path: '**', redirectTo: 'pages'},
+  // {path: '**', redirectTo: 'pages'},
 ];
 
 const config: ExtraOptions = {

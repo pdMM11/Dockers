@@ -12,4 +12,10 @@ import { NbAuthService } from '@nebular/auth/services/auth.service';
 })
 export class RegisterComponent extends NbRegisterComponent {
 
+  passNonNumeric(pass: string ) {
+    const reg = new RegExp(/^\d+$/);
+    return reg.test(pass);
+      // return isNaN(pass);
+  }
+
 }

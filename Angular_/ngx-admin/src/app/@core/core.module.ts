@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import {NbAuthJWTToken, NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy} from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -56,7 +56,6 @@ import { SecurityCamerasService } from './mock/security-cameras.service';
  */
 import { MockDataModule } from './mock/mock-data.module';
 
-
 const socialLinks = [
   {
     url: 'https://github.com/akveo/nebular',
@@ -74,6 +73,13 @@ const socialLinks = [
     icon: 'twitter',
   },
 ];
+
+const formSetting: any = {
+  redirectDelay: 0,
+  showMessages: {
+    success: true,
+  },
+};
 
 const DATA_SERVICES = [
   { provide: UserData, useClass: UserService },
@@ -111,7 +117,59 @@ export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
-
+    strategies: [
+      NbPasswordAuthStrategy.setup({
+        name: 'email',
+        token: {
+          class: NbAuthJWTToken,
+          key: 'token',
+        },
+        baseEndpoint: window['__env']['apiUrl'], // http://localhost:8000',
+        login: {
+          endpoint: '/%5Erest-auth/login/',
+          // endpoint: 'api-token-auth/',
+          method: 'post',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
+        },
+        register: {
+          endpoint: '/%5Erest-auth/registration/',
+          method: 'post',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
+        },
+        logout: {
+          endpoint: '/%5Erest-auth/logout/',
+          method: 'post',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
+        },
+        requestPass: {
+          endpoint: '/%5Erest-auth/password/change/', // verify this one
+          method: 'post',
+        },
+        resetPass: {
+          endpoint: '/%5Erest-auth/password/reset/',
+          method: 'post',
+        },
+      }),
+    ],
+    forms: {
+      login: formSetting,
+      register: formSetting,
+      requestPassword: formSetting,
+      resetPassword: formSetting,
+      logout: {
+        redirectDelay: 0,
+      },
+    },
+    /**
     strategies: [
       NbDummyAuthStrategy.setup({
         name: 'email',
@@ -126,6 +184,7 @@ export const NB_CORE_PROVIDERS = [
         socialLinks: socialLinks,
       },
     },
+     */
   }).providers,
 
   NbSecurityModule.forRoot({
@@ -174,3 +233,4 @@ export class CoreModule {
     };
   }
 }
+

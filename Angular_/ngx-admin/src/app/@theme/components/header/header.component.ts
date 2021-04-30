@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuService,
@@ -29,6 +29,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('escClose', {static: false, read: TemplateRef}) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -63,7 +64,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+  // userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+  userMenu = [];
   search_form = new FormControl('');
   prots_autocomplete = [];
   fps_autocomplete = [];
@@ -98,7 +100,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       });
 
-
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
         if (token.isValid()) {
@@ -106,6 +107,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // here we receive a payload from the token and assigns it to our `user` variable
         }
       });
+    if (this.user !== {}) {
+      this.userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+    }
   }
 
   ngOnInit() {
@@ -129,6 +133,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.menuService.onItemClick().subscribe(( event ) => {
+      this.onItemSelection(event.item.title);
+    });
   }
 
   ngOnDestroy() {
@@ -231,7 +239,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     window.open(decodeURIComponent(url), target);
   }
 
-
   onSearchChange_prot(value: string): void {
     /**
      Function to retrieve autocomplete sugestions from the Fusion Protein page for the search form.
@@ -294,7 +301,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     // this.autocomplete.push({page: 'Fusion Proteins', sugestions: aux_array});
     this.prots_autocomplete = aux_array;
-
   }
 
   onSearchChange_fp(value: string): void {
@@ -401,7 +407,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       aux_array = aux_array.slice(0, 5);
     }
     // this.autocomplete.push({page: 'Virus\' Taxonomy', sugestions: aux_array});
-
     this.tax_autocomplete = aux_array;
+  }
+
+  onItemSelection( title ) {
+    if ( title === 'Log out' ) {
+      this.router.navigate(['/auth/logout']).then();
+    } else if ( title === 'Profile' ) {
+      // Do something on Profile
+      alert('Profile Clicked ');
+    }
   }
 }

@@ -12,6 +12,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {EnvService} from '../../../services/env.service';
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 
 interface TaxHostInterface {
@@ -83,6 +84,7 @@ export class TaxHostComponent implements OnInit {
   data_print;
 
   API_URL = ''; // name of the API domain
+  user = {};
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<TaxHostInterface>,
               private taxhostService: TaxHostService,
@@ -90,8 +92,18 @@ export class TaxHostComponent implements OnInit {
               private formBuilder: FormBuilder,
               private sanitizer: DomSanitizer,
               private env: EnvService,
+              private authService: NbAuthService,
   ) {
     this.API_URL = env.apiUrl;
+
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+
+        if (token.isValid()) {
+          this.user = token.getPayload();
+          // here we receive a payload from the token and assigns it to our `user` variable
+        }
+      });
   }
 
   ngOnInit() {

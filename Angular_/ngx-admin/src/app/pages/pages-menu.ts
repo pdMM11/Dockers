@@ -275,7 +275,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-
+   */
   {
     title: 'Auth',
     icon: 'lock-outline',
@@ -283,6 +283,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Login',
         link: '/auth/login',
+      },
+      {
+        title: 'Logout',
+        link: '/auth/logout',
       },
       {
         title: 'Register',
@@ -298,5 +302,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-   */
+
 ];

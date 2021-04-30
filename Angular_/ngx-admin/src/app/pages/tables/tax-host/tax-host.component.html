@@ -89,9 +89,7 @@
 
 </nb-card>
 
-<!--
-
-<nb-card>
+<nb-card *ngIf="user.user_id">
   <nb-card-header>
     Virus' Host
     <p *ngIf="add_form_th">Add Entry</p>
@@ -100,9 +98,9 @@
 
   <nb-card-body>
 
-    <button nbButton (click)="addDataForm_th()">ADD ENTRY</button>
+    <button nbButton (click)="addDataForm_th()" style="width: 300px;">ADD ENTRY</button>
     <p></p>
-    <button nbButton (click)="putDataForm_th()">UPDATE ENTRY</button>
+    <button nbButton (click)="putDataForm_th()" style="width: 300px;">UPDATE ENTRY</button>
     <p></p>
 
     <form [formGroup]="addTaxHostForm" (ngSubmit)="onSubmit()" *ngIf="add_form_th" novalidate>
@@ -147,7 +145,7 @@
 
 </nb-card>
 
-<nb-card>
+<nb-card *ngIf="user.user_id">
   <nb-card-header>
     Host
     <p *ngIf="add_form_host">Add Entry</p>
@@ -156,9 +154,9 @@
 
   <nb-card-body>
 
-    <button nbButton (click)="addDataForm_host()">ADD ENTRY</button>
+    <button nbButton (click)="addDataForm_host()" style="width: 300px;">ADD ENTRY</button>
     <p></p>
-    <button nbButton (click)="putDataForm_host()">UPDATE ENTRY</button>
+    <button nbButton (click)="putDataForm_host()" style="width: 300px;">UPDATE ENTRY</button>
     <p></p>
 
 
@@ -202,4 +200,4 @@
   </nb-card-body>
 
 </nb-card>
--->
+

@@ -80,8 +80,8 @@
 
 </nb-card>
 
-<!--
-<nb-card>
+
+<nb-card *ngIf="user.user_id">
 
   <nb-card-header>
     Peptide's Reference
@@ -91,9 +91,9 @@
 
   <nb-card-body>
 
-    <button nbButton (click)="addDataForm_pr()">ADD ENTRY</button>
+    <button nbButton (click)="addDataForm_pr()" style="width: 300px;">ADD ENTRY</button>
     <p></p>
-    <button nbButton (click)="putDataForm_pr()">UPDATE ENTRY</button>
+    <button nbButton (click)="putDataForm_pr()" style="width: 300px;">UPDATE ENTRY</button>
     <p></p>
 
     <form [formGroup]="addPeptRef" (ngSubmit)="onSubmitPR()" *ngIf="add_form_pr" novalidate>
@@ -129,7 +129,7 @@
 </nb-card>
 
 
-<nb-card>
+<nb-card *ngIf="user.user_id">
 
   <nb-card-header>
     Reference
@@ -139,9 +139,9 @@
 
   <nb-card-body>
 
-    <button nbButton (click)="addDataForm_ref()">ADD ENTRY</button>
+    <button nbButton (click)="addDataForm_ref()" style="width: 300px;">ADD ENTRY</button>
     <p></p>
-    <button nbButton (click)="putDataForm_ref()">UPDATE ENTRY</button>
+    <button nbButton (click)="putDataForm_ref()" style="width: 300px;">UPDATE ENTRY</button>
     <p></p>
 
     <form [formGroup]="addRef" (ngSubmit)="onSubmitRef()" *ngIf="add_form_ref" novalidate>
@@ -180,4 +180,4 @@
   </nb-card-body>
 
 </nb-card>
--->
+

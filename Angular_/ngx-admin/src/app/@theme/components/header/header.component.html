@@ -13,7 +13,6 @@
 <div class="header-container">
   <nb-actions size="small">
 
-
     <nb-action class="control-item">
       <nb-search type="column-curtain"
                  nbPopover="Search against the 3 main tables of the database: Fusion Proteins, Fusion Peptide and Virus' Taxonomy."
@@ -35,6 +34,14 @@
       </nb-user>
     </nb-action>
     -->
+
+    <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+      <nb-user [nbContextMenu]="userMenu"
+               [name]="user?.username"
+               [title]="user?.username"
+      >
+      </nb-user>
+    </nb-action>
   </nb-actions>
 </div>
 
