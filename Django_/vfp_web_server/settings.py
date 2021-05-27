@@ -172,7 +172,7 @@ REST_FRAMEWORK = {
     ),
 }
 REST_USE_JWT = True
-SITE_ID = 1
+SITE_ID = 4
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
@@ -181,7 +181,18 @@ JWT_AUTH = {
 
 
 #This is required otherwise it asks for email server
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'vfprot.database@gmail.com'
+EMAIL_HOST_PASSWORD = 'hdixubfgmhejpnch' #past the key or password app here
+DEFAULT_FROM_EMAIL = 'vfprot.database@gmail.com'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # ACCOUNT_EMAIL_REQUIRED = True
 # AUTHENTICATION_METHOD = 'EMAIL'
 # ACCOUNT_EMAIL_VERIFICATION = 'optional'
@@ -189,6 +200,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
+OLD_PASSWORD_FIELD_ENABLED = False
 
 #Following is added to enable registration with email instead of username
 AUTHENTICATION_BACKENDS = (
@@ -198,3 +210,11 @@ AUTHENTICATION_BACKENDS = (
  # `allauth` specific authentication methods, such as login by e-mail
  "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+# CELERY STUFF
+BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Lisbon'

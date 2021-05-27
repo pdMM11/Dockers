@@ -2,7 +2,7 @@ from django.shortcuts import render
 # from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -98,6 +98,8 @@ class AutoCompletePagination(PageNumberPagination):
 
 @api_view(["POST"])
 @csrf_exempt
+@authentication_classes([])
+@permission_classes([])
 def weblogo(request):
     """
     Clustal Omega multiple alignment function intend for the http://weblogo.threeplusone.com/create.cgi webpage.
@@ -115,6 +117,8 @@ def weblogo(request):
 
 @api_view(["POST"])
 @csrf_exempt
+@authentication_classes([])
+@permission_classes([])
 def weblogologomaker(request):
     """
     Function to build Weblogos (either in text format, or in PNG format, using Logomaker package) from protein sequences that are later aligned with Clustal Omega.
@@ -432,6 +436,8 @@ def clustal(request):  # error no urllib
 
 @api_view(["POST"])
 @csrf_exempt
+@authentication_classes([])
+@permission_classes([])
 def clustal_all(request):
     """
     Function that performs a Clustal Omega Alignment to protein sequences, saving into files the alignemnt itself and guide tree information.
@@ -656,6 +662,8 @@ def ml_predict(request):
 
 @api_view(["POST"])
 @csrf_exempt
+@authentication_classes([])
+@permission_classes([])
 def conservation_features(request):
     """
     Function that retrieves the conservation scores of a protein against different taxonomy Family's Weblogos.

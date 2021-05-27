@@ -4,6 +4,7 @@
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
     "paths": {
+        "*": ["types/*"],
       "@angular/*": [
         "../node_modules/@angular/*"
       ],

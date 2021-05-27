@@ -40,10 +40,13 @@ export class EpitopesComponent implements OnInit {
   results: any;
   results_bepi1: any;
   results_bepi2: any;
-  option = 'Bepipred';
+  option = 'Emini';
   data_bepi1 = [];
   data_bepi2 = [];
   data_other = [];
+  data_other_string = '';
+  data_other_empty = false;
+  processing = false;
 
   settings_bepi1 = {
     /**
@@ -224,6 +227,8 @@ export class EpitopesComponent implements OnInit {
     this.data_bepi1 = [];
     this.data_bepi2 = [];
     this.data_other = [];
+    this.data_other_empty = false;
+    this.processing = true;
     if (this.sequence.value !== null && this.sequence.value !== '') {
       this.iedbService.send(this.option, this.sequence.value, this.window_size.value).subscribe(
         (data) => {
@@ -256,6 +261,9 @@ export class EpitopesComponent implements OnInit {
                 this.data_bepi2.push(row_data_int);
               }
             }
+            if (this.data_bepi1.length === 1) {
+              alert('No results were provided for this method. Please try another.');
+            }
           } else {
             this.results = data.split('\n');
             for (const i of this.results) {
@@ -272,10 +280,21 @@ export class EpitopesComponent implements OnInit {
                 this.data_other.push(row_data_int);
               }
             }
+            this.data_other_string = JSON.stringify(this.data_other);
+            if (JSON.stringify(this.data_other).startsWith('[{"position":""},')) {
+              alert('No results were provided for this method. Please try another.');
+            }
+            if (this.data_other_string.startsWith('[{"position":""},')) {
+              this.data_other_empty = false;
+            } else {
+              this.data_other_empty = true;
+            }
           }
+          this.processing = false;
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
+          this.processing = false;
         });
     } else if (this.query_seq !== null && this.query_seq !== '') {
       this.iedbService.send(this.option, this.query_seq, this.window_size.value).subscribe(
@@ -309,6 +328,9 @@ export class EpitopesComponent implements OnInit {
                 this.data_bepi2.push(row_data_int);
               }
             }
+            if (this.data_bepi1.length === 1) {
+              alert('No results were provided for this method. Please try another.');
+            }
           } else {
             this.results = data.split('\n');
             for (const i of this.results) {
@@ -325,13 +347,25 @@ export class EpitopesComponent implements OnInit {
                 this.data_other.push(row_data_int);
               }
             }
+            this.data_other_string = JSON.stringify(this.data_other);
+            if (JSON.stringify(this.data_other).startsWith('[{"position":""},')) {
+              alert('No results were provided for this method. Please try another.');
+            }
+            if (this.data_other_string.startsWith('[{"position":""},')) {
+              this.data_other_empty = false;
+            } else {
+              this.data_other_empty = true;
+            }
           }
+          this.processing = false;
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
+          this.processing = false;
         });
     } else {
       alert('ERROR: SEQUENCE NEEDS TO BE FILLED');
+      this.processing = false;
     }
   }
 }

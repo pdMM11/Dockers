@@ -35,13 +35,17 @@
     </nb-action>
     -->
 
-    <nb-action class="user-action" *nbIsGranted="['view', 'user']">
-      <nb-user [nbContextMenu]="userMenu"
-               [name]="user?.username"
-               [title]="user?.username"
-      >
-      </nb-user>
-    </nb-action>
+      <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+        <nb-user
+          [nbContextMenu]="userMenu"
+          [name]="user?.username"
+          [title]="user?.username"
+          showInitials = "true"
+          color="#cccccc"
+        >
+        </nb-user>
+      </nb-action>
+
   </nb-actions>
 </div>
 

@@ -67,7 +67,7 @@
       <tr>
         <th><label>WINDOW SIZE:</label></th>
         <th style="padding-left:50px;">
-          <input nbInput type="number" min="5" placeholder="15" [formControl]="window_size"
+          <input nbInput type="number" min="5" placeholder="20" [formControl]="window_size"
                  class="search-input shape-rectangle size-medium">
         </th>
       </tr>
@@ -230,8 +230,10 @@
     <p></p>
     -->
     <div *ngIf="conserv_card">
+      <!--
       <p></p>
       {{name_family}}
+      -->
       <p></p>
       <span *ngFor="let item of print_conserv; index as i"
             class="seq" [ngStyle]="{'background-color':item.color}"
@@ -240,6 +242,7 @@
     </span>
       <p></p>
       <dl>
+        <!--
         <div class="Legend">
           <div class="Red">&nbsp;</div>
           Score above 1
@@ -251,6 +254,19 @@
           Score above between 0.40 and 0.60
           <div class="White">&nbsp;</div>
           Score below 0.40
+        </div>
+        -->
+        <div class="Legend">
+          <div class="Red">&nbsp;</div>
+          Relative Conservation above 0.95 within the sequence
+          <div class="Orange">&nbsp;</div>
+          Relative Conservation above between 0.90 and 0.95 within the sequence
+          <div class="Yellow">&nbsp;</div>
+          Relative Conservation above between 0.80 and 0.90 within the sequence
+          <div class="LightGreen">&nbsp;</div>
+          Relative Conservation above between 0.60 and 0.80 within the sequence
+          <div class="White">&nbsp;</div>
+          Relative Conservation below 0.95 within the sequence
         </div>
       </dl>
 

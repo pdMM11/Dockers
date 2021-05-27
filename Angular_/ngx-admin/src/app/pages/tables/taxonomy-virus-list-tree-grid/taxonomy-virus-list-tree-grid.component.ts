@@ -408,7 +408,9 @@ export class TaxonomyVirusListTreeGridComponent implements OnInit {
             this.complete_aux(data['results']);
           },
           (error: HttpErrorResponse) => {
-            alert(error.message);
+            if (error.status !== 403) {
+              alert(error.message);
+            }
           });
     } else {
       this.autocomplete = [];

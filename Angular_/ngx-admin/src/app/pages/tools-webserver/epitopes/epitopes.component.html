@@ -98,30 +98,40 @@
 
     </table>
 
-
-
     <p></p>
-    <button nbButton (click)="gotoIEDB()">GO TO IEDB EPITOPES</button>
+    <div *ngIf="processing">
+      <button nbButton disabled>GO TO IEDB EPITOPES</button>
+    </div>
+    <button nbButton *ngIf="!processing" (click)="gotoIEDB()">GO TO IEDB EPITOPES</button>
     <p></p>
   </nb-card-body>
 </nb-card>
 
-<nb-card *ngIf="data_bepi1.length>0||data_bepi2.length>0||data_other.length>0">
+<nb-card *ngIf="processing">
+  <nb-card-header>
+    Performing the required analysis.
+  </nb-card-header>
+  <nb-card-body>
+    Please wait for the output. Do not start another one.
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="data_bepi1.length>1||(data_other.length>0&&data_other_empty)">
   <nb-card-header>
     Results
   </nb-card-header>
 
-  <nb-card-body *ngIf="data_bepi1.length>0">
+  <nb-card-body *ngIf="data_bepi1.length > 1">
     <ng2-smart-table [settings]="settings_bepi1" [source]="data_bepi1">
     </ng2-smart-table>
   </nb-card-body>
 
-  <nb-card-body *ngIf="data_bepi2.length>0">
+  <nb-card-body *ngIf="data_bepi1.length > 1">
     <ng2-smart-table [settings]="settings_bepi2" [source]="data_bepi2">
     </ng2-smart-table>
   </nb-card-body>
 
-  <nb-card-body *ngIf="data_other.length>0">
+  <nb-card-body *ngIf="(data_other.length>0&&data_other_empty)">
     <ng2-smart-table [settings]="settings_other" [source]="data_other">
     </ng2-smart-table>
   </nb-card-body>

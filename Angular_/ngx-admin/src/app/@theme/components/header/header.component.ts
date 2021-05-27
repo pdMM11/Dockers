@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   // userMenu = [{title: 'Profile'}, {title: 'Log out'}];
-  userMenu = [];
+  userMenu = []
   search_form = new FormControl('');
   prots_autocomplete = [];
   fps_autocomplete = [];
@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       });
     if (this.user !== {}) {
-      this.userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+      this.userMenu = [{title: 'Log out'}];
     }
   }
 

@@ -38,6 +38,7 @@ interface PosConservInterface {
   Phenuiviridae?: number;
   Rhabdoviridae?: number;
   prob?: number;
+  prob_correct?: number;
   color?: string;
 }
 
@@ -49,7 +50,7 @@ interface PosConservInterface {
 export class MlPredictComponent implements OnInit {
   query_seq = '';
   sequence = new FormControl('');
-  window_size = new FormControl(15);
+  window_size = new FormControl(20);
   gap_size = new FormControl(1);
   results: MlInterface[] = [];
   option_model = 'svm';
@@ -316,6 +317,7 @@ export class MlPredictComponent implements OnInit {
         aux_array.Rhabdoviridae = this.conserv_data[String(i)]['Rhabdoviridae'];
         // alert(aux_array.hasOwnProperty(this.option_conserv) );
         aux_array.prob = this.conserv_data[String(i)][this.option_conserv];
+        /**
         // alert(typeof aux_array.prob === 'number');
         if (aux_array.prob >= 1) {
           aux_array.color = 'red';
@@ -325,17 +327,29 @@ export class MlPredictComponent implements OnInit {
           aux_array.color = 'yellow';
         } else if (aux_array.prob >= 0.40 && aux_array.prob < 0.60) {
           aux_array.color = 'lightgreen';
-          /**
-        } else if (aux_array.prob >= 0.70 && aux_array.prob < 0.80) {
-          aux_array.color = 'lightblue';
-        } else if (aux_array.prob >= 0.60 && aux_array.prob < 0.70) {
-          aux_array.color = 'lightgray';
-          */
         } else {
           aux_array.color = 'white';
         }
-        // alert(aux_array);
+         */
         this.print_conserv.push(aux_array);
+      }
+      const maxScore = Math.max.apply(Math, this.print_conserv.map(function(o) { return o.prob; }));
+      const minScore = Math.min.apply(Math, this.print_conserv.map(function(o) { return o.prob; }));
+      for (let i = 0; i < this.print_conserv.length; i++) {
+        this.print_conserv[i].prob_correct = (this.print_conserv[i].prob - minScore) / (maxScore - minScore);
+
+        if (this.print_conserv[i].prob_correct >= 0.95) {
+          this.print_conserv[i].color = 'red';
+        } else if (this.print_conserv[i].prob_correct >= 0.90 && this.print_conserv[i].prob_correct < 0.95) {
+          this.print_conserv[i].color = 'orange';
+        } else if (this.print_conserv[i].prob_correct >= 0.80 && this.print_conserv[i].prob_correct < 0.90) {
+          this.print_conserv[i].color = 'yellow';
+        } else if (this.print_conserv[i].prob_correct >= 0.60 && this.print_conserv[i].prob_correct < 0.80) {
+          this.print_conserv[i].color = 'lightgreen';
+        } else {
+          this.print_conserv[i].color = 'white';
+        }
+
       }
     } else {
       for (let i = 0; i < this.print_conserv.length; i++) {
@@ -362,8 +376,5 @@ export class MlPredictComponent implements OnInit {
     }
     this.conserv_card = true;
     this.name_family = this.option_conserv;
-
-    // alert(JSON.stringify(this.conserv_data));
-    // alert(JSON.stringify(this.print_conserv));
   }
 }

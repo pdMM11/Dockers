@@ -16,17 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
+from django.conf.urls import url
 from crmapp import views
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework_jwt.views import verify_jwt_token
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic import RedirectView, TemplateView
 from django.conf.urls.static import static
 
 #from rest_framework import router
 
 
 urlpatterns = [
+
+    url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        TemplateView.as_view(template_name="templates_auth/templates/password_reset_confirm.html"),
+        name='password_reset_confirm'),
+
     path('admin/', admin.site.urls),
 
     path(r'fusionpeptides/', views.FusionPeptidesAPIView.as_view(), name='fusion-peptides'),
@@ -81,11 +88,9 @@ urlpatterns = [
     path(r'save_taxonomy_results/', views.WriteResultsAPIView.write_taxonomy_virus_results, name='save-tax-predict'),
     path(r'taxonomyvirus/autocomplete/', views.TaxonomyVirusAPIView_Autocomplete.as_view()),
 
-
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path(r'api/token/verify/', verify_jwt_token),
-
 
     path(r'clustal/', views.clustal, name='clustal'),
 

@@ -6,12 +6,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {CoreModule, NB_CORE_PROVIDERS} from './@core/core.module';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken} from '@nebular/auth';
+import {NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken, NbTokenStorage, NbTokenLocalStorage} from '@nebular/auth';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -26,6 +26,7 @@ import {
 // import {AuthComponent} from './auth/auth.component';
 import {CookieService} from 'ngx-cookie-service';
 import { EnvServiceProvider } from './services/env.service.provider';
+import {TokenInterceptor} from './services/token.interceptor.service';
 /**
 import {LoginComponent} from './pages/admin-pages/login/login.component';
 import {RegisterComponent} from './pages/admin-pages/register/register.component';
@@ -74,6 +75,11 @@ const formSetting: any = {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
 
 
     /**
@@ -130,7 +136,10 @@ const formSetting: any = {
      */
   ],
   bootstrap: [AppComponent],
-  providers: [CookieService, EnvServiceProvider],
+  providers: [CookieService, EnvServiceProvider,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
+  ],
 })
 export class AppModule {
 }

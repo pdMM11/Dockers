@@ -1,6 +1,12 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NbAuthJWTToken, NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy} from '@nebular/auth';
+import {
+  NbAuthJWTToken,
+  NbAuthModule,
+  NbDummyAuthStrategy,
+  NbPasswordAuthStrategy,
+  NbTokenLocalStorage,
+} from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -141,6 +147,7 @@ export const NB_CORE_PROVIDERS = [
             success: '/pages/dashboard',
             failure: null, // stay on the same page
           },
+          defaultErrors: ['Username or email already registered, please try again.'],
         },
         logout: {
           endpoint: '/%5Erest-auth/logout/',
@@ -151,12 +158,13 @@ export const NB_CORE_PROVIDERS = [
           },
         },
         requestPass: {
-          endpoint: '/%5Erest-auth/password/change/', // verify this one
+          endpoint: '/%5Erest-auth/password/reset/', // verify this one
           method: 'post',
         },
         resetPass: {
-          endpoint: '/%5Erest-auth/password/reset/',
+          endpoint: '/%5Erest-auth/password/change/',
           method: 'post',
+          resetPasswordTokenKey: 'auth_app_token', // JSON.parse(localStorage.getItem('auth_app_token'))['value'],
         },
       }),
     ],
