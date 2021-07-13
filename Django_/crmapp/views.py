@@ -1125,7 +1125,7 @@ class FusionPeptidesAPIView_Autocomplete(generics.ListCreateAPIView):
     filterset_fields = ['idfusion_peptides', 'residues', 'sequence', 'annotation_method',
                         'exp_evidence', 'protein', 'protein__name', 'protein__idtaxonomy',
                         'protein__idtaxonomy__family',
-                        'protein__idtaxonomy__commonname']
+                        'protein__idtaxonomy__commonname', 'protein__idtaxonomy__family']
     search_fields = ['idfusion_peptides', 'residues', 'sequence', 'annotation_method',
                      'exp_evidence', 'protein__name', 'protein__idtaxonomy__family',
                      'protein__idtaxonomy__commonname']
@@ -1332,11 +1332,11 @@ class ProteinAPIView_Save(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['idprotein', 'name', 'class_field', 'activation',
                         'name_fusogenic_unit', 'sequence_fusogenic',
-                        'uniprotid', 'ncbiid', 'idtaxonomy', 'idtaxonomy__commonname']
+                        'uniprotid', 'ncbiid', 'idtaxonomy', 'idtaxonomy__commonname','idtaxonomy__family']
     # search_fields = filterset_fields
     search_fields = ['idprotein', 'name', 'class_field', 'activation',
                      'name_fusogenic_unit', 'sequence_fusogenic',
-                     'uniprotid', 'ncbiid', 'idtaxonomy__commonname']
+                     'uniprotid', 'ncbiid', 'idtaxonomy__commonname','idtaxonomy__family']
     pagination_class = CustomPagination
 
 
@@ -1346,11 +1346,11 @@ class ProteinAPIView_Autocomplete(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['idprotein', 'name', 'class_field', 'activation',
                         'name_fusogenic_unit', 'sequence_fusogenic',
-                        'uniprotid', 'ncbiid', 'idtaxonomy', 'idtaxonomy__commonname']
+                        'uniprotid', 'ncbiid', 'idtaxonomy', 'idtaxonomy__commonname','idtaxonomy__family']
     # search_fields = filterset_fields
     search_fields = ['idprotein', 'name', 'class_field', 'activation',
                      'name_fusogenic_unit', 'sequence_fusogenic',
-                     'uniprotid', 'ncbiid', 'idtaxonomy__commonname']
+                     'uniprotid', 'ncbiid', 'idtaxonomy__commonname','idtaxonomy__family']
     pagination_class = AutoCompletePagination
 
 

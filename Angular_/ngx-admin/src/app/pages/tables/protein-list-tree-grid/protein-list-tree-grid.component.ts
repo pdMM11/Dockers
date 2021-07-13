@@ -452,6 +452,7 @@ export class ProteinListTreeGridComponent implements OnInit {
       (error: HttpErrorResponse) => {
         alert(error.message);
       });
+    alert('NOTICE: ALL SEQUENCES ARE SELECTED');
     this.fetchProtein();
   }
 
@@ -464,7 +465,6 @@ export class ProteinListTreeGridComponent implements OnInit {
         this.seq_tools(true, i['idprotein'], i['sequence_fusogenic'], i['name']);
       }
     }
-    alert('NOTICE: ALL SEQUENCES ARE SELECTED');
   }
 
   clearAllSelected() {
