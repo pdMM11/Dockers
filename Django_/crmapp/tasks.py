@@ -1,6 +1,6 @@
 from celery import Celery
 
-app = Celery('vfp_web_server', broker='redis://localhost:6379/0')
+app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
 
 
 @app.task
