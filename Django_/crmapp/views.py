@@ -1,3 +1,5 @@
+from multiprocessing.pool import AsyncResult
+
 from django.shortcuts import render
 # from django.core.paginator import Paginator
 from django.shortcuts import render
@@ -50,7 +52,9 @@ from crmapp.conserv.descriptors_conserv import Descriptor
 
 from django.shortcuts import render
 
-from crmapp.tasks import MachineLearning, MachineLearningTask
+from crmapp.tasks import MachineLearningTask
+
+from celery import result, Celery
 
 
 def index(request, path=''):
@@ -678,10 +682,17 @@ def ml_predict_task(request):
     except: gap = 1
     try: model_picked = unquote(request.GET.get('model'))
     except: model_picked = 'svm'
-    return MachineLearningTask.apply_async(kwargs={"model_picked": model_picked,
+    predictions = MachineLearningTask.apply_async(kwargs={"model_picked": model_picked,
                                                        "seq": seq,
                                                        "window_size": window_size,
                                                        "gap": gap})
+
+    res = result.AsyncResult(id=predictions.id, app=MachineLearningTask)
+
+    return res
+
+    # async_result = AsyncResult(id=predictions.id, app=MachineLearningTask)
+
 
 @api_view(["POST"])
 @csrf_exempt
