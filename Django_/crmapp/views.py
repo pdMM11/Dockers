@@ -50,6 +50,8 @@ from crmapp.conserv.descriptors_conserv import Descriptor
 
 from django.shortcuts import render
 
+from crmapp.tasks import MachineLearning, MachineLearningTask
+
 
 def index(request, path=''):
     """
@@ -599,7 +601,6 @@ def ml_predict(request):
         model_picked = unquote(request.GET.get('model'))
     except:
         model_picked = 'svm'
-
     model = None
 
     if model_picked == 'svm':
@@ -658,7 +659,29 @@ def ml_predict(request):
         return HttpResponse('<h1>Page was found</h1>')
 
         return render(request, 'home.html')
-        """
+      """
+
+def ml_predict_task(request):
+    """
+        Function that, using ML models trained with ProPythia, predicts the likelihood a peptide being a fusion peptide.
+        It receives a GET request, with the following parameters:
+        - 'seq': protein sequence.
+        - 'window_size': window size
+        - 'gap': gap between windows
+        - 'model': ML model
+        Returns a JSON with the probabilities from all possible peptides
+    """
+    seq = unquote(request.GET.get('sequence'))
+    try: window_size = int(unquote(request.GET.get('window_size')))
+    except: window_size = 15
+    try: gap = int(unquote(request.GET.get('gap')))
+    except: gap = 1
+    try: model_picked = unquote(request.GET.get('model'))
+    except: model_picked = 'svm'
+    return MachineLearningTask.apply_async(kwargs={"model_picked": model_picked,
+                                                       "seq:": seq,
+                                                       "window_size": window_size,
+                                                       "gap": gap})
 
 @api_view(["POST"])
 @csrf_exempt

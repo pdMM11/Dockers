@@ -102,6 +102,8 @@ urlpatterns = [
     path(r'ml_predict/', views.ml_predict, name='ml-predict'),
     path(r'save_ml_results/', views.WriteResultsAPIView.write_ml_results, name='save-ml-predict'),
 
+    path(r'ml_predict_redis', views.ml_predict_task),
+
     path(r'^rest-auth/', include('rest_auth.urls')),
     path(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     
