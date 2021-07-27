@@ -3,7 +3,7 @@ from propythia.machine_learning import MachineLearning
 import pandas as pd
 from django.http import JsonResponse
 
-from celery import Celery
+from celery import Celery, shared_task
 
 app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
 
@@ -12,7 +12,8 @@ app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
 def add(x, y):
     return x + y
 
-@app.task
+# @app.task
+@shared_task
 def MachineLearningTask(model_picked, seq, window_size, gap,):
 
     model = None
