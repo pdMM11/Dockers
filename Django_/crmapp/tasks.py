@@ -5,7 +5,7 @@ from django.http import JsonResponse
 
 from celery import Celery, shared_task
 
-app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
+# app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
 
 
 @app.task
