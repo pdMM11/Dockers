@@ -7,10 +7,11 @@ from celery import Celery, shared_task
 
 # app = Celery('vfp_web_server', broker='redis://redis_vfp:6379/0')
 
-
+"""
 @app.task
 def add(x, y):
     return x + y
+"""
 
 # @app.task
 @shared_task
