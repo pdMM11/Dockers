@@ -10,7 +10,7 @@ RUN pip install gunicorn
 # Update the default application repository sources list
 RUN apt-get update && apt-get install -y \
     python-dev \
-    python-pip \
+    # python-pip \
     python-setuptools \
     build-essential \
     git
@@ -32,3 +32,7 @@ EXPOSE 8000
 
 # define the default command to run when starting the container
 CMD ["gunicorn", "--bind", ":8000", "vfp_web_server.wsgi:_application"]
+
+# run celery
+# CMD ["celery", "-A", "vfp_web_server", "worker", "-l", "info"]
+

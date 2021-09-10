@@ -28,4 +28,5 @@ django-rest-auth[with_social]
 logomaker
 celery
 redis
+flower
 

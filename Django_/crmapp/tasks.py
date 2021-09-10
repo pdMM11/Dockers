@@ -16,6 +16,8 @@ def add(x, y):
 # @app.task
 @shared_task
 def MachineLearningTask(model_picked, seq, window_size, gap,):
+    
+    print('ON TASK')
 
     model = None
 
@@ -49,9 +51,11 @@ def MachineLearningTask(model_picked, seq, window_size, gap,):
         result = ml.predict_window(model, seq=seq, x=None, window_size=window_size,
                                    gap=gap, features=[], names=None, y=None,
                                    filename=None)
-
-        return JsonResponse(result.to_json(orient='table'), safe=False)
+        response = result.to_json(orient='table')
+        # return JsonResponse(result.to_json(orient='table'), safe=False)
 
     else:
-        JsonResponse([], safe=False)
+        response = {}
+        # JsonResponse([], safe=False)
+    return response
 

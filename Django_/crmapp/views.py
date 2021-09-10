@@ -12,6 +12,7 @@ from rest_framework import filters
 from rest_framework.views import APIView
 from rest_framework import generics
 
+from vfp_web_server.celery import app as celery_app
 from .models import *
 from .serializers import *
 from django.shortcuts import render
@@ -54,8 +55,7 @@ from django.shortcuts import render
 
 from crmapp.tasks import MachineLearningTask
 
-from celery import result, Celery
-
+import celery
 
 def index(request, path=''):
     """
@@ -686,12 +686,28 @@ def ml_predict_task(request):
                                                        "seq": seq,
                                                        "window_size": window_size,
                                                        "gap": gap})
+    print(predictions.id)
 
-    res = result.AsyncResult(id=predictions.id, app=MachineLearningTask)
+    return JsonResponse({"task_id": predictions.id}, status=202)
 
-    return res
+    # res = result.AsyncResult(id=predictions.id, app=MachineLearningTask)
+    # res = predictions.get()
+
+    # return predictions
 
     # async_result = AsyncResult(id=predictions.id, app=MachineLearningTask)
+
+
+@csrf_exempt
+def get_status(request):
+    task_id = unquote(request.GET.get('task_id'))
+    task_result = celery.result.AsyncResult(task_id, app=celery_app)
+    result = {
+        "task_id": task_id,
+        "task_status": task_result.status,
+        "task_result": task_result.result
+    }
+    return JsonResponse(result, status=200)
 
 
 @api_view(["POST"])
