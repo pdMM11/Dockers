@@ -60,5 +60,21 @@ export class MlPredictService {
     this.data.family = family;
     return this.httpClient.post<any>(`${this.API_URL}/conserv/`, this.data, this.httpOptions);
   }
+  getTaskIDRedis(method: string, sequence_text: string, window_size= 15, gap = 1) {
+  /**
+   GET request to retrieve the task ID for the Async Function to obtain the ML prediction.
+   Inputs: a sequence "seq", split into subsequences of size "window_size"
+   against a Weblogo with VFP from the same Taxonomy "family".
+   */
+    return this.httpClient.get<any>(`${this.API_URL}/ml_predict_redis/?sequence=` + sequence_text
+      + '&window_size=' + window_size +  '&gap=' + gap + '&model=' + method) ; // , this.httpOptions);
+  }
+  getRedisResult(task_id: string) {
+    /**
+     GET request to retrieve result from the last request to the Asyns Tool: input the task ID.
+     */
+    return this.httpClient.get<any>(`${this.API_URL}/ml_predict_redis/?task_id=` + task_id);
+    // , this.httpOptions);
+  }
 }
 

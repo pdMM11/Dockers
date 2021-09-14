@@ -682,6 +682,7 @@ def ml_predict_task(request):
     except: gap = 1
     try: model_picked = unquote(request.GET.get('model'))
     except: model_picked = 'svm'
+
     predictions = MachineLearningTask.apply_async(kwargs={"model_picked": model_picked,
                                                        "seq": seq,
                                                        "window_size": window_size,

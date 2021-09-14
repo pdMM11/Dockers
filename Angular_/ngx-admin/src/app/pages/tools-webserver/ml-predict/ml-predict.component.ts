@@ -70,6 +70,8 @@ export class MlPredictComponent implements OnInit {
 
   conserv_card = false;
   name_family = '';
+  taskID = '';
+  asyncReturn = true;
 
   settings = {
     /**
@@ -376,5 +378,50 @@ export class MlPredictComponent implements OnInit {
     }
     this.conserv_card = true;
     this.name_family = this.option_conserv;
+  }
+  getTaskID() {
+    /**
+     * Sent a Request to the Async Function.
+     */
+    this.taskID = '';
+    let sequence = '';
+    if (this.sequence.value !== null && this.sequence.value !== '') {
+      sequence = this.sequence.value;
+    } else if (this.query_seq !== null && this.query_seq !== '') {
+      sequence = this.query_seq;
+    }
+    if (sequence !== '') {
+      this.MLService.getTaskIDRedis(this.option_model, this.sequence.value,
+        this.window_size.value, this.gap_size.value).subscribe(
+        (data_send) => {
+          alert(data_send['task_id']);
+          this.getTaskID_aux(data_send['task_id']);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+    });
+
+    } else {
+      alert('ERROR: SEQUENCE NEEDS TO BE FILLED');
+    }
+  }
+  getTaskID_aux(data) {
+    /**
+     * Complementary function to the getTaskID one, to save the task ID.
+     */
+    this.taskID = data;
+    this.asyncReturn = false;
+  }
+  getResultfromTaskID() {
+    if (this.taskID !== '') {
+      this.MLService.getRedisResult(this.taskID).subscribe(
+        (data_send) => {
+          const data_parse = JSON.parse(data_send['task_result']);
+          this.results = data_parse['data'];
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        });
+    }
   }
 }

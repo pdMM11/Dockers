@@ -16,9 +16,6 @@ def add(x, y):
 # @app.task
 @shared_task
 def MachineLearningTask(model_picked, seq, window_size, gap,):
-    
-    print('ON TASK')
-
     model = None
 
     if model_picked == 'svm':
