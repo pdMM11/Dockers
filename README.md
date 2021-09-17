@@ -21,4 +21,6 @@ Commands used to successufully build the application:
   sudo docker run --rm  --name django__web_1 --network VFP_NETWORK -p 8000:8000 pedrodmmoreira/vfp_webserver:django-httpd-build 
 
   sudo docker run --rm --name angular_vfp -p 4201:4200 pedrodmmoreira/vfp_webserver:angular-httpd-build
+
+  docker run -it --name redis_vfp --network VFP_NETWORK --rm redis redis-server
   

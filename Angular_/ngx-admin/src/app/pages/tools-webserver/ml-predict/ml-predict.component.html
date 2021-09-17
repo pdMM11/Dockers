@@ -97,11 +97,16 @@
     </table>
 
     <p></p>
+    <button nbButton (click)="getTaskID()">PREDICT FUSION PEPTIDES</button>
+    <!--
     <button nbButton (click)="gotoML()">PREDICT FUSION PEPTIDES</button>
+    <button nbButton (click)="getTaskID()">PREDICT CONSERVATION ASYNC</button>
+    -->
     <p></p>
   </nb-card-body>
 </nb-card>
 
+<!--
 <nb-card *ngIf="results.length>0">
   <nb-card-header>
     Results
@@ -149,9 +154,6 @@
 
       <p></p>
 
-      <!--
-      <button nbButton (click)="writeFile()">SAVE DATA</button>
-      -->
       <a [href]="fileUrl" download="results_ml.txt">Download Results</a>
 
       <p></p>
@@ -160,9 +162,72 @@
   </nb-card-body>
 
 </nb-card>
+-->
 
- <!-- <nb-card *ngIf="conserv_card">
- -->
+<nb-card *ngIf="box_async">
+  <nb-card-header>
+    Results
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <div *ngIf="!asyncReturn">
+      <p>Results not yet returned...</p>
+      <button nbButton (click)="getResultfromTaskID()">REFRESH</button>
+    </div>
+
+    <div *ngIf="asyncReturn">
+      <button nbButton (click)="showTable()">SHOW ALL PEPTIDES</button>
+      <p></p>
+
+      <ng2-smart-table [settings]="settings" [source]="results" *ngIf="table_bool">
+      </ng2-smart-table>
+
+      <p></p>
+      <button nbButton (click)="seqColor()">SHOW SEQUENCE</button>
+      <p></p>
+
+
+      <div *ngIf="pos_prob.length>0">
+        <p></p>
+        <span *ngFor="let item of pos_prob; index as i"
+              class="seq" [ngStyle]="{'background-color':item.color}"
+              nbTooltip="Position: {{item.no}}; Probability: {{item.prob}}">
+        {{item.carat}}
+    </span>
+        <p></p>
+        <dl>
+          <div class="Legend">
+            <div class="Red">&nbsp;</div>
+            >= 99% probability
+            <div class="Orange">&nbsp;</div>
+            Probability between 95 and 99%
+            <div class="Yellow">&nbsp;</div>
+            Probability between 90 and 95%
+            <div class="LightGreen">&nbsp;</div>
+            Probability between 80 and 90%
+            <div class="LightBlue">&nbsp;</div>
+            Probability between 70 and 80%
+            <div class="LightGray">&nbsp;</div>
+            Probability between 60 and 70%
+            <div class="White">&nbsp;</div>
+            < 60% probability
+          </div>
+        </dl>
+
+        <p></p>
+
+        <a [href]="fileUrl" download="results_ml.txt">Download Results</a>
+
+        <p></p>
+      </div>
+
+    </div>
+
+  </nb-card-body>
+
+</nb-card>
+
 
 <nb-card>
  <nb-card-header>
@@ -285,7 +350,71 @@
 
 </nb-card>
 
+<!--
 <button nbButton (click)="getTaskID()">PREDICT CONSERVATION ASYNC</button>
 
-{{taskID}}
 
+<nb-card *ngIf="box_async">
+  <nb-card-header>
+    Results
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <div *ngIf="!asyncReturn">
+      <p>Results not yet returned...</p>
+      <button nbButton (click)="getResultfromTaskID()">REFRESH</button>
+    </div>
+
+    <div *ngIf="asyncReturn">
+      <button nbButton (click)="showTable()">SHOW ALL PEPTIDES</button>
+      <p></p>
+
+      <ng2-smart-table [settings]="settings" [source]="results" *ngIf="table_bool">
+      </ng2-smart-table>
+
+      <p></p>
+      <button nbButton (click)="seqColor()">SHOW SEQUENCE</button>
+      <p></p>
+
+
+      <div *ngIf="pos_prob.length>0">
+        <p></p>
+        <span *ngFor="let item of pos_prob; index as i"
+              class="seq" [ngStyle]="{'background-color':item.color}"
+              nbTooltip="Position: {{item.no}}; Probability: {{item.prob}}">
+        {{item.carat}}
+    </span>
+        <p></p>
+        <dl>
+          <div class="Legend">
+            <div class="Red">&nbsp;</div>
+            >= 99% probability
+            <div class="Orange">&nbsp;</div>
+            Probability between 95 and 99%
+            <div class="Yellow">&nbsp;</div>
+            Probability between 90 and 95%
+            <div class="LightGreen">&nbsp;</div>
+            Probability between 80 and 90%
+            <div class="LightBlue">&nbsp;</div>
+            Probability between 70 and 80%
+            <div class="LightGray">&nbsp;</div>
+            Probability between 60 and 70%
+            <div class="White">&nbsp;</div>
+            < 60% probability
+          </div>
+        </dl>
+
+        <p></p>
+
+        <a [href]="fileUrl" download="results_ml.txt">Download Results</a>
+
+        <p></p>
+      </div>
+
+    </div>
+
+  </nb-card-body>
+
+</nb-card>
+-->

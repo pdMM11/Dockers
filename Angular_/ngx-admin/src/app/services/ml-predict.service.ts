@@ -73,7 +73,7 @@ export class MlPredictService {
     /**
      GET request to retrieve result from the last request to the Asyns Tool: input the task ID.
      */
-    return this.httpClient.get<any>(`${this.API_URL}/ml_predict_redis/?task_id=` + task_id);
+    return this.httpClient.get<any>(`${this.API_URL}/get_status/?task_id=` + task_id);
     // , this.httpOptions);
   }
 }

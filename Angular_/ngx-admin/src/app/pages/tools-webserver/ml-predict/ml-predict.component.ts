@@ -72,6 +72,7 @@ export class MlPredictComponent implements OnInit {
   name_family = '';
   taskID = '';
   asyncReturn = true;
+  box_async = false;
 
   settings = {
     /**
@@ -383,6 +384,7 @@ export class MlPredictComponent implements OnInit {
     /**
      * Sent a Request to the Async Function.
      */
+    this.box_async = true;
     this.taskID = '';
     let sequence = '';
     if (this.sequence.value !== null && this.sequence.value !== '') {
@@ -391,10 +393,9 @@ export class MlPredictComponent implements OnInit {
       sequence = this.query_seq;
     }
     if (sequence !== '') {
-      this.MLService.getTaskIDRedis(this.option_model, this.sequence.value,
+      this.MLService.getTaskIDRedis(this.option_model, sequence,
         this.window_size.value, this.gap_size.value).subscribe(
         (data_send) => {
-          alert(data_send['task_id']);
           this.getTaskID_aux(data_send['task_id']);
         },
         (error: HttpErrorResponse) => {
@@ -417,11 +418,23 @@ export class MlPredictComponent implements OnInit {
       this.MLService.getRedisResult(this.taskID).subscribe(
         (data_send) => {
           const data_parse = JSON.parse(data_send['task_result']);
-          this.results = data_parse['data'];
+          this.getResultFromTaskID_aux(data_parse['data']);
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
         });
+    }
+  }
+  getResultFromTaskID_aux(data) {
+    if (data !== null) {
+      this.asyncReturn = true;
+      this.results = data;
+
+      this.writeFile();
+
+      const blob = new Blob([this.data_print], { type: 'application/octet-stream' });
+
+      this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
     }
   }
 }

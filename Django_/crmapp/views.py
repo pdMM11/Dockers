@@ -675,6 +675,7 @@ def ml_predict_task(request):
         - 'model': ML model
         Returns a JSON with the probabilities from all possible peptides
     """
+
     seq = unquote(request.GET.get('sequence'))
     try: window_size = int(unquote(request.GET.get('window_size')))
     except: window_size = 15
@@ -687,7 +688,6 @@ def ml_predict_task(request):
                                                        "seq": seq,
                                                        "window_size": window_size,
                                                        "gap": gap})
-    print(predictions.id)
 
     return JsonResponse({"task_id": predictions.id}, status=202)
 
