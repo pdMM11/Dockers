@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'viral_fusion_protein',
         'USER': 'root_docker',
         'PASSWORD': 'admin',
-        'HOST': 'django__db_1',   
+        'HOST': 'django__db_1',
         'PORT': '3306',
     }
 }

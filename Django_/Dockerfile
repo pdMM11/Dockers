@@ -26,12 +26,12 @@ ADD . /my_app_dir/
 
 COPY ./entrypoint.sh /
 
-EXPOSE 8000
+EXPOSE 5555 8000
 
 # Define Supervisor to later run additional processes: Celery and Flower
 RUN mkdir -p /var/log/supervisor
 
-RUN mkdir -p /var/run/celery /var/run/beat /var/run/flower /var/log/gunicorn /var/log/supervisor
+RUN mkdir -p /var/run/gunicorn /var/log/gunicorn /var/run/celery /var/log/celery /var/run/beat /var/log/beat /var/run/flower /var/run/flower /var/log/supervisor
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
@@ -39,8 +39,13 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # ENTRYPOINT ["/entrypoint.sh"]
 
-# run gunicorn (the Django App) plus celery & celery
+# run gunicorn (the Django App) plus Celery's Worker & Beat and Flower
 CMD ["/usr/bin/supervisord"]
+
+# run Flower (it has to start after the Celery Worker)
+
+# ENTRYPOINT ["./flower_start.conf.sh"]
+
 
 # define the default command to run when starting the container
 # CMD ["gunicorn", "--bind", ":8000", "vfp_web_server.wsgi:_application"]
