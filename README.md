@@ -17,10 +17,10 @@ Commands used to successufully build the application:
   sudo docker network create VFP_NETWORK  
 
   sudo docker run --rm --name django__db_1 --network VFP_NETWORK -p 3307:3306 pedrodmmoreira/vfp_webserver:mysql-httpd-build 
+  
+  sudo docker run -it --name redis_vfp --network VFP_NETWORK --rm redis redis-server
 
   sudo docker run --rm  --name django__web_1 --network VFP_NETWORK -p 5555:5555 -p 8000:8000 pedrodmmoreira/vfp_webserver:django-httpd-build 
 
   sudo docker run --rm --name angular_vfp -p 4201:4200 pedrodmmoreira/vfp_webserver:angular-httpd-build
-
-  sudo docker run -it --name redis_vfp --network VFP_NETWORK --rm redis redis-server
   
