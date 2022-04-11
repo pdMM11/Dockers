@@ -51,11 +51,11 @@ import json
 
 from crmapp.conserv.descriptors_conserv import Descriptor
 
-from django.shortcuts import render
-
 from crmapp.tasks import MachineLearningTask
 
 import celery
+import html
+import re
 
 def index(request, path=''):
     """
@@ -673,10 +673,16 @@ def ml_predict_task(request):
         - 'window_size': window size
         - 'gap': gap between windows
         - 'model': ML model
-        Returns a JSON with the probabilities from all possible peptides
+        Returns a JSON with the probabilities from all possible peptides.
     """
-
-    seq = unquote(request.GET.get('sequence'))
+    seq_input = unquote(request.GET.get('sequence'))
+    seq = html.unescape(seq_input)
+    alphabet = 'ACDEFGHIKLMNPQRSTVWY-'
+    if seq.count(">") > 0:
+        seq = re.sub(">.*\n", "", seq)
+    seq_cleared = list(filter(lambda a: a in alphabet, seq))
+    seq = ''
+    seq = seq.join(seq_cleared)
     try: window_size = int(unquote(request.GET.get('window_size')))
     except: window_size = 15
     try: gap = int(unquote(request.GET.get('gap')))
@@ -701,10 +707,17 @@ def ml_predict_task(request):
 
 @csrf_exempt
 def get_status(request):
+    """
+    Function that provides status of a given task.
+    It receives a GET request, with the following parameters:
+        - 'task_id': Celery task ID.
+        Returns a JSON with the status of the Task (with the results if completed).
+    """
     task_id = unquote(request.GET.get('task_id'))
-    task_result = celery.result.AsyncResult(task_id, app=celery_app)
+    #task_result = celery.result.AsyncResult(task_id, app=celery_app)
+    task_result = celery.current_app.AsyncResult(task_id)
     result = {
-        "task_id": task_id,
+        "task_id": task_result.id,
         "task_status": task_result.status,
         "task_result": task_result.result
     }
